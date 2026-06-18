@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GoalApp" />
-  <title>GoalApp DATA-2</title>
+  <title>GoalApp PRODUCT-1</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -328,6 +328,32 @@
 /* Corrección iPhone/iPad: respeta la barra de estado y el área segura */
 .topbar,.top{padding-top:max(12px,env(safe-area-inset-top));min-height:calc(70px + env(safe-area-inset-top));height:auto}
 body{padding-top:0}
+
+
+    /* PRODUCT-1: perfil, preferencias y personalización persistente */
+    .profile-fields { display:grid; gap:10px; margin-top:18px; }
+    .profile-fields label { display:grid; gap:6px; color:var(--muted); font-size:10px; font-weight:700; }
+    .profile-fields input,.profile-fields select { width:100%; min-height:48px; padding:0 13px; color:var(--text); border:1px solid var(--line); border-radius:14px; background:#0a0f12; outline:none; appearance:none; }
+    .profile-fields input:focus,.profile-fields select:focus { border-color:var(--green); box-shadow:0 0 0 3px rgba(0,237,104,.08); }
+    .preference-grid { display:grid; gap:9px; }
+    .preference-choice { position:relative; display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:11px; min-height:70px; padding:11px 12px; border:1px solid var(--line); border-radius:17px; background:linear-gradient(145deg,#11181c,#080c0e); text-align:left; }
+    .preference-choice .pref-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:13px; color:var(--green); background:rgba(0,237,104,.09); font-size:18px; }
+    .preference-choice strong { display:block; margin-bottom:3px; font-size:12px; }
+    .preference-choice small { color:var(--muted); font-size:9px; line-height:1.35; }
+    .preference-choice .switch { width:38px; height:22px; padding:3px; border-radius:99px; background:#263036; transition:.2s; }
+    .preference-choice .switch::after { content:""; display:block; width:16px; height:16px; border-radius:50%; background:#89928e; transition:.2s; }
+    .preference-choice.selected { border-color:rgba(0,237,104,.55); }
+    .preference-choice.selected .switch { background:var(--green); }
+    .preference-choice.selected .switch::after { background:#031008; transform:translateX(16px); }
+    .preferences-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 0 14px; }
+    .summary-tile { padding:12px 9px; border:1px solid var(--line); border-radius:15px; background:linear-gradient(145deg,#10171a,#080c0e); text-align:center; }
+    .summary-tile strong { display:block; color:var(--green); font-size:19px; }
+    .summary-tile span { color:var(--muted); font-size:8px; }
+    .modal-sheet.scrollable { max-height:min(86dvh,780px); overflow:auto; }
+    .modal-note { margin:8px 0 12px; color:var(--muted); font-size:9px; text-align:center; }
+    .edit-grid { max-height:52dvh; overflow:auto; padding-right:2px; }
+    .country-chip { display:inline-flex; align-items:center; gap:6px; margin-top:7px; color:var(--muted); font-size:9px; }
+    .country-chip b { color:var(--green); }
 </style>
 </head>
 <body>
@@ -338,16 +364,18 @@ body{padding-top:0}
   <div class="onboarding" id="onboarding" hidden>
     <div class="onboarding-inner">
       <div class="onboarding-head"><svg class="brand-logo" viewBox="0 0 48 48"><defs><linearGradient id="g2"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g2)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg><strong>GoalApp</strong></div>
-      <div class="step-indicator"><span class="active"></span><span></span><span></span></div>
-      <section class="step active" data-step="0"><span class="eyebrow">Bienvenido</span><h1 class="page-title">Todo tu fútbol, sin el ruido.</h1><p class="sub">Elige lo que te importa y GoalApp organizará partidos, noticias y alertas para ti.</p><div class="welcome-art"></div></section>
-      <section class="step" data-step="1"><span class="eyebrow">Paso 1 de 2</span><h1 class="page-title">Elige tus equipos</h1><p class="sub">Selecciona al menos dos. Puedes cambiarlos después.</p><div class="choice-grid" id="teamChoices"></div></section>
-      <section class="step" data-step="2"><span class="eyebrow">Paso 2 de 2</span><h1 class="page-title">Elige tus ligas</h1><p class="sub">Selecciona al menos dos competiciones.</p><div class="choice-grid" id="leagueChoices"></div></section>
+      <div class="step-indicator"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+      <section class="step active" data-step="0"><span class="eyebrow">Bienvenido</span><h1 class="page-title">Todo tu fútbol, sin el ruido.</h1><p class="sub">Configura tu perfil una vez y GoalApp priorizará partidos, ligas, noticias y alertas para ti.</p><div class="welcome-art"></div></section>
+      <section class="step" data-step="1"><span class="eyebrow">Tu perfil</span><h1 class="page-title">Personaliza GoalApp</h1><p class="sub">Usaremos estos datos únicamente para adaptar horarios, idioma y saludos.</p><div class="profile-fields"><label>Nombre<input id="onboardingName" maxlength="30" placeholder="Tu nombre"></label><label>País<select id="onboardingCountry"><option>El Salvador</option><option>Guatemala</option><option>Honduras</option><option>México</option><option>Estados Unidos</option><option>España</option><option>Otro</option></select></label><label>Idioma<select id="onboardingLanguage"><option>Español</option><option>English</option></select></label></div></section>
+      <section class="step" data-step="2"><span class="eyebrow">Equipos</span><h1 class="page-title">Elige tus equipos</h1><p class="sub">Selecciona al menos dos. Tus partidos aparecerán primero.</p><div class="choice-grid" id="teamChoices"></div></section>
+      <section class="step" data-step="3"><span class="eyebrow">Competiciones</span><h1 class="page-title">Elige tus ligas</h1><p class="sub">Selecciona al menos dos competiciones para ordenar el calendario.</p><div class="choice-grid" id="leagueChoices"></div></section>
+      <section class="step" data-step="4"><span class="eyebrow">Alertas</span><h1 class="page-title">Recibe solo lo importante</h1><p class="sub">Activa o desactiva cada tipo de alerta. Podrás cambiarlo desde Perfil.</p><div class="preference-grid" id="onboardingAlertChoices"></div></section>
       <div class="onboarding-footer"><div class="onboarding-message" id="onboardingMessage"></div><button class="primary" id="onboardingNext">Continuar</button></div>
     </div>
   </div>
 
   <div class="app">
-    <header class="topbar"><button class="brand" data-go="home"><svg class="brand-logo" viewBox="0 0 48 48"><defs><linearGradient id="g3"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g3)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg>GoalApp</button><div class="top-actions"><button class="circle-btn" data-toast="No tienes alertas nuevas"><span class="dot"></span><svg class="icon"><use href="#i-bell"/></svg></button><button class="circle-btn avatar-btn" data-go="profile">J</button></div></header>
+    <header class="topbar"><button class="brand" data-go="home"><svg class="brand-logo" viewBox="0 0 48 48"><defs><linearGradient id="g3"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g3)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg>GoalApp</button><div class="top-actions"><button class="circle-btn" data-toast="No tienes alertas nuevas"><span class="dot"></span><svg class="icon"><use href="#i-bell"/></svg></button><button class="circle-btn avatar-btn" id="topAvatar" data-go="profile">J</button></div></header>
     <main>
       <section class="screen active" data-screen="home">
         <span class="eyebrow">Tu fútbol, personalizado</span><h1 class="page-title" id="greeting">Buenas tardes, Jony</h1><p class="sub" id="homeSubtitle">Aquí tienes lo más importante para ti.</p>
@@ -372,7 +400,7 @@ body{padding-top:0}
 
       <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
 
-      <section class="screen" data-screen="profile"><div class="profile"><div class="profile-photo">J</div><div><h1>Jony</h1><p>@jonyfutbol</p><span class="premium-badge">BETA</span></div></div><article class="card settings"><button data-go="clubs"><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-toast="Tus ligas están guardadas en este dispositivo"><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-toast="Notificaciones: configuración pendiente de servidor"><span>Notificaciones</span><b>Preparadas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar onboarding</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
+      <section class="screen" data-screen="profile"><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
     </main>
 
     <nav class="nav"><button class="active" data-go="home"><span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span>Inicio</button><button data-go="live"><span class="nav-icon"><svg class="icon"><use href="#i-live"/></svg></span>Live</button><button data-go="feed"><span class="nav-icon"><svg class="icon"><use href="#i-spark"/></svg></span>Feed</button><button data-go="clubs"><span class="nav-icon"><svg class="icon"><use href="#i-club"/></svg></span>Clubes</button><button data-go="profile"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button></nav>
@@ -380,6 +408,10 @@ body{padding-top:0}
 
   <div class="modal" id="reportModal"><div class="modal-sheet"><h2>Reportar error</h2><p>Describe qué hiciste, qué esperabas y qué ocurrió.</p><input class="field" id="reportTitle" placeholder="Título breve"><textarea class="field" id="reportText" placeholder="Describe el problema o sugerencia"></textarea><div class="modal-actions"><button class="secondary" data-close-modal>Cancelar</button><button class="primary" id="sendReport">Guardar reporte</button></div></div></div>
   <div class="modal" id="backendModal"><div class="modal-sheet"><h2>Conectar datos profesionales</h2><p>Pega la URL pública de tu Cloudflare Worker. GoalApp guardará esta dirección únicamente en tu dispositivo.</p><input class="field" id="backendUrl" inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://goalapp-data.tuusuario.workers.dev"><div id="backendTestResult" style="min-height:20px;margin:10px 0;color:var(--muted);font-size:12px"></div><div class="modal-actions"><button class="secondary" data-close-backend>Cancelar</button><button class="secondary" id="testBackend">Probar</button><button class="primary" id="saveBackend">Guardar</button></div></div></div>
+  <div class="modal" id="profileModal"><div class="modal-sheet scrollable"><h2>Perfil y región</h2><p>Estos datos personalizan saludos, idioma y horarios.</p><div class="profile-fields"><label>Nombre<input id="editProfileName" maxlength="30"></label><label>País<select id="editProfileCountry"><option>El Salvador</option><option>Guatemala</option><option>Honduras</option><option>México</option><option>Estados Unidos</option><option>España</option><option>Otro</option></select></label><label>Idioma<select id="editProfileLanguage"><option>Español</option><option>English</option></select></label></div><div class="modal-actions" style="margin-top:14px"><button class="secondary" data-close-preferences>Cancelar</button><button class="primary" id="saveProfilePreferences">Guardar</button></div></div></div>
+  <div class="modal" id="teamsModal"><div class="modal-sheet scrollable"><h2>Equipos favoritos</h2><p>Los cambios se guardan automáticamente y reorganizan Home y Live.</p><div class="choice-grid edit-grid" id="editTeamChoices"></div><div class="modal-note">Selecciona al menos dos para una mejor personalización.</div><button class="primary" data-close-preferences>Listo</button></div></div>
+  <div class="modal" id="leaguesModal"><div class="modal-sheet scrollable"><h2>Ligas favoritas</h2><p>GoalApp mostrará estas competiciones antes que el resto.</p><div class="choice-grid edit-grid" id="editLeagueChoices"></div><div class="modal-note">Los cambios se guardan automáticamente.</div><button class="primary" data-close-preferences>Listo</button></div></div>
+  <div class="modal" id="alertsModal"><div class="modal-sheet scrollable"><h2>Alertas inteligentes</h2><p>Configura qué eventos deberían generar notificaciones en futuras versiones.</p><div class="preference-grid" id="editAlertChoices"></div><div class="modal-note">La configuración queda guardada en este dispositivo.</div><button class="primary" data-close-preferences>Listo</button></div></div>
   <div class="toast" id="toast"></div>
 
   <script>
@@ -397,7 +429,8 @@ body{padding-top:0}
       {id:'city',name:'Manchester City',country:'Inglaterra',logo:'https://media.api-sports.io/football/teams/50.png'},
       {id:'psg',name:'Paris Saint-Germain',country:'Francia',logo:'https://media.api-sports.io/football/teams/85.png'},
       {id:'bayern',name:'Bayern Munich',country:'Alemania',logo:'https://media.api-sports.io/football/teams/157.png'},
-      {id:'inter',name:'Inter Milan',country:'Italia',logo:'https://media.api-sports.io/football/teams/505.png'}
+      {id:'inter',name:'Inter Milan',country:'Italia',logo:'https://media.api-sports.io/football/teams/505.png'},
+      {id:'salvador',name:'El Salvador',country:'Selección nacional',logo:'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2080%2080%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20x2%3D%221%22%3E%3Cstop%20stop-color%3D%22%230b47aa%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236aa8ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M40%204%2070%2014v23c0%2020-12%2033-30%2039C22%2070%2010%2057%2010%2037V14Z%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M18%2028h44v10H18zm0%2018h44v10H18z%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2240%22%20cy%3D%2242%22%20r%3D%227%22%20fill%3D%22%230b47aa%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%22%20font-size%3D%227%22%20font-weight%3D%22700%22%20fill%3D%22%23fff%22%3EES%3C%2Ftext%3E%3C%2Fsvg%3E'}
     ];
     const LEAGUES = [{id:'worldcup',name:'Mundial',region:'Internacional'},{id:'champions',name:'Champions League',region:'Europa'},{id:'laliga',name:'LaLiga',region:'España'},{id:'premier',name:'Premier League',region:'Inglaterra'},{id:'seriea',name:'Serie A',region:'Italia'},{id:'bundesliga',name:'Bundesliga',region:'Alemania'},{id:'ligue1',name:'Ligue 1',region:'Francia'},{id:'mls',name:'MLS',region:'Estados Unidos'},{id:'elsalvador',name:'Primera División',region:'El Salvador'}];
     const FALLBACK_GAMES = [
@@ -406,12 +439,24 @@ body{padding-top:0}
       {id:'demo-3',league:'Champions League',homeName:'Paris Saint-Germain',awayName:'Manchester City',homeLogo:TEAM_CATALOG[5].logo,awayLogo:TEAM_CATALOG[4].logo,score:'8:00 PM',statusText:'HOY',state:'upcoming',isToday:false,isDemo:true,date:new Date(Date.now()+86400000).toISOString()}
     ];
 
+    const DEFAULT_PROFILE = {name:'Jony',country:'El Salvador',language:'Español'};
+    const ALERT_OPTIONS = [
+      {id:'goals',icon:'⚽',name:'Goles',description:'Recibe el marcador y goleador de tus equipos.'},
+      {id:'kickoff',icon:'⏱',name:'Inicio del partido',description:'Aviso poco antes y al comenzar.'},
+      {id:'lineups',icon:'▦',name:'Alineaciones',description:'Notificación cuando se confirmen los titulares.'},
+      {id:'redcards',icon:'▮',name:'Tarjetas rojas',description:'Solo eventos de alta importancia.'},
+      {id:'news',icon:'◆',name:'Noticias importantes',description:'Contenido de alta relevancia para tus favoritos.'},
+      {id:'daily',icon:'✦',name:'Daily Brief',description:'Resumen diario personalizado de 30 segundos.'}
+    ];
+    function readStoredJSON(key,fallback){try{const value=JSON.parse(localStorage.getItem(key)||'null');return value??fallback}catch{return fallback}}
     const state = {
       currentScreen:'home', previousScreen:'home', filter:'all', offline:false, loading:false,
       matches:[], selectedMatch:null, dataMode:'loading', updatedAt:null, providerName:'TheSportsDB',
       professionalBackend: localStorage.getItem(BACKEND_STORAGE_KEY) || DEFAULT_PROFESSIONAL_BACKEND,
-      selectedTeams: JSON.parse(localStorage.getItem('goalapp_teams') || '[]'),
-      selectedLeagues: JSON.parse(localStorage.getItem('goalapp_leagues') || '[]'),
+      profile: readStoredJSON('goalapp_profile',DEFAULT_PROFILE),
+      alertPreferences: readStoredJSON('goalapp_alerts',['goals','kickoff','lineups','news','daily']),
+      selectedTeams: readStoredJSON('goalapp_teams',[]),
+      selectedLeagues: readStoredJSON('goalapp_leagues',[]),
       selectedDate: localStorage.getItem('goalapp_selected_date') || dateKey(new Date()),
       showOtherCompetitions:false,
       onboardingStep:0
@@ -645,31 +690,47 @@ body{padding-top:0}
       }finally{state.loading=false;$('#refreshRealData')?.classList.remove('loading');renderAllMatchData();hydrateBackendUI()}
     }
 
+    function alertChoiceHTML(option,selected){return `<button class="preference-choice ${selected?'selected':''}" data-alert-choice="${option.id}"><span class="pref-icon">${option.icon}</span><span><strong>${escapeHTML(option.name)}</strong><small>${escapeHTML(option.description)}</small></span><span class="switch"></span></button>`}
+    function renderAlertChoices(){const html=ALERT_OPTIONS.map(option=>alertChoiceHTML(option,state.alertPreferences.includes(option.id))).join('');const onboarding=$('#onboardingAlertChoices');const edit=$('#editAlertChoices');if(onboarding)onboarding.innerHTML=html;if(edit)edit.innerHTML=html}
     function renderChoices(){
-      $('#teamChoices').innerHTML=TEAM_CATALOG.map(t=>`<button class="choice ${state.selectedTeams.includes(t.id)?'selected':''}" data-team-choice="${t.id}"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><strong>${escapeHTML(t.name)}</strong></button>`).join('');
-      $('#leagueChoices').innerHTML=LEAGUES.map(l=>`<button class="choice league-choice ${state.selectedLeagues.includes(l.id)?'selected':''}" data-league-choice="${l.id}"><strong>${escapeHTML(l.name)}</strong><span>${escapeHTML(l.region)}</span></button>`).join('');
+      const teamHTML=TEAM_CATALOG.map(t=>`<button class="choice ${state.selectedTeams.includes(t.id)?'selected':''}" data-team-choice="${t.id}"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><strong>${escapeHTML(t.name)}</strong></button>`).join('');
+      const leagueHTML=LEAGUES.map(l=>`<button class="choice league-choice ${state.selectedLeagues.includes(l.id)?'selected':''}" data-league-choice="${l.id}"><strong>${escapeHTML(l.name)}</strong><span>${escapeHTML(l.region)}</span></button>`).join('');
+      if($('#teamChoices'))$('#teamChoices').innerHTML=teamHTML;if($('#editTeamChoices'))$('#editTeamChoices').innerHTML=teamHTML;
+      if($('#leagueChoices'))$('#leagueChoices').innerHTML=leagueHTML;if($('#editLeagueChoices'))$('#editLeagueChoices').innerHTML=leagueHTML;
+      renderAlertChoices();
     }
     function updateStep(){
       $$('.step').forEach(s=>s.classList.toggle('active',+s.dataset.step===state.onboardingStep));
       $$('.step-indicator span').forEach((s,i)=>s.classList.toggle('active',i<=state.onboardingStep));
-      $('#onboardingNext').textContent=state.onboardingStep===2?'Crear mi GoalApp':'Continuar';
-      $('#onboardingMessage').textContent=state.onboardingStep===1?`${state.selectedTeams.length} equipos seleccionados`:state.onboardingStep===2?`${state.selectedLeagues.length} ligas seleccionadas`:'';
+      $('#onboardingNext').textContent=state.onboardingStep===4?'Crear mi GoalApp':'Continuar';
+      const messages=['',state.profile?.name?`Hola, ${state.profile.name}`:'Completa tu nombre',`${state.selectedTeams.length} equipos seleccionados`,`${state.selectedLeagues.length} ligas seleccionadas`,`${state.alertPreferences.length} alertas activas`];
+      $('#onboardingMessage').textContent=messages[state.onboardingStep]||'';
     }
-    function openOnboarding(){state.onboardingStep=0;renderChoices();updateStep();$('#onboarding').hidden=false}
-    function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();showToast('Tu GoalApp personalizada está lista')}
+    function hydrateOnboardingProfile(){if($('#onboardingName'))$('#onboardingName').value=state.profile?.name||'';if($('#onboardingCountry'))$('#onboardingCountry').value=state.profile?.country||'El Salvador';if($('#onboardingLanguage'))$('#onboardingLanguage').value=state.profile?.language||'Español'}
+    function openOnboarding(){state.onboardingStep=0;hydrateOnboardingProfile();renderChoices();updateStep();$('#onboarding').hidden=false}
+    function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();renderAllMatchData();showToast('Tu GoalApp personalizada está lista')}
 
     function hydratePersonalization(){
+      const profile=state.profile||DEFAULT_PROFILE;
       const selected=TEAM_CATALOG.filter(t=>state.selectedTeams.includes(t.id));
       const names=selected.slice(0,2).map(t=>t.name);
-      $('#homeSubtitle').textContent=selected.length?`Noticias, partidos y alertas de ${names.join(' y ')}.`:'Aquí tienes lo más importante para ti.';
-      const actual=state.matches.filter(m=>m.isToday);
-      const items=[];
-      if(actual[0])items.push(`${actual[0].homeName} vs ${actual[0].awayName}: ${actual[0].score}.`);
-      if(actual[1])items.push(`${actual[1].homeName} vs ${actual[1].awayName}: ${actual[1].score}.`);
-      if(!actual.length&&state.matches[0])items.push(`Próximo destacado: ${state.matches[0].homeName} vs ${state.matches[0].awayName}.`);
-      items.push(`${state.matches.length||0} partidos cargados desde la fuente de datos.`,'GoalAI priorizará tus equipos favoritos.');
+      const hour=new Date().getHours();const salutation=hour<12?'Buenos días':hour<19?'Buenas tardes':'Buenas noches';
+      $('#greeting').textContent=`${salutation}, ${profile.name||'Jony'}`;
+      $('#homeSubtitle').textContent=selected.length?`Noticias, partidos y alertas de ${names.join(' y ')}.`:'Elige equipos para personalizar esta pantalla.';
+      const actual=state.matches.filter(m=>m.isToday);const items=[];
+      const selectedMatches=[...state.matches].filter(isSelectedTeamMatch).sort(compareByRelevance);
+      if(selectedMatches[0])items.push(`${selectedMatches[0].homeName} vs ${selectedMatches[0].awayName}: ${selectedMatches[0].statusText}.`);
+      else if(actual[0])items.push(`${actual[0].homeName} vs ${actual[0].awayName}: ${actual[0].score}.`);
+      if(selectedMatches[1])items.push(`${selectedMatches[1].homeName} vs ${selectedMatches[1].awayName}: ${selectedMatches[1].statusText}.`);
+      items.push(`${state.matches.length||0} partidos disponibles para la fecha seleccionada.`);
+      if(state.alertPreferences.includes('daily'))items.push('Tu Daily Brief está activado.');
       $('#briefList').innerHTML=items.map(x=>`<li>${escapeHTML(x)}</li>`).join('');
-      $('#favoriteCount').textContent=`${state.selectedTeams.length} ›`; $('#leagueCount').textContent=`${state.selectedLeagues.length} ›`;
+      const initial=(profile.name||'J').trim().charAt(0).toUpperCase()||'J';
+      $('#topAvatar').textContent=initial;$('#profileAvatar').textContent=initial;$('#profileName').textContent=profile.name||'Jony';
+      $('#profileHandle').textContent=`@${normalizeName(profile.name||'jony')||'jony'}futbol`;$('#profileCountry').textContent=profile.country||'El Salvador';$('#profileLanguage').textContent=profile.language||'Español';
+      $('#profileSettingsStatus').textContent=`${profile.country||'El Salvador'} ›`;
+      $('#favoriteCount').textContent=`${state.selectedTeams.length} ›`;$('#leagueCount').textContent=`${state.selectedLeagues.length} ›`;$('#alertCount').textContent=`${state.alertPreferences.length} activas ›`;
+      $('#summaryTeams').textContent=state.selectedTeams.length;$('#summaryLeagues').textContent=state.selectedLeagues.length;$('#summaryAlerts').textContent=state.alertPreferences.length;
       $('#clubList').innerHTML=TEAM_CATALOG.map(t=>`<article class="club-card"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><div><h3>${escapeHTML(t.name)}</h3><p>${escapeHTML(t.country)}</p><small>${state.selectedTeams.includes(t.id)?'Incluido en tu experiencia':'Disponible para seguir'}</small></div><button class="follow ${state.selectedTeams.includes(t.id)?'on':''}" data-follow="${t.id}">${state.selectedTeams.includes(t.id)?'Siguiendo':'Seguir'}</button></article>`).join('');
     }
 
@@ -822,6 +883,9 @@ body{padding-top:0}
       }catch(error){console.warn(error);renderNoDetail($('#matchEvents'),'No se pudieron cargar los detalles','Comprueba tu conexión y vuelve a intentarlo.');renderNoDetail($('#matchStats'),'No se pudieron cargar las estadísticas','Comprueba tu conexión y vuelve a intentarlo.');}
     }
 
+    const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
+    function openPreferenceModal(id){preferenceModals.forEach(name=>$('#'+name)?.classList.toggle('open',name===id));if(id==='profileModal'){const profile=state.profile||DEFAULT_PROFILE;$('#editProfileName').value=profile.name||'';$('#editProfileCountry').value=profile.country||'El Salvador';$('#editProfileLanguage').value=profile.language||'Español'}renderChoices()}
+    function closePreferenceModals(){preferenceModals.forEach(name=>$('#'+name)?.classList.remove('open'))}
     const modal=$('#reportModal'); function openModal(){modal.classList.add('open')} function closeModal(){modal.classList.remove('open')}
     const backendModal=$('#backendModal');
     function openBackendModal(){
@@ -862,6 +926,22 @@ body{padding-top:0}
       const lc=e.target.closest('[data-league-choice]');if(lc){const id=lc.dataset.leagueChoice;state.selectedLeagues=state.selectedLeagues.includes(id)?state.selectedLeagues.filter(x=>x!==id):[...state.selectedLeagues,id];renderChoices();updateStep()}
     });
 
+    document.addEventListener('click',e=>{
+      if(e.target.closest('[data-edit-profile]'))openPreferenceModal('profileModal');
+      if(e.target.closest('[data-edit-teams]'))openPreferenceModal('teamsModal');
+      if(e.target.closest('[data-edit-leagues]'))openPreferenceModal('leaguesModal');
+      if(e.target.closest('[data-edit-alerts]'))openPreferenceModal('alertsModal');
+      if(e.target.closest('[data-close-preferences]'))closePreferenceModals();
+      if(preferenceModals.some(id=>e.target===$('#'+id)))closePreferenceModals();
+      const alertChoice=e.target.closest('[data-alert-choice]');
+      if(alertChoice){const id=alertChoice.dataset.alertChoice;state.alertPreferences=state.alertPreferences.includes(id)?state.alertPreferences.filter(x=>x!==id):[...state.alertPreferences,id];localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));renderAlertChoices();hydratePersonalization();updateStep();showToast(state.alertPreferences.includes(id)?'Alerta activada':'Alerta desactivada')}
+      const teamChoice=e.target.closest('[data-team-choice]');
+      if(teamChoice){localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));hydratePersonalization();renderAllMatchData()}
+      const leagueChoice=e.target.closest('[data-league-choice]');
+      if(leagueChoice){localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));hydratePersonalization();renderAllMatchData()}
+    });
+    $('#saveProfilePreferences').addEventListener('click',()=>{const name=$('#editProfileName').value.trim();if(!name){showToast('Escribe tu nombre');return}state.profile={name,country:$('#editProfileCountry').value,language:$('#editProfileLanguage').value};localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));hydratePersonalization();closePreferenceModals();showToast('Perfil actualizado')});
+
     $('#refreshRealData').addEventListener('click',()=>fetchRealMatches(true));
     $('#testBackend').addEventListener('click',testProfessionalBackend);
     $('#saveBackend').addEventListener('click',async()=>{
@@ -875,17 +955,19 @@ body{padding-top:0}
       localStorage.removeItem(CACHE_KEY);
       hydrateBackendUI();closeBackendModal();showToast(candidate?'Fuente profesional conectada':'Fuente gratuita restaurada');fetchRealMatches(true);
     });
-    $('#onboardingNext').addEventListener('click',()=>{if(state.onboardingStep===0){state.onboardingStep=1}else if(state.onboardingStep===1){if(state.selectedTeams.length<2){showToast('Selecciona al menos 2 equipos');return}state.onboardingStep=2}else{if(state.selectedLeagues.length<2){showToast('Selecciona al menos 2 ligas');return}finishOnboarding();return}updateStep()});
+    $('#onboardingNext').addEventListener('click',()=>{if(state.onboardingStep===0){state.onboardingStep=1}else if(state.onboardingStep===1){const name=$('#onboardingName').value.trim();if(!name){showToast('Escribe tu nombre');return}state.profile={name,country:$('#onboardingCountry').value,language:$('#onboardingLanguage').value};state.onboardingStep=2}else if(state.onboardingStep===2){if(state.selectedTeams.length<2){showToast('Selecciona al menos 2 equipos');return}state.onboardingStep=3}else if(state.onboardingStep===3){if(state.selectedLeagues.length<2){showToast('Selecciona al menos 2 ligas');return}state.onboardingStep=4}else{finishOnboarding();return}updateStep()});
     $('#toggleOffline').addEventListener('click',()=>{state.offline=!state.offline;$('#offlineLabel').textContent=state.offline?'Sin conexión ›':'En línea ›';fetchRealMatches(false);showToast(state.offline?'Modo sin conexión activado':'Conexión restablecida')});
-    $('#resetApp').addEventListener('click',()=>{localStorage.removeItem('goalapp_onboarded');state.selectedTeams=[];state.selectedLeagues=[];openOnboarding()});
+    $('#resetApp').addEventListener('click',()=>{['goalapp_onboarded','goalapp_profile','goalapp_alerts','goalapp_teams','goalapp_leagues'].forEach(key=>localStorage.removeItem(key));state.profile={...DEFAULT_PROFILE};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=[];state.selectedLeagues=[];hydratePersonalization();openOnboarding()});
     $('#sendReport').addEventListener('click',()=>{const title=$('#reportTitle').value.trim(),text=$('#reportText').value.trim();if(!title||!text){showToast('Completa título y descripción');return}const reports=JSON.parse(localStorage.getItem('goalapp_reports')||'[]');reports.push({title,text,date:new Date().toISOString()});localStorage.setItem('goalapp_reports',JSON.stringify(reports));$('#reportTitle').value='';$('#reportText').value='';closeModal();showToast('Reporte guardado en este dispositivo')});
     window.addEventListener('online',()=>{state.offline=false;$('#offlineLabel').textContent='En línea ›';fetchRealMatches(true)});
     window.addEventListener('offline',()=>{state.offline=true;$('#offlineLabel').textContent='Sin conexión ›';fetchRealMatches(false)});
 
+    ['onboardingName','onboardingCountry','onboardingLanguage'].forEach(id=>$('#'+id)?.addEventListener('input',()=>{state.profile={name:$('#onboardingName').value.trim(),country:$('#onboardingCountry').value,language:$('#onboardingLanguage').value};updateStep()}));
+
     const preview=new URLSearchParams(location.search).get('preview');
     window.addEventListener('error',()=>{const splash=document.getElementById('splash');if(splash)splash.classList.add('done')});
     setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
-    if(preview){state.selectedTeams=['real','liverpool','barca'];state.selectedLeagues=['laliga','premier','champions']}
+    if(preview){state.profile={name:'Jony',country:'El Salvador',language:'Español'};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=['real','liverpool','barca','salvador'];state.selectedLeagues=['laliga','premier','champions','elsalvador']}
     if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
     hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();fetchRealMatches(true);
   </script>
