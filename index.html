@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GoalApp" />
-  <title>GoalApp MATCH-1</title>
+  <title>GoalApp DATA-3 + CONTENT-1</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -470,9 +470,17 @@ body{padding-top:0}
         <article class="hero" id="homeHero"><img class="hero-bg" id="heroBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="competition" id="heroCompetition">Conectando con datos reales…</div><div class="scoreboard"><div class="team"><img id="heroHomeLogo" src="" alt=""><span class="team-name" id="heroHomeName">Local</span></div><div class="score"><strong id="heroScore">—</strong><b id="heroStatus">Cargando</b><small id="heroDataLabel">DATOS REALES</small></div><div class="team"><img id="heroAwayLogo" src="" alt=""><span class="team-name" id="heroAwayName">Visitante</span></div></div><button class="primary" id="heroMatchButton" disabled>Abriendo calendario…</button><div class="home-data-note" id="heroUpdatedAt">Fuente: TheSportsDB</div></article>
         <div class="section-head"><div><h2>Partidos reales</h2><span class="live-dot"></span></div><button class="link-btn" data-go="live">Ver todo</button></div>
         <div class="horizontal" id="homeMatches"><div class="loading-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div></div></div>
-        <div class="section-head"><div><h2>Para ti</h2><span class="eyebrow">GoalAI</span></div><button class="link-btn" data-go="feed">Ver todo</button></div>
-        <article class="news"><div class="news-copy"><span class="tag">IMPORTANCIA 98%</span><h3>La estrella vuelve al once titular</h3><p>El cuerpo técnico confirma su regreso para el próximo partido.</p><small>Hace 1 hora</small></div><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=86" alt="Jugador"><button class="save" aria-label="Guardar"><svg class="icon"><use href="#i-club"/></svg></button></article>
-        <article class="news"><div class="news-copy"><span class="tag">IMPORTANCIA 92%</span><h3>Liverpool recupera una pieza clave</h3><p>El atacante completó el entrenamiento con normalidad.</p><small>Hace 2 horas</small></div><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=86" alt="Jugador"><button class="save" aria-label="Guardar"><svg class="icon"><use href="#i-club"/></svg></button></article>
+        <div class="section-head"><div><h2>Marcadores de hoy</h2><span class="eyebrow">EN DIRECTO</span></div><button class="link-btn" data-go="live">Calendario</button></div>
+        <div class="score-summary" id="homeScoreSummary"><div class="score-summary-card"><strong>—</strong><span>En vivo</span></div><div class="score-summary-card"><strong>—</strong><span>Finalizados</span></div><div class="score-summary-card"><strong>—</strong><span>Próximos</span></div></div>
+        <div class="today-results" id="homeTodayResults"><div class="editorial-status">Cargando resultados del día…</div></div>
+        <div class="section-head"><div><h2>Última hora</h2><span class="eyebrow">GoalNews</span></div><button class="link-btn" data-go="feed">Ver todas</button></div>
+        <div class="editorial-grid" id="homeNews"><div class="editorial-status">Conectando con AS, Mundo Deportivo y MARCA…</div></div>
+        <div class="section-head"><div><h2>Tabla rápida</h2><span class="eyebrow">POSICIONES</span></div><button class="link-btn" data-go="feed">Competiciones</button></div>
+        <article class="competition-panel"><select class="competition-select" id="homeCompetitionSelect" aria-label="Seleccionar competición"></select><div id="homeQuickStandings"><div class="editorial-status" style="margin-top:11px">Cargando clasificación…</div></div></article>
+        <div class="section-head"><div><h2>Jugadores en tendencia</h2><span class="eyebrow">DATOS REALES</span></div><button class="link-btn" data-go="clubs">Ver más</button></div>
+        <div class="player-scroll" id="homePlayers"><div class="editorial-status">Cargando goleadores…</div></div>
+        <div class="section-head"><div><h2>Videos destacados</h2><span class="eyebrow">EL CHIRINGUITO</span></div><button class="link-btn" data-go="feed">Ver todos</button></div>
+        <div class="video-scroll" id="homeVideos"><div class="editorial-status">Cargando videos…</div></div>
       </section>
 
       <section class="screen" data-screen="live"><span class="eyebrow">Calendario real</span><h1 class="page-title">Partidos</h1><p class="sub">Tus equipos y las competiciones principales aparecen primero.</p><div class="data-toolbar"><div class="data-source"><strong><span class="source-dot" id="sourceDot"></span><span id="dataSourceLabel">Conectando…</span></strong><small id="dataUpdatedAt">Esperando la primera actualización</small></div><button class="refresh-btn" id="refreshRealData">Actualizar</button></div><div class="date-strip" id="dateStrip" aria-label="Seleccionar fecha"></div><div class="calendar-summary" id="calendarSummary">Cargando calendario…</div><div class="tabs filter-tabs"><button class="tab active" data-filter="all">Todos</button><button class="tab" data-filter="live">En vivo</button><button class="tab" data-filter="upcoming">Próximos</button><button class="tab" data-filter="finished">Finalizados</button></div><div id="matchState"></div><div id="matches"></div></section>
@@ -491,9 +499,18 @@ body{padding-top:0}
         <div class="panel" data-panel="ai"><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>GoalAI · análisis basado en datos</strong></div><p id="matchAIText">Selecciona un partido para generar contexto a partir de sus datos.</p><div id="matchAIFacts"></div></article><article class="card content-card" style="margin-top:11px"><div class="detail-section-title"><h3>Momento del partido</h3><small>Indicador experimental</small></div><div class="chart" id="matchChart"><span style="height:31%"></span><span style="height:58%"></span><span style="height:43%"></span><span style="height:76%"></span><span style="height:49%"></span><span style="height:69%"></span><span style="height:92%"></span><span style="height:64%"></span></div></article></div>
       </section>
 
-      <section class="screen" data-screen="feed"><span class="eyebrow">Personalizado por IA</span><h1 class="page-title">GoalFeed</h1><p class="sub">Contenido ordenado por relevancia, no por ruido.</p><article class="feed-item"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=86"><div class="feed-copy"><span class="tag">IMPORTANCIA 98%</span><h2>Regresa al once titular</h2><p>La noticia más relevante para tus equipos.</p><small>Actualizado recientemente</small></div></article><article class="feed-item"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=86"><div class="feed-copy"><span class="tag">IMPORTANCIA 92%</span><h2>Liverpool recupera una figura</h2><p>El jugador vuelve a estar disponible.</p><small>Actualizado recientemente</small></div></article><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>Pregúntale a GoalAI</strong></div><p>Analiza partidos, jugadores, clasificaciones y estadísticas en segundos.</p><button class="primary" data-toast="GoalAI Chat se activará en PWA-3">Abrir GoalAI</button></article></section>
+      <section class="screen" data-screen="feed">
+        <span class="eyebrow">Información verificada y enlazada</span><h1 class="page-title">GoalNews</h1><p class="sub">Noticias, fichajes, Mundial y videos de tus fuentes favoritas.</p>
+        <div class="news-toolbar"><div class="news-categories" id="newsCategories"><button class="news-chip active" data-news-category="all">Para ti</button><button class="news-chip" data-news-category="latest">Última hora</button><button class="news-chip" data-news-category="worldcup">Mundial</button><button class="news-chip" data-news-category="transfers">Fichajes</button><button class="news-chip" data-news-category="realmadrid">Real Madrid</button><button class="news-chip" data-news-category="barcelona">Barcelona</button><button class="news-chip" data-news-category="videos">Videos</button></div><button class="refresh-btn" id="refreshNews">Actualizar</button></div>
+        <div class="editorial-grid" id="newsFeed"><div class="editorial-status">Cargando titulares actuales…</div></div>
+        <div class="section-head"><div><h2>Competiciones</h2><span class="eyebrow">TABLAS</span></div></div>
+        <article class="competition-panel"><select class="competition-select" id="feedCompetitionSelect"></select><div id="feedStandings"><div class="editorial-status" style="margin-top:11px">Selecciona una competición.</div></div></article>
+        <div class="section-head"><div><h2>Máximos goleadores</h2><span class="eyebrow">JUGADORES</span></div></div>
+        <div class="player-scroll" id="feedPlayers"><div class="editorial-status">Cargando jugadores…</div></div>
+        <p class="section-note">GoalApp muestra titulares, resúmenes breves y enlaces al medio original. El contenido completo permanece en cada fuente.</p>
+      </section>
 
-      <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
+      <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes y jugadores</h1><p class="sub">Gestiona tus equipos y consulta a los futbolistas más destacados.</p><div id="clubList"></div><div class="club-intelligence"><div class="section-head"><div><h2>Jugadores destacados</h2><span class="eyebrow">TOP SCORERS</span></div></div><div class="player-scroll" id="clubPlayers"><div class="editorial-status">Cargando estadísticas…</div></div><div class="section-head"><div><h2>Noticias de tus equipos</h2><span class="eyebrow">PARA TI</span></div><button class="link-btn" data-go="feed">Ver todas</button></div><div class="editorial-grid" id="clubNews"><div class="editorial-status">Cargando noticias personalizadas…</div></div></div></section>
 
       <section class="screen" data-screen="profile"><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
     </main>
@@ -507,6 +524,7 @@ body{padding-top:0}
   <div class="modal" id="teamsModal"><div class="modal-sheet scrollable"><h2>Equipos favoritos</h2><p>Los cambios se guardan automáticamente y reorganizan Home y Live.</p><div class="choice-grid edit-grid" id="editTeamChoices"></div><div class="modal-note">Selecciona al menos dos para una mejor personalización.</div><button class="primary" data-close-preferences>Listo</button></div></div>
   <div class="modal" id="leaguesModal"><div class="modal-sheet scrollable"><h2>Ligas favoritas</h2><p>GoalApp mostrará estas competiciones antes que el resto.</p><div class="choice-grid edit-grid" id="editLeagueChoices"></div><div class="modal-note">Los cambios se guardan automáticamente.</div><button class="primary" data-close-preferences>Listo</button></div></div>
   <div class="modal" id="alertsModal"><div class="modal-sheet scrollable"><h2>Alertas inteligentes</h2><p>Configura qué eventos deberían generar notificaciones en futuras versiones.</p><div class="preference-grid" id="editAlertChoices"></div><div class="modal-note">La configuración queda guardada en este dispositivo.</div><button class="primary" data-close-preferences>Listo</button></div></div>
+  <div class="modal" id="playerModal"><div class="modal-sheet scrollable"><div id="playerDetail"><div class="editorial-status">Cargando jugador…</div></div><button class="primary" data-close-player style="margin-top:14px">Cerrar</button></div></div>
   <div class="toast" id="toast"></div>
 
   <script>
@@ -515,6 +533,17 @@ body{padding-top:0}
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
     const CACHE_KEY = 'goalapp_real_matches_v2';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
+    const EDITORIAL_CACHE_KEY = 'goalapp_editorial_v1';
+    const FEATURED_COMPETITIONS = [
+      {key:'worldcup',name:'Mundial 2026',league:1,season:2026},
+      {key:'champions',name:'Champions League',league:2,season:2025},
+      {key:'premier',name:'Premier League',league:39,season:2025},
+      {key:'laliga',name:'LaLiga',league:140,season:2025},
+      {key:'seriea',name:'Serie A',league:135,season:2025},
+      {key:'bundesliga',name:'Bundesliga',league:78,season:2025},
+      {key:'ligue1',name:'Ligue 1',league:61,season:2025},
+      {key:'mls',name:'MLS',league:253,season:2026}
+    ];
 
     const TEAM_CATALOG = [
       {id:'real',name:'Real Madrid',country:'España',logo:'https://media.api-sports.io/football/teams/541.png'},
@@ -555,7 +584,9 @@ body{padding-top:0}
       selectedDate: localStorage.getItem('goalapp_selected_date') || dateKey(new Date()),
       showOtherCompetitions:false,
       onboardingStep:0, matchDetail:null, matchRefreshTimer:null, matchCountdownTimer:null, listRefreshTimer:null, matchRefreshAfter:0,
-      matchLazy:{standings:false,h2h:false}
+      matchLazy:{standings:false,h2h:false},
+      todayMatches:[], news:[], videos:[], newsCategory:'all', editorialUpdatedAt:null,
+      competitionKey:'worldcup', standingsData:null, topPlayers:[], editorialLoading:false
     };
 
     const $ = (q,root=document)=>root.querySelector(q);
@@ -571,6 +602,9 @@ body{padding-top:0}
     function formatDate(date){return new Intl.DateTimeFormat('es-SV',{weekday:'short',day:'numeric',month:'short'}).format(date)}
     function formatFullDate(date){return new Intl.DateTimeFormat('es-SV',{weekday:'long',day:'numeric',month:'long',hour:'numeric',minute:'2-digit'}).format(date)}
     function formatUpdated(date){return new Intl.DateTimeFormat('es-SV',{hour:'numeric',minute:'2-digit',day:'numeric',month:'short'}).format(date)}
+    function relativeTime(value){const date=new Date(value||Date.now());const seconds=Math.max(1,Math.round((Date.now()-date.getTime())/1000));if(seconds<60)return'Hace instantes';const minutes=Math.round(seconds/60);if(minutes<60)return`Hace ${minutes} min`;const hours=Math.round(minutes/60);if(hours<24)return`Hace ${hours} h`;const days=Math.round(hours/24);return`Hace ${days} d`}
+    function currentCompetition(){return FEATURED_COMPETITIONS.find(item=>item.key===state.competitionKey)||FEATURED_COMPETITIONS[0]}
+    function populateCompetitionSelects(){const html=FEATURED_COMPETITIONS.map(item=>`<option value="${item.key}" ${item.key===state.competitionKey?'selected':''}>${escapeHTML(item.name)}</option>`).join('');['homeCompetitionSelect','feedCompetitionSelect'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=html})}
     function logo(name){return TEAM_CATALOG.find(t=>t.id===name)}
     function cleanBackendUrl(value=''){return String(value).trim().replace(/\/+$/,'')}
     function professionalBase(){return cleanBackendUrl(state.professionalBackend)}
@@ -905,10 +939,121 @@ body{padding-top:0}
       container.innerHTML=html;
     }
 
-    function renderAllMatchData(){renderDateStrip();renderHomeMatches();renderMatches();hydratePersonalization()}
+
+    function renderTodayDashboard(){
+      const list=(state.todayMatches.length?state.todayMatches:state.matches).filter(Boolean).sort(compareByRelevance);
+      const live=list.filter(m=>m.live), finished=list.filter(m=>m.finished), upcoming=list.filter(m=>!m.live&&!m.finished);
+      const summary=$('#homeScoreSummary');
+      if(summary)summary.innerHTML=`<div class="score-summary-card live"><strong>${live.length}</strong><span>En vivo</span></div><div class="score-summary-card"><strong>${finished.length}</strong><span>Finalizados</span></div><div class="score-summary-card"><strong>${upcoming.length}</strong><span>Próximos</span></div>`;
+      const chosen=[...live,...finished.slice(0,4),...upcoming.slice(0,2)].slice(0,5);
+      const target=$('#homeTodayResults');if(!target)return;
+      target.innerHTML=chosen.length?chosen.map(m=>`<button class="result-mini" data-match-id="${escapeHTML(m.id)}"><div class="result-team"><img src="${m.homeLogo}" alt=""><strong>${escapeHTML(m.homeName)}</strong></div><div class="result-score"><strong>${escapeHTML(m.score)}</strong><small>${escapeHTML(m.statusText)}</small></div><div class="result-team away"><strong>${escapeHTML(m.awayName)}</strong><img src="${m.awayLogo}" alt=""></div></button>`).join(''):`<div class="editorial-status">No hay partidos disponibles para hoy.</div>`;
+    }
+
+    function editorialCardHTML(item){
+      const image=item.image||'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=75';
+      return `<button class="editorial-card" data-news-link="${escapeHTML(item.link||'')}"><div class="editorial-copy"><span class="source-badge ${item.type==='video'?'video':''}">${escapeHTML(item.source||'GoalNews')}</span><h3>${escapeHTML(item.title||'Noticia')}</h3><p>${escapeHTML(item.description||'Abre la fuente para leer la información completa.')}</p><small>${relativeTime(item.publishedAt)}</small></div><img loading="lazy" src="${image}" alt="" onerror="this.src='https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=70'"></button>`;
+    }
+
+    function renderNewsFeed(){
+      const target=$('#newsFeed');if(!target)return;
+      const items=state.newsCategory==='videos'?state.videos:state.news;
+      target.innerHTML=items.length?items.map(editorialCardHTML).join(''):`<div class="editorial-status">No se encontraron contenidos en esta categoría. Prueba de nuevo en unos minutos.</div>`;
+      const home=$('#homeNews');if(home){const personalized=(state.news||[]).slice(0,3);home.innerHTML=personalized.length?personalized.map(editorialCardHTML).join(''):`<div class="editorial-status">Las noticias aparecerán cuando la fuente responda.</div>`}
+      const club=$('#clubNews');if(club){const selectedNames=selectedTeamNames();const filtered=(state.news||[]).filter(item=>selectedNames.some(name=>normalizeName(item.title+' '+item.description).includes(name))).slice(0,3);const display=filtered.length?filtered:(state.news||[]).slice(0,2);club.innerHTML=display.length?display.map(editorialCardHTML).join(''):`<div class="editorial-status">No hay noticias nuevas de tus equipos.</div>`}
+    }
+
+    function renderVideos(){
+      const target=$('#homeVideos');if(!target)return;
+      target.innerHTML=state.videos.length?state.videos.slice(0,6).map(item=>`<button class="video-card" data-news-link="${escapeHTML(item.link||'')}"><img loading="lazy" src="${item.image||'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=75'}" alt=""><span class="video-play">▶</span><div class="video-copy"><span class="source-badge video">${escapeHTML(item.source||'Video')}</span><h3>${escapeHTML(item.title||'Video destacado')}</h3></div></button>`).join(''):`<div class="editorial-status">Videos no disponibles temporalmente.</div>`;
+    }
+
+    function playerCardHTML(entry){
+      const stat=entry.statistics?.[0]||{};const goals=stat.goals?.total??0;const assists=stat.goals?.assists??0;const appearances=stat.games?.appearences??0;
+      return `<button class="player-card" data-open-player="${entry.id||''}"><img loading="lazy" src="${entry.photo||placeholderLogo(entry.name)}" alt="${escapeHTML(entry.name||'Jugador')}"><div class="player-copy"><h3>${escapeHTML(entry.name||'Jugador')}</h3><p>${escapeHTML(stat.team?.name||entry.nationality||'')}</p><div class="player-numbers"><span><strong>${goals}</strong><small>Goles</small></span><span><strong>${assists}</strong><small>Asist.</small></span><span><strong>${appearances}</strong><small>Partidos</small></span></div></div></button>`;
+    }
+
+    function renderTopPlayersGlobal(){
+      const html=state.topPlayers.length?state.topPlayers.slice(0,8).map(playerCardHTML).join(''):`<div class="editorial-status">Los goleadores no están disponibles para esta competición.</div>`;
+      ['homePlayers','feedPlayers','clubPlayers'].forEach(id=>{const el=$('#'+id);if(el)el.innerHTML=html});
+    }
+
+    function quickStandingsHTML(data){
+      const rows=data?.standings?.[0]||[];
+      if(!rows.length)return'<div class="editorial-status" style="margin-top:11px">La tabla no está disponible para esta competición.</div>';
+      return `<table class="quick-table"><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>DG</th><th>Pts</th></tr></thead><tbody>${rows.slice(0,8).map(row=>`<tr><td>${row.rank}</td><td><span class="quick-team"><img src="${row.team?.logo||placeholderLogo(row.team?.name)}" alt=""><span>${escapeHTML(row.team?.name||'Equipo')}</span></span></td><td>${row.all?.played??'—'}</td><td>${row.goalsDiff??'—'}</td><td><strong>${row.points??'—'}</strong></td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderCompetitionData(){const html=quickStandingsHTML(state.standingsData);if($('#homeQuickStandings'))$('#homeQuickStandings').innerHTML=html;if($('#feedStandings'))$('#feedStandings').innerHTML=html;renderTopPlayersGlobal()}
+
+    async function loadCompetitionData(key=state.competitionKey,force=false){
+      if(!hasProfessionalBackend())return;
+      state.competitionKey=key;populateCompetitionSelects();const competition=currentCompetition();
+      if(force){state.standingsData=null;state.topPlayers=[]}
+      try{
+        const [standingsResult,playersResult]=await Promise.allSettled([
+          fetchJSON(`${professionalBase()}/api/standings?league=${competition.league}&season=${competition.season}`,22000),
+          fetchJSON(`${professionalBase()}/api/topscorers?league=${competition.league}&season=${competition.season}&limit=12`,22000)
+        ]);
+        state.standingsData=standingsResult.status==='fulfilled'?standingsResult.value:null;
+        state.topPlayers=playersResult.status==='fulfilled'?(playersResult.value.players||[]):[];
+      }catch(error){console.warn('Competition data error',error)}
+      renderCompetitionData();
+    }
+
+    async function loadNews(category=state.newsCategory,force=false){
+      if(state.editorialLoading)return;state.editorialLoading=true;state.newsCategory=category;
+      $$('.news-chip').forEach(chip=>chip.classList.toggle('active',chip.dataset.newsCategory===category));
+      if($('#newsFeed'))$('#newsFeed').innerHTML='<div class="editorial-status">Actualizando titulares…</div>';
+      try{
+        if(category==='videos'){
+          const data=await fetchJSON(`${professionalBase()}/api/videos?limit=20`,22000);state.videos=data.videos||[];
+        }else{
+          const apiCategory=category==='latest'?'all':category;
+          const data=await fetchJSON(`${professionalBase()}/api/news?category=${encodeURIComponent(apiCategory)}&limit=30`,22000);state.news=data.news||[];
+        }
+        state.editorialUpdatedAt=new Date();
+      }catch(error){console.warn('GoalNews error',error);showToast('Una fuente editorial no respondió')}
+      finally{state.editorialLoading=false;renderNewsFeed();renderVideos()}
+    }
+
+    async function fetchTodayDashboard(){
+      if(!hasProfessionalBackend())return;
+      try{
+        const today=dateKey(new Date());const [todayResult,liveResult]=await Promise.allSettled([
+          fetchJSON(`${professionalBase()}/api/matches/today?timezone=America%2FEl_Salvador`,30000),
+          fetchJSON(`${professionalBase()}/api/matches/live?timezone=America%2FEl_Salvador`,20000)
+        ]);
+        const rows=[];if(todayResult.status==='fulfilled')rows.push(...(todayResult.value.matches||[]));if(liveResult.status==='fulfilled')rows.push(...(liveResult.value.matches||[]));
+        state.todayMatches=[...new Map(rows.map(item=>[String(item.id),item])).values()].filter(item=>dateKey(new Date(item.date||0))===today).map(normalizeProfessionalMatch).sort(compareByRelevance);
+      }catch(error){console.warn('Today dashboard error',error);state.todayMatches=[]}
+      renderTodayDashboard();
+    }
+
+    async function loadEditorialDashboard(force=false){
+      populateCompetitionSelects();
+      await Promise.allSettled([fetchTodayDashboard(),loadNews('all',force),loadVideosOnly(),loadCompetitionData(state.competitionKey,force)]);
+      renderTodayDashboard();renderNewsFeed();renderVideos();renderCompetitionData();
+    }
+
+    async function loadVideosOnly(){try{const data=await fetchJSON(`${professionalBase()}/api/videos?limit=12`,22000);state.videos=data.videos||[]}catch(error){console.warn('Videos error',error)}renderVideos()}
+
+    async function openPlayer(playerId){
+      if(!playerId)return;const modal=$('#playerModal');modal.classList.add('open');$('#playerDetail').innerHTML='<div class="editorial-status">Cargando datos del jugador…</div>';
+      const cached=state.topPlayers.find(player=>String(player.id)===String(playerId));const competition=currentCompetition();
+      try{const data=await fetchJSON(`${professionalBase()}/api/player/${encodeURIComponent(playerId)}?season=${competition.season}`,22000);renderPlayerDetail(data.player||cached)}catch(error){renderPlayerDetail(cached,error.message)}
+    }
+
+    function renderPlayerDetail(player,error=''){
+      if(!player){$('#playerDetail').innerHTML=`<div class="editorial-status">No se pudo cargar el jugador. ${escapeHTML(error)}</div>`;return}
+      const stat=player.statistics?.[0]||{};const games=stat.games||{},goals=stat.goals||{},cards=stat.cards||{},passes=stat.passes||{};
+      $('#playerDetail').innerHTML=`<div class="player-modal-head"><img src="${player.photo||placeholderLogo(player.name)}" alt=""><div><h2>${escapeHTML(player.name||'Jugador')}</h2><p>${escapeHTML(stat.team?.name||player.nationality||'')} · ${escapeHTML(games.position||'Posición no disponible')}</p><span class="source-badge">Datos API-Football</span></div></div><div class="player-stat-grid"><div><strong>${goals.total??0}</strong><span>Goles</span></div><div><strong>${goals.assists??0}</strong><span>Asistencias</span></div><div><strong>${games.appearences??0}</strong><span>Partidos</span></div><div><strong>${games.minutes??0}</strong><span>Minutos</span></div><div><strong>${passes.key??0}</strong><span>Pases clave</span></div><div><strong>${(cards.yellow??0)+(cards.red??0)}</strong><span>Tarjetas</span></div></div>${error?`<p class="section-note">Se muestran datos guardados porque la consulta detallada falló: ${escapeHTML(error)}</p>`:''}`;
+    }
+
+    function renderAllMatchData(){renderDateStrip();renderHomeMatches();renderMatches();renderTodayDashboard();hydratePersonalization()}
 
     function showScreen(name){
-      const apply=()=>{const leavingMatch=state.currentScreen==='match'&&name!=='match';if(leavingMatch)clearMatchTimers();$$('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));state.previousScreen=state.currentScreen;state.currentScreen=name;window.scrollTo({top:0,behavior:'smooth'});if(name==='live'&&!state.matches.length)fetchRealMatches()};
+      const apply=()=>{const leavingMatch=state.currentScreen==='match'&&name!=='match';if(leavingMatch)clearMatchTimers();$$('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));state.previousScreen=state.currentScreen;state.currentScreen=name;window.scrollTo({top:0,behavior:'smooth'});if(name==='live'&&!state.matches.length)fetchRealMatches();if((name==='feed'||name==='clubs')&&!state.news.length)loadEditorialDashboard()};
       document.startViewTransition?document.startViewTransition(apply):apply();
     }
 
@@ -1049,7 +1194,7 @@ body{padding-top:0}
         $('#matchStats').innerHTML='';renderStats({statistics:detail.statistics||[]});renderTopPlayers(detail.players||[]);
         renderLineups(detail.lineups||[],detail.players||[]);renderAIAuto(match,{statistics:detail.statistics||[]},detail.events||[]);
         const chips=[['Eventos',availability.events],['Stats',availability.statistics],['Alineaciones',availability.lineups],['Jugadores',availability.players]];
-        const holder=$('#matchAIFacts');$('#availabilityRow')?.remove();holder.insertAdjacentHTML('beforebegin',`<div class="availability-row" id="availabilityRow">${chips.map(([name,on])=>`<span class="availability-chip ${on?'on':''}">${name}</span>`).join('')}</div>`);
+        const holder=$('#matchAIFacts');holder.insertAdjacentHTML('beforebegin',`<div class="availability-row" id="availabilityRow">${chips.map(([name,on])=>`<span class="availability-chip ${on?'on':''}">${name}</span>`).join('')}</div>`);$('#availabilityRow')?.previousElementSibling?.id==='availabilityRow'&&$('#availabilityRow').previousElementSibling.remove();
         startMatchRefresh(Number(detail.refreshAfter)||35);
         if(!automatic)showToast('Match Center actualizado');
       }catch(error){$('#matchLastUpdated').textContent=`Error: ${error.message}`;if(!automatic)showToast('No se pudo actualizar el partido');startMatchRefresh(60)}finally{$('#refreshMatch').classList.remove('loading')}
@@ -1093,7 +1238,11 @@ body{padding-top:0}
     }
 
     document.addEventListener('click',e=>{
-      const go=e.target.closest('[data-go]'),match=e.target.closest('[data-match-id]'),back=e.target.closest('[data-back]'),filter=e.target.closest('[data-filter]'),mtab=e.target.closest('[data-mtab]'),save=e.target.closest('.save'),follow=e.target.closest('[data-follow]'),toastBtn=e.target.closest('[data-toast]'),dateButton=e.target.closest('[data-date-key]');
+      const go=e.target.closest('[data-go]'),match=e.target.closest('[data-match-id]'),back=e.target.closest('[data-back]'),filter=e.target.closest('[data-filter]'),mtab=e.target.closest('[data-mtab]'),save=e.target.closest('.save'),follow=e.target.closest('[data-follow]'),toastBtn=e.target.closest('[data-toast]'),dateButton=e.target.closest('[data-date-key]'),newsLink=e.target.closest('[data-news-link]'),newsCategory=e.target.closest('[data-news-category]'),playerButton=e.target.closest('[data-open-player]');
+      if(newsLink&&newsLink.dataset.newsLink)window.open(newsLink.dataset.newsLink,'_blank','noopener,noreferrer');
+      if(newsCategory)loadNews(newsCategory.dataset.newsCategory,true);
+      if(playerButton)openPlayer(playerButton.dataset.openPlayer);
+      if(e.target.closest('[data-close-player]'))$('#playerModal').classList.remove('open');if(e.target===$('#playerModal'))$('#playerModal').classList.remove('open');
       if(go)showScreen(go.dataset.go);if(match)openMatch(match.dataset.matchId);if(back)showScreen(state.previousScreen||'home');
       if(dateButton){state.selectedDate=dateButton.dataset.dateKey;state.showOtherCompetitions=false;localStorage.setItem('goalapp_selected_date',state.selectedDate);state.matches=[];renderDateStrip();fetchRealMatches(true)}
       if(filter){state.filter=filter.dataset.filter;$$('[data-filter]').forEach(b=>b.classList.toggle('active',b===filter));renderMatches()}
@@ -1142,6 +1291,8 @@ body{padding-top:0}
       localStorage.removeItem(CACHE_KEY);
       hydrateBackendUI();closeBackendModal();showToast(candidate?'Fuente profesional conectada':'Fuente gratuita restaurada');fetchRealMatches(true);
     });
+    $('#refreshNews')?.addEventListener('click',()=>loadNews(state.newsCategory,true));
+    ['homeCompetitionSelect','feedCompetitionSelect'].forEach(id=>$('#'+id)?.addEventListener('change',event=>loadCompetitionData(event.target.value,true)));
     $('#onboardingNext').addEventListener('click',()=>{if(state.onboardingStep===0){state.onboardingStep=1}else if(state.onboardingStep===1){const name=$('#onboardingName').value.trim();if(!name){showToast('Escribe tu nombre');return}state.profile={name,country:$('#onboardingCountry').value,language:$('#onboardingLanguage').value};state.onboardingStep=2}else if(state.onboardingStep===2){if(state.selectedTeams.length<2){showToast('Selecciona al menos 2 equipos');return}state.onboardingStep=3}else if(state.onboardingStep===3){if(state.selectedLeagues.length<2){showToast('Selecciona al menos 2 ligas');return}state.onboardingStep=4}else{finishOnboarding();return}updateStep()});
     $('#toggleOffline').addEventListener('click',()=>{state.offline=!state.offline;$('#offlineLabel').textContent=state.offline?'Sin conexión ›':'En línea ›';fetchRealMatches(false);showToast(state.offline?'Modo sin conexión activado':'Conexión restablecida')});
     $('#resetApp').addEventListener('click',()=>{['goalapp_onboarded','goalapp_profile','goalapp_alerts','goalapp_teams','goalapp_leagues'].forEach(key=>localStorage.removeItem(key));state.profile={...DEFAULT_PROFILE};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=[];state.selectedLeagues=[];hydratePersonalization();openOnboarding()});
@@ -1157,7 +1308,7 @@ body{padding-top:0}
     setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
     if(preview){state.profile={name:'Jony',country:'El Salvador',language:'Español'};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=['real','liverpool','barca','salvador'];state.selectedLeagues=['laliga','premier','champions','elsalvador']}
     if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
-    hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();fetchRealMatches(true);
+    hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();populateCompetitionSelects();fetchRealMatches(true);loadEditorialDashboard(true);
   </script>
 </body>
 </html>
