@@ -292,7 +292,11 @@
     .detail-loading { display:grid; gap:9px; }
     .detail-loading .skeleton { height:45px; }
 
-  </style>
+  
+/* Corrección iPhone/iPad: respeta la barra de estado y el área segura */
+.topbar,.top{padding-top:max(12px,env(safe-area-inset-top));min-height:calc(70px + env(safe-area-inset-top));height:auto}
+body{padding-top:0}
+</style>
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute"><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol><symbol id="i-club" viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6z"/><path d="M9 12h6M12 9v6"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 2l1.5 2M16 2l-1.5 2M7 9h10M5 13H2M22 13h-3M5 18H2M22 18h-3"/><rect x="6" y="5" width="12" height="16" rx="6"/><path d="M12 9v12"/></symbol></svg>
@@ -348,6 +352,7 @@
 
   <script>
     const LEGACY_API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
+    const DEFAULT_PROFESSIONAL_BACKEND = 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev';
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
     const CACHE_KEY = 'goalapp_real_matches_v1';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
@@ -372,7 +377,7 @@
     const state = {
       currentScreen:'home', previousScreen:'home', filter:'today', offline:false, loading:false,
       matches:[], selectedMatch:null, dataMode:'loading', updatedAt:null, providerName:'TheSportsDB',
-      professionalBackend: localStorage.getItem(BACKEND_STORAGE_KEY) || '',
+      professionalBackend: localStorage.getItem(BACKEND_STORAGE_KEY) || DEFAULT_PROFESSIONAL_BACKEND,
       selectedTeams: JSON.parse(localStorage.getItem('goalapp_teams') || '[]'),
       selectedLeagues: JSON.parse(localStorage.getItem('goalapp_leagues') || '[]'),
       onboardingStep:0
@@ -385,7 +390,7 @@
     function showToast(msg){clearTimeout(toastTimer);toast.textContent=msg;toast.classList.add('on');toastTimer=setTimeout(()=>toast.classList.remove('on'),1900)}
     function escapeHTML(value=''){return String(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
     function normalizeName(value=''){return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'')}
-    function dateKey(date){return new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
+    function dateKey(date){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/El_Salvador',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
     function isSameDay(a,b){return dateKey(a)===dateKey(b)}
     function formatTime(date){return new Intl.DateTimeFormat('es-SV',{hour:'numeric',minute:'2-digit'}).format(date)}
     function formatDate(date){return new Intl.DateTimeFormat('es-SV',{weekday:'short',day:'numeric',month:'short'}).format(date)}
@@ -472,9 +477,22 @@
       };
     }
 
-    async function fetchJSON(url,timeout=12000){
-      const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),timeout);
-      try{const response=await fetch(url,{cache:'no-store',signal:controller.signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}finally{clearTimeout(timer)}
+    async function fetchJSON(url,timeout=30000){
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),timeout);
+      try{
+        const separator=url.includes('?')?'&':'?';
+        const response=await fetch(`${url}${separator}_=${Date.now()}`,{cache:'no-store',signal:controller.signal,headers:{accept:'application/json'}});
+        const text=await response.text();
+        let payload;
+        try{payload=text?JSON.parse(text):{}}catch{throw new Error(`Respuesta no JSON (HTTP ${response.status})`)}
+        if(!response.ok)throw new Error(payload?.error||`HTTP ${response.status}`);
+        if(payload?.ok===false)throw new Error(payload?.error||'La fuente respondió con error');
+        return payload;
+      }catch(error){
+        if(error?.name==='AbortError')throw new Error('La fuente tardó demasiado en responder');
+        throw error;
+      }finally{clearTimeout(timer)}
     }
     function extractArray(data,preferred=[]){for(const key of preferred){if(Array.isArray(data?.[key]))return data[key]}for(const value of Object.values(data||{})){if(Array.isArray(value))return value}return[]}
 
@@ -504,11 +522,20 @@
         let matches=[];
         if(hasProfessionalBackend()){
           const backend=professionalBase();
-          const results=await Promise.all(dates.map(date=>fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(date)}&timezone=America%2FEl_Salvador`,15000)));
-          const events=results.flatMap(data=>Array.isArray(data?.matches)?data.matches:[]);
+          const results=await Promise.allSettled(
+            dates.map(date=>fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(date)}&timezone=America%2FEl_Salvador`,30000))
+          );
+          const successful=results.filter(result=>result.status==='fulfilled').map(result=>result.value);
+          const failures=results.filter(result=>result.status==='rejected');
+          if(!successful.length){
+            const reason=failures[0]?.reason?.message||'Ninguna fecha pudo cargarse';
+            throw new Error(reason);
+          }
+          const events=successful.flatMap(data=>Array.isArray(data?.matches)?data.matches:[]);
           const unique=[...new Map(events.filter(Boolean).map(item=>[String(item.id||JSON.stringify(item)),item])).values()];
           matches=unique.map(normalizeProfessionalMatch).sort((a,b)=>new Date(a.date)-new Date(b.date));
           state.providerName='GoalApp Data API';
+          if(failures.length)console.warn('Algunas fechas no cargaron:',failures.map(x=>x.reason?.message));
         }else{
           const results=await Promise.all(dates.map(date=>fetchJSON(`${LEGACY_API_BASE}/eventsday.php?d=${date}&s=Soccer`)));
           const events=results.flatMap(data=>extractArray(data,['events']));
@@ -523,7 +550,7 @@
         console.warn('GoalApp real data error:',error);
         const cacheNow=readCache();
         if(cacheNow){state.matches=cacheNow.matches;state.providerName=cacheNow.provider||state.providerName;state.updatedAt=new Date(cacheNow.savedAt);setDataSource('cache',`No se pudo actualizar. Guardados: ${formatUpdated(state.updatedAt)}`);showToast('Usando la última actualización guardada')}
-        else{state.matches=FALLBACK_GAMES;setDataSource('demo','La fuente real no respondió; se muestran datos de prueba');showToast('No fue posible cargar la fuente de datos')}
+        else{const reason=error?.message||'Error desconocido';state.matches=FALLBACK_GAMES;setDataSource('demo',`Error: ${reason}`);showToast(`No fue posible cargar: ${reason}`)}
       }finally{state.loading=false;$('#refreshRealData')?.classList.remove('loading');renderAllMatchData();hydrateBackendUI()}
     }
 
@@ -728,7 +755,8 @@
     window.addEventListener('error',()=>{const splash=document.getElementById('splash');if(splash)splash.classList.add('done')});
     setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
     if(preview){state.selectedTeams=['real','liverpool','barca'];state.selectedLeagues=['laliga','premier','champions']}
-    hydratePersonalization();renderChoices();updateStep();renderMatches();hydrateBackendUI();fetchRealMatches();
+    if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
+    hydratePersonalization();renderChoices();updateStep();renderMatches();hydrateBackendUI();fetchRealMatches(true);
   </script>
 </body>
 </html>
