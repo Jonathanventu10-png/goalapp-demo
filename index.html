@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GoalApp" />
-  <title>GoalApp DATA-1</title>
+  <title>GoalApp DATA-2</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -292,6 +292,38 @@
     .detail-loading { display:grid; gap:9px; }
     .detail-loading .skeleton { height:45px; }
 
+
+    /* DATA-2: calendario, relevancia y competiciones */
+    .date-strip { display:grid; grid-auto-flow:column; grid-auto-columns:72px; gap:8px; margin:2px -2px 14px; padding:2px 2px 6px; overflow-x:auto; scrollbar-width:none; scroll-snap-type:x proximity; }
+    .date-strip::-webkit-scrollbar { display:none; }
+    .date-chip { scroll-snap-align:center; display:grid; place-items:center; gap:3px; min-height:67px; padding:9px 7px; border:1px solid var(--line); border-radius:16px; background:linear-gradient(145deg,#10171a,#080c0e); color:var(--muted); }
+    .date-chip span { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; }
+    .date-chip strong { color:var(--text); font-size:18px; line-height:1; }
+    .date-chip small { font-size:8px; color:var(--muted); }
+    .date-chip.active { color:#031008; border-color:var(--green); background:linear-gradient(145deg,var(--green-2),var(--green)); box-shadow:0 12px 28px rgba(0,237,104,.2); }
+    .date-chip.active strong,.date-chip.active small { color:#031008; }
+    .filter-tabs { grid-template-columns:repeat(4,1fr); }
+    .filter-tabs .tab { font-size:10px; padding-inline:1px; }
+    .match-section { margin:18px 0 22px; }
+    .match-section-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 2px 10px; }
+    .match-section-title { display:flex; align-items:center; gap:8px; min-width:0; }
+    .match-section-title h3 { margin:0; font-size:14px; }
+    .match-section-title p { margin:2px 0 0; color:var(--muted); font-size:9px; }
+    .match-count { flex:0 0 auto; min-width:24px; height:24px; display:grid; place-items:center; padding:0 7px; border:1px solid var(--line); border-radius:99px; color:var(--muted); background:var(--surface); font-size:9px; font-weight:800; }
+    .priority-mark { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 10px rgba(0,237,104,.5); }
+    .priority-mark.main { background:var(--purple); box-shadow:0 0 10px rgba(155,85,255,.5); }
+    .priority-mark.other { background:var(--muted); box-shadow:none; }
+    .personal-match { border-color:rgba(0,237,104,.48); background:radial-gradient(circle at 0 50%,rgba(0,237,104,.08),transparent 38%),linear-gradient(145deg,#10171a,#080c0e); }
+    .main-match { border-color:rgba(155,85,255,.2); }
+    .competition-country { display:block; margin-top:2px; color:var(--muted); font-size:8px; }
+    .status-live { color:var(--green)!important; }
+    .status-finished { color:#aeb7b2!important; }
+    .status-upcoming { color:var(--blue)!important; }
+    .show-more-card { width:100%; min-height:54px; margin-top:8px; border:1px dashed var(--line-strong); border-radius:16px; background:rgba(11,16,19,.6); color:var(--text); font-size:11px; font-weight:800; }
+    .show-more-card span { color:var(--green); }
+    .calendar-summary { margin:-4px 0 13px; color:var(--muted); font-size:10px; text-align:center; }
+    .empty-priority { padding:14px; border:1px solid var(--line); border-radius:16px; color:var(--muted); background:rgba(11,16,19,.5); font-size:11px; line-height:1.45; }
+
   
 /* Corrección iPhone/iPad: respeta la barra de estado y el área segura */
 .topbar,.top{padding-top:max(12px,env(safe-area-inset-top));min-height:calc(70px + env(safe-area-inset-top));height:auto}
@@ -328,7 +360,7 @@ body{padding-top:0}
         <article class="news"><div class="news-copy"><span class="tag">IMPORTANCIA 92%</span><h3>Liverpool recupera una pieza clave</h3><p>El atacante completó el entrenamiento con normalidad.</p><small>Hace 2 horas</small></div><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=86" alt="Jugador"><button class="save" aria-label="Guardar"><svg class="icon"><use href="#i-club"/></svg></button></article>
       </section>
 
-      <section class="screen" data-screen="live"><span class="eyebrow">Calendario real</span><h1 class="page-title">Partidos</h1><p class="sub">Resultados, horarios y competiciones actualizados desde una fuente externa.</p><div class="data-toolbar"><div class="data-source"><strong><span class="source-dot" id="sourceDot"></span><span id="dataSourceLabel">Conectando…</span></strong><small id="dataUpdatedAt">Esperando la primera actualización</small></div><button class="refresh-btn" id="refreshRealData">Actualizar</button></div><div class="tabs"><button class="tab active" data-filter="today">Hoy</button><button class="tab" data-filter="upcoming">Próximos</button><button class="tab" data-filter="finished">Finalizados</button></div><div id="matchState"></div><div id="matches"></div></section>
+      <section class="screen" data-screen="live"><span class="eyebrow">Calendario real</span><h1 class="page-title">Partidos</h1><p class="sub">Tus equipos y las competiciones principales aparecen primero.</p><div class="data-toolbar"><div class="data-source"><strong><span class="source-dot" id="sourceDot"></span><span id="dataSourceLabel">Conectando…</span></strong><small id="dataUpdatedAt">Esperando la primera actualización</small></div><button class="refresh-btn" id="refreshRealData">Actualizar</button></div><div class="date-strip" id="dateStrip" aria-label="Seleccionar fecha"></div><div class="calendar-summary" id="calendarSummary">Cargando calendario…</div><div class="tabs filter-tabs"><button class="tab active" data-filter="all">Todos</button><button class="tab" data-filter="live">En vivo</button><button class="tab" data-filter="upcoming">Próximos</button><button class="tab" data-filter="finished">Finalizados</button></div><div id="matchState"></div><div id="matches"></div></section>
 
       <section class="screen" data-screen="match"><button class="back" data-back><svg class="icon"><use href="#i-arrow"/></svg>Volver</button><article class="hero match-hero"><img class="hero-bg" id="matchBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86"><div class="competition" id="matchCompetition">Partido</div><div class="scoreboard"><div class="team"><img id="matchHomeLogo" src=""><span class="team-name" id="matchHomeName">Local</span></div><div class="score"><strong id="matchScore">—</strong><b id="matchStatus">—</b><small id="matchDate"></small></div><div class="team"><img id="matchAwayLogo" src=""><span class="team-name" id="matchAwayName">Visitante</span></div></div></article><div class="tabs"><button class="tab active" data-mtab="summary">Resumen</button><button class="tab" data-mtab="stats">Estadísticas</button><button class="tab" data-mtab="ai">GoalAI</button></div>
         <div class="panel active" data-panel="summary"><article class="card content-card" id="matchEvents"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></article></div>
@@ -354,7 +386,7 @@ body{padding-top:0}
     const LEGACY_API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
     const DEFAULT_PROFESSIONAL_BACKEND = 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev';
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
-    const CACHE_KEY = 'goalapp_real_matches_v1';
+    const CACHE_KEY = 'goalapp_real_matches_v2';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
     const TEAM_CATALOG = [
@@ -367,7 +399,7 @@ body{padding-top:0}
       {id:'bayern',name:'Bayern Munich',country:'Alemania',logo:'https://media.api-sports.io/football/teams/157.png'},
       {id:'inter',name:'Inter Milan',country:'Italia',logo:'https://media.api-sports.io/football/teams/505.png'}
     ];
-    const LEAGUES = [{id:'laliga',name:'LaLiga',region:'España'},{id:'premier',name:'Premier League',region:'Inglaterra'},{id:'champions',name:'Champions League',region:'Europa'},{id:'seriea',name:'Serie A',region:'Italia'},{id:'bundesliga',name:'Bundesliga',region:'Alemania'},{id:'ligue1',name:'Ligue 1',region:'Francia'}];
+    const LEAGUES = [{id:'worldcup',name:'Mundial',region:'Internacional'},{id:'champions',name:'Champions League',region:'Europa'},{id:'laliga',name:'LaLiga',region:'España'},{id:'premier',name:'Premier League',region:'Inglaterra'},{id:'seriea',name:'Serie A',region:'Italia'},{id:'bundesliga',name:'Bundesliga',region:'Alemania'},{id:'ligue1',name:'Ligue 1',region:'Francia'},{id:'mls',name:'MLS',region:'Estados Unidos'},{id:'elsalvador',name:'Primera División',region:'El Salvador'}];
     const FALLBACK_GAMES = [
       {id:'demo-1',league:'LaLiga',homeName:'Real Madrid',awayName:'Barcelona',homeLogo:TEAM_CATALOG[0].logo,awayLogo:TEAM_CATALOG[1].logo,score:'2 - 1',statusText:"78'",state:'today',isToday:true,favorite:true,isDemo:true,date:new Date().toISOString()},
       {id:'demo-2',league:'Premier League',homeName:'Liverpool',awayName:'Arsenal',homeLogo:TEAM_CATALOG[2].logo,awayLogo:TEAM_CATALOG[3].logo,score:'1 - 0',statusText:"65'",state:'today',isToday:true,favorite:true,isDemo:true,date:new Date().toISOString()},
@@ -375,11 +407,13 @@ body{padding-top:0}
     ];
 
     const state = {
-      currentScreen:'home', previousScreen:'home', filter:'today', offline:false, loading:false,
+      currentScreen:'home', previousScreen:'home', filter:'all', offline:false, loading:false,
       matches:[], selectedMatch:null, dataMode:'loading', updatedAt:null, providerName:'TheSportsDB',
       professionalBackend: localStorage.getItem(BACKEND_STORAGE_KEY) || DEFAULT_PROFESSIONAL_BACKEND,
       selectedTeams: JSON.parse(localStorage.getItem('goalapp_teams') || '[]'),
       selectedLeagues: JSON.parse(localStorage.getItem('goalapp_leagues') || '[]'),
+      selectedDate: localStorage.getItem('goalapp_selected_date') || dateKey(new Date()),
+      showOtherCompetitions:false,
       onboardingStep:0
     };
 
@@ -402,6 +436,54 @@ body{padding-top:0}
     function hydrateBackendUI(){
       const status=$('#backendStatus');
       if(status)status.textContent=hasProfessionalBackend()?'Conectada ›':'Configurar ›';
+    }
+
+
+    const LEAGUE_ALIASES = {
+      worldcup:['worldcup','fifaworldcup','mundial'],
+      champions:['uefachampionsleague','championsleague'],
+      laliga:['laliga','primera division spain'],
+      premier:['premierleague','englishpremierleague'],
+      seriea:['seriea'],
+      bundesliga:['bundesliga'],
+      ligue1:['ligue1'],
+      mls:['majorleaguesoccer','mls'],
+      elsalvador:['primeradivisionelsalvador','primeradivision','liga mayor']
+    };
+    const PRIORITY_LEAGUE_IDS = new Set([1,2,39,61,78,135,140,253]);
+    const PRIORITY_LEAGUE_NAMES = ['worldcup','fifaworldcup','uefachampionsleague','championsleague','premierleague','laliga','seriea','bundesliga','ligue1','majorleaguesoccer','mls'];
+
+    function selectedTeamNames(){return TEAM_CATALOG.filter(t=>state.selectedTeams.includes(t.id)).map(t=>normalizeName(t.name))}
+    function isSelectedTeamMatch(match){const selected=selectedTeamNames();return selected.some(name=>name===normalizeName(match.homeName)||name===normalizeName(match.awayName))}
+    function isSelectedLeagueMatch(match){
+      const leagueName=normalizeName(match.league);
+      return state.selectedLeagues.some(id=>(LEAGUE_ALIASES[id]||[]).some(alias=>leagueName.includes(normalizeName(alias))));
+    }
+    function isPriorityCompetition(match){
+      if(PRIORITY_LEAGUE_IDS.has(Number(match.competitionId)))return true;
+      const leagueName=normalizeName(match.league);
+      const country=normalizeName(match.competitionCountry||'');
+      if(PRIORITY_LEAGUE_NAMES.some(alias=>leagueName.includes(alias)))return true;
+      if(country==='elsalvador'&&/primera|liga/.test(leagueName))return true;
+      return false;
+    }
+    function relevanceScore(match){
+      let score=0;
+      if(isSelectedTeamMatch(match))score+=120;
+      if(isSelectedLeagueMatch(match))score+=80;
+      if(isPriorityCompetition(match))score+=45;
+      if(match.live)score+=35;
+      if(!match.finished)score+=8;
+      return score;
+    }
+    function compareByRelevance(a,b){return relevanceScore(b)-relevanceScore(a)||Number(b.live)-Number(a.live)||new Date(a.date)-new Date(b.date)}
+    function dateFromKey(key){const [year,month,day]=key.split('-').map(Number);return new Date(year,month-1,day,12,0,0)}
+    function dateChipLabel(date,offset){if(offset===-1)return'Ayer';if(offset===0)return'Hoy';if(offset===1)return'Mañana';return new Intl.DateTimeFormat('es-SV',{weekday:'short'}).format(date).replace('.','')}
+    function renderDateStrip(){
+      const today=dateFromKey(dateKey(new Date()));
+      const offsets=[-1,0,1,2,3,4,5];
+      $('#dateStrip').innerHTML=offsets.map(offset=>{const date=new Date(today);date.setDate(today.getDate()+offset);const key=dateKey(date);const month=new Intl.DateTimeFormat('es-SV',{month:'short'}).format(date).replace('.','');return `<button class="date-chip ${key===state.selectedDate?'active':''}" data-date-key="${key}"><span>${dateChipLabel(date,offset)}</span><strong>${date.getDate()}</strong><small>${escapeHTML(month)}</small></button>`}).join('');
+      requestAnimationFrame(()=>$('#dateStrip .date-chip.active')?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}));
     }
 
     const knownLogos = new Map(TEAM_CATALOG.flatMap(team=>{
@@ -461,12 +543,15 @@ body{padding-top:0}
       const live=event.state==='live';
       const finished=event.state==='finished';
       const today=isSameDay(date,now);
-      const stateName=finished?'finished':today?'today':'upcoming';
+      const stateName=live?'live':finished?'finished':'upcoming';
       const score=homeScore!==null&&awayScore!==null?`${homeScore} - ${awayScore}`:formatTime(date);
       const homeName=event.homeTeam?.name||'Equipo local', awayName=event.awayTeam?.name||'Equipo visitante';
       return {
         id:String(event.id||crypto.randomUUID()), source:'professional', raw:event,
         league:event.competition?.name||'Competición',
+        competitionId:event.competition?.id||null,
+        competitionCountry:event.competition?.country||'',
+        competitionRound:event.competition?.round||'',
         homeName, awayName,
         homeLogo:resolveLogo(homeName,event.homeTeam?.logo),
         awayLogo:resolveLogo(awayName,event.awayTeam?.logo),
@@ -505,52 +590,58 @@ body{padding-top:0}
       $('#heroDataLabel').textContent=mode==='real'?'DATOS REALES':mode==='cache'?'DATOS GUARDADOS':'DEMOSTRACIÓN';
     }
 
-    function readCache(){
-      try{const cached=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(!cached?.matches?.length)return null;return cached}catch{return null}
+    function readCache(date=state.selectedDate){
+      try{
+        const root=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
+        const cached=root?.byDate?.[date];
+        if(!cached?.matches?.length)return null;
+        return cached;
+      }catch{return null}
     }
-    function saveCache(matches){localStorage.setItem(CACHE_KEY,JSON.stringify({savedAt:Date.now(),matches,provider:state.providerName}))}
+    function saveCache(matches,date=state.selectedDate){
+      let root={byDate:{}};
+      try{root=JSON.parse(localStorage.getItem(CACHE_KEY)||'null')||root}catch{}
+      if(!root.byDate)root.byDate={};
+      root.byDate[date]={savedAt:Date.now(),matches,provider:state.providerName};
+      const keys=Object.keys(root.byDate).sort().slice(-10);
+      root.byDate=Object.fromEntries(keys.map(key=>[key,root.byDate[key]]));
+      localStorage.setItem(CACHE_KEY,JSON.stringify(root));
+    }
 
     async function fetchRealMatches(force=false){
-      if(state.offline){const cache=readCache();state.matches=cache?.matches||FALLBACK_GAMES;state.providerName=cache?.provider||state.providerName;setDataSource(cache?'cache':'demo',cache?`Última actualización: ${formatUpdated(new Date(cache.savedAt))}`:'Sin conexión; se muestran datos de prueba');renderAllMatchData();return}
+      renderDateStrip();
+      if(state.offline){const cache=readCache();state.matches=cache?.matches||[];state.providerName=cache?.provider||state.providerName;setDataSource(cache?'cache':'demo',cache?`Última actualización: ${formatUpdated(new Date(cache.savedAt))}`:'Sin conexión y sin datos guardados para esta fecha');renderAllMatchData();return}
       if(state.loading)return;
       const cached=readCache();
-      if(!force&&cached&&Date.now()-cached.savedAt<CACHE_MAX_AGE){state.matches=cached.matches;state.providerName=cached.provider||state.providerName;state.updatedAt=new Date(cached.savedAt);setDataSource('cache',`Guardados: ${formatUpdated(state.updatedAt)}`);renderAllMatchData()}
+      if(!force&&cached&&Date.now()-cached.savedAt<CACHE_MAX_AGE){state.matches=cached.matches;state.providerName=cached.provider||state.providerName;state.updatedAt=new Date(cached.savedAt);setDataSource('cache',`Guardados: ${formatUpdated(state.updatedAt)}`);renderAllMatchData();return}
       state.loading=true;$('#refreshRealData')?.classList.add('loading');renderMatches();
       try{
-        const base=new Date();
-        const dates=[-1,0,1].map(offset=>{const d=new Date(base);d.setDate(base.getDate()+offset);return dateKey(d)});
         let matches=[];
         if(hasProfessionalBackend()){
           const backend=professionalBase();
-          const results=await Promise.allSettled(
-            dates.map(date=>fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(date)}&timezone=America%2FEl_Salvador`,30000))
-          );
+          const requests=[fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`,30000)];
+          if(state.selectedDate===dateKey(new Date()))requests.push(fetchJSON(`${backend}/api/matches?live=all&timezone=America%2FEl_Salvador`,20000));
+          const results=await Promise.allSettled(requests);
           const successful=results.filter(result=>result.status==='fulfilled').map(result=>result.value);
-          const failures=results.filter(result=>result.status==='rejected');
-          if(!successful.length){
-            const reason=failures[0]?.reason?.message||'Ninguna fecha pudo cargarse';
-            throw new Error(reason);
-          }
-          const events=successful.flatMap(data=>Array.isArray(data?.matches)?data.matches:[]);
+          if(!successful.length)throw new Error(results[0]?.reason?.message||'La fecha no pudo cargarse');
+          const events=successful.flatMap(data=>Array.isArray(data?.matches)?data.matches:[]).filter(item=>dateKey(new Date(item.date||0))===state.selectedDate);
           const unique=[...new Map(events.filter(Boolean).map(item=>[String(item.id||JSON.stringify(item)),item])).values()];
-          matches=unique.map(normalizeProfessionalMatch).sort((a,b)=>new Date(a.date)-new Date(b.date));
+          matches=unique.map(normalizeProfessionalMatch).sort(compareByRelevance);
           state.providerName='GoalApp Data API';
-          if(failures.length)console.warn('Algunas fechas no cargaron:',failures.map(x=>x.reason?.message));
         }else{
-          const results=await Promise.all(dates.map(date=>fetchJSON(`${LEGACY_API_BASE}/eventsday.php?d=${date}&s=Soccer`)));
-          const events=results.flatMap(data=>extractArray(data,['events']));
+          const result=await fetchJSON(`${LEGACY_API_BASE}/eventsday.php?d=${state.selectedDate}&s=Soccer`);
+          const events=extractArray(result,['events']);
           const unique=[...new Map(events.filter(Boolean).map(item=>[String(item.idEvent||JSON.stringify(item)),item])).values()];
-          matches=unique.map(normalizeEvent).sort((a,b)=>new Date(a.date)-new Date(b.date));
+          matches=unique.map(normalizeEvent).sort(compareByRelevance);
           state.providerName='TheSportsDB';
         }
-        if(!matches.length)throw new Error('La fuente no devolvió partidos para estos días');
-        state.matches=matches; state.updatedAt=new Date(); saveCache(matches);
+        state.matches=matches;state.updatedAt=new Date();saveCache(matches);
         setDataSource('real',`Actualizado: ${formatUpdated(state.updatedAt)}`);
       }catch(error){
-        console.warn('GoalApp real data error:',error);
+        console.warn('GoalApp DATA-2 error:',error);
         const cacheNow=readCache();
         if(cacheNow){state.matches=cacheNow.matches;state.providerName=cacheNow.provider||state.providerName;state.updatedAt=new Date(cacheNow.savedAt);setDataSource('cache',`No se pudo actualizar. Guardados: ${formatUpdated(state.updatedAt)}`);showToast('Usando la última actualización guardada')}
-        else{const reason=error?.message||'Error desconocido';state.matches=FALLBACK_GAMES;setDataSource('demo',`Error: ${reason}`);showToast(`No fue posible cargar: ${reason}`)}
+        else{state.matches=[];setDataSource('demo',`Error: ${error?.message||'Error desconocido'}`);showToast('No fue posible cargar esta fecha')}
       }finally{state.loading=false;$('#refreshRealData')?.classList.remove('loading');renderAllMatchData();hydrateBackendUI()}
     }
 
@@ -583,9 +674,16 @@ body{padding-top:0}
     }
 
     function renderHomeMatches(){
-      const matches=state.matches||[];
-      const featured=matches.find(m=>m.live)||matches.find(m=>m.isToday)||matches.find(m=>m.state==='upcoming')||matches[0];
-      if(!featured)return;
+      const matches=[...(state.matches||[])].sort(compareByRelevance);
+      const featured=matches.find(m=>isSelectedTeamMatch(m)&&m.live)||matches.find(m=>m.live)||matches.find(isSelectedTeamMatch)||matches.find(isPriorityCompetition)||matches[0];
+      if(!featured){
+        $('#heroCompetition').textContent='No hay partidos para esta fecha';
+        $('#heroHomeLogo').src=placeholderLogo('GA');$('#heroAwayLogo').src=placeholderLogo('GA');
+        $('#heroHomeName').textContent='GoalApp';$('#heroAwayName').textContent='Calendario';$('#heroScore').textContent='—';$('#heroStatus').textContent='Sin partidos';
+        $('#heroMatchButton').disabled=true;$('#heroMatchButton').textContent='Selecciona otra fecha';
+        $('#homeMatches').innerHTML='<article class="card status-card"><p>Explora otra fecha desde la sección Live.</p></article>';
+        return;
+      }
       $('#heroCompetition').textContent=`${featured.league}${featured.venue?' · '+featured.venue:''}`;
       $('#heroHomeLogo').src=featured.homeLogo;$('#heroHomeLogo').alt=featured.homeName;$('#heroHomeName').textContent=featured.homeName;
       $('#heroAwayLogo').src=featured.awayLogo;$('#heroAwayLogo').alt=featured.awayName;$('#heroAwayName').textContent=featured.awayName;
@@ -594,24 +692,54 @@ body{padding-top:0}
       const button=$('#heroMatchButton');button.disabled=false;button.dataset.matchId=featured.id;button.textContent=featured.finished?'Ver resumen →':featured.live?'Seguir partido →':'Ver partido →';
       $('#heroUpdatedAt').textContent=state.updatedAt?`Fuente: ${state.providerName} · ${formatUpdated(state.updatedAt)}`:`Fuente: ${state.providerName}`;
       const cards=matches.filter(m=>m.id!==featured.id).slice(0,4);
-      $('#homeMatches').innerHTML=cards.length?cards.map(m=>`<button class="mini-match" data-match-id="${escapeHTML(m.id)}"><small>${escapeHTML(m.league)}</small><div class="mini-grid"><img src="${m.homeLogo}" alt="${escapeHTML(m.homeName)}"><strong>${escapeHTML(m.score)}</strong><img src="${m.awayLogo}" alt="${escapeHTML(m.awayName)}"></div><b>${escapeHTML(m.statusText)}</b></button>`).join(''):`<article class="card status-card"><p>No hay otros partidos disponibles.</p></article>`;
+      $('#homeMatches').innerHTML=cards.length?cards.map(m=>`<button class="mini-match" data-match-id="${escapeHTML(m.id)}"><small>${escapeHTML(m.league)}</small><div class="mini-grid"><img src="${m.homeLogo}" alt="${escapeHTML(m.homeName)}" onerror="this.src='${placeholderLogo('FC')}'"><strong>${escapeHTML(m.score)}</strong><img src="${m.awayLogo}" alt="${escapeHTML(m.awayName)}" onerror="this.src='${placeholderLogo('FC')}'"></div><b>${escapeHTML(m.statusText)}</b></button>`).join(''):`<article class="card status-card"><p>No hay otros partidos disponibles.</p></article>`;
     }
 
     function loadingMatches(){return Array.from({length:4},()=>`<div class="loading-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div>`).join('')}
     function filteredMatches(){
-      if(state.filter==='today')return state.matches.filter(m=>m.isToday);
-      if(state.filter==='upcoming')return state.matches.filter(m=>!m.finished&&!m.isToday);
-      return state.matches.filter(m=>m.finished);
+      const matches=state.matches.filter(m=>dateKey(new Date(m.date))===state.selectedDate);
+      if(state.filter==='live')return matches.filter(m=>m.live);
+      if(state.filter==='upcoming')return matches.filter(m=>!m.live&&!m.finished);
+      if(state.filter==='finished')return matches.filter(m=>m.finished);
+      return matches;
+    }
+    function statusClass(match){return match.live?'status-live':match.finished?'status-finished':'status-upcoming'}
+    function matchRowHTML(match,kind='main'){
+      const className=kind==='personal'?'personal-match':kind==='main'?'main-match':'';
+      const fallback=placeholderLogo('FC');
+      return `<button class="match-row ${match.live?'favorite':''} ${className}" data-match-id="${escapeHTML(match.id)}"><div class="side"><img loading="lazy" src="${match.homeLogo}" alt="${escapeHTML(match.homeName)}" onerror="this.onerror=null;this.src='${fallback}'"><div><strong>${escapeHTML(match.homeName)}</strong><small>${escapeHTML(match.league)}</small>${match.competitionCountry?`<span class="competition-country">${escapeHTML(match.competitionCountry)}</span>`:''}</div></div><div class="row-score"><strong>${escapeHTML(match.score)}</strong><b class="${statusClass(match)}">${escapeHTML(match.statusText)}</b></div><div class="side away"><div><strong>${escapeHTML(match.awayName)}</strong><small>${escapeHTML(formatTime(new Date(match.date)))}</small></div><img loading="lazy" src="${match.awayLogo}" alt="${escapeHTML(match.awayName)}" onerror="this.onerror=null;this.src='${fallback}'"></div></button>`;
+    }
+    function sectionHTML(title,subtitle,matches,kind,mark=''){
+      if(!matches.length)return'';
+      return `<section class="match-section"><div class="match-section-head"><div class="match-section-title"><span class="priority-mark ${mark}"></span><div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(subtitle)}</p></div></div><span class="match-count">${matches.length}</span></div>${matches.map(match=>matchRowHTML(match,kind)).join('')}</section>`;
     }
     function renderMatches(){
       const container=$('#matches'),status=$('#matchState');
+      renderDateStrip();
+      const selectedDate=dateFromKey(state.selectedDate);
+      $('#calendarSummary').textContent=`${formatDate(selectedDate)} · ${state.matches.length} partidos encontrados`;
       if(state.loading&&!state.matches.length){status.innerHTML='';container.innerHTML=loadingMatches();return}
-      if(state.offline&&!state.matches.length){container.innerHTML='';status.innerHTML=`<article class="card status-card"><div class="status-icon"><svg class="icon"><use href="#i-live"/></svg></div><h3>Sin conexión</h3><p>No hay datos guardados todavía. Conéctate una vez para almacenar el calendario.</p><button class="secondary" id="retryConnection">Reintentar</button></article>`;return}
-      status.innerHTML=''; const list=filteredMatches();
-      const rows=list.map(m=>`<button class="match-row ${m.live?'favorite':''}" data-match-id="${escapeHTML(m.id)}"><div class="side"><img src="${m.homeLogo}" alt="${escapeHTML(m.homeName)}"><div><strong>${escapeHTML(m.homeName)}</strong><small>${escapeHTML(m.league)}</small></div></div><div class="row-score"><strong>${escapeHTML(m.score)}</strong><b>${escapeHTML(m.statusText)}</b></div><div class="side away"><div><strong>${escapeHTML(m.awayName)}</strong><small>${escapeHTML(formatDate(new Date(m.date)))}</small></div><img src="${m.awayLogo}" alt="${escapeHTML(m.awayName)}"></div></button>`).join('');
-      container.innerHTML=rows||`<article class="card status-card"><h3>No hay partidos en esta vista</h3><p>La fuente gratuita puede devolver pocos encuentros por día. Prueba otro filtro o actualiza.</p><div class="empty-actions"><button class="secondary" data-filter-jump="today">Ver hoy</button><button class="secondary" id="refreshEmpty">Actualizar</button></div></article>`;
+      if(state.offline&&!state.matches.length){container.innerHTML='';status.innerHTML=`<article class="card status-card"><div class="status-icon"><svg class="icon"><use href="#i-live"/></svg></div><h3>Sin conexión</h3><p>No hay datos guardados para esta fecha.</p><button class="secondary" id="retryConnection">Reintentar</button></article>`;return}
+      status.innerHTML='';
+      const list=filteredMatches().sort(compareByRelevance);
+      if(!list.length){container.innerHTML=`<article class="card status-card"><h3>No hay partidos en esta vista</h3><p>Prueba otro filtro, selecciona otra fecha o actualiza.</p><div class="empty-actions"><button class="secondary" data-filter-jump="all">Ver todos</button><button class="secondary" id="refreshEmpty">Actualizar</button></div></article>`;return}
+      const personal=list.filter(match=>isSelectedTeamMatch(match)||isSelectedLeagueMatch(match));
+      const personalIds=new Set(personal.map(match=>match.id));
+      let main=list.filter(match=>!personalIds.has(match.id)&&isPriorityCompetition(match));
+      const mainIds=new Set(main.map(match=>match.id));
+      let others=list.filter(match=>!personalIds.has(match.id)&&!mainIds.has(match.id));
+      if(!personal.length&&!main.length){main=others.slice(0,10);others=others.slice(10)}
+      const visibleOthers=state.showOtherCompetitions?others:others.slice(0,0);
+      let html='';
+      html+=sectionHTML('Tus partidos','Equipos y ligas que elegiste',personal,'personal','');
+      html+=sectionHTML('Principales competiciones','Mundial, Champions y ligas principales',main,'main','main');
+      html+=sectionHTML('Otras competiciones','Calendario internacional completo',visibleOthers,'other','other');
+      if(others.length&&!state.showOtherCompetitions)html+=`<button class="show-more-card" id="showOtherCompetitions">Ver otras competiciones <span>(${others.length})</span></button>`;
+      if(others.length&&state.showOtherCompetitions)html+=`<button class="show-more-card" id="hideOtherCompetitions">Ocultar otras competiciones</button>`;
+      container.innerHTML=html;
     }
-    function renderAllMatchData(){renderHomeMatches();renderMatches();hydratePersonalization()}
+
+    function renderAllMatchData(){renderDateStrip();renderHomeMatches();renderMatches();hydratePersonalization()}
 
     function showScreen(name){
       const apply=()=>{$$('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));state.previousScreen=state.currentScreen;state.currentScreen=name;window.scrollTo({top:0,behavior:'smooth'});if(name==='live'&&!state.matches.length)fetchRealMatches()};
@@ -715,8 +843,9 @@ body{padding-top:0}
     }
 
     document.addEventListener('click',e=>{
-      const go=e.target.closest('[data-go]'),match=e.target.closest('[data-match-id]'),back=e.target.closest('[data-back]'),filter=e.target.closest('[data-filter]'),mtab=e.target.closest('[data-mtab]'),save=e.target.closest('.save'),follow=e.target.closest('[data-follow]'),toastBtn=e.target.closest('[data-toast]');
+      const go=e.target.closest('[data-go]'),match=e.target.closest('[data-match-id]'),back=e.target.closest('[data-back]'),filter=e.target.closest('[data-filter]'),mtab=e.target.closest('[data-mtab]'),save=e.target.closest('.save'),follow=e.target.closest('[data-follow]'),toastBtn=e.target.closest('[data-toast]'),dateButton=e.target.closest('[data-date-key]');
       if(go)showScreen(go.dataset.go);if(match)openMatch(match.dataset.matchId);if(back)showScreen(state.previousScreen||'home');
+      if(dateButton){state.selectedDate=dateButton.dataset.dateKey;state.showOtherCompetitions=false;localStorage.setItem('goalapp_selected_date',state.selectedDate);state.matches=[];renderDateStrip();fetchRealMatches(true)}
       if(filter){state.filter=filter.dataset.filter;$$('[data-filter]').forEach(b=>b.classList.toggle('active',b===filter));renderMatches()}
       if(mtab){$$('[data-mtab]').forEach(b=>b.classList.toggle('active',b===mtab));$$('[data-panel]').forEach(p=>p.classList.toggle('active',p.dataset.panel===mtab.dataset.mtab))}
       if(save){save.classList.toggle('saved');showToast(save.classList.contains('saved')?'Contenido guardado':'Contenido eliminado')}
@@ -726,6 +855,8 @@ body{padding-top:0}
       if(e.target.closest('[data-config-backend]'))openBackendModal();if(e.target.closest('[data-close-backend]'))closeBackendModal();if(e.target===backendModal)closeBackendModal();
       if(e.target.closest('#retryConnection')){state.offline=false;$('#offlineLabel').textContent='En línea ›';fetchRealMatches(true);showToast('Reconectando…')}
       if(e.target.closest('#refreshEmpty'))fetchRealMatches(true);
+      if(e.target.closest('#showOtherCompetitions')){state.showOtherCompetitions=true;renderMatches()}
+      if(e.target.closest('#hideOtherCompetitions')){state.showOtherCompetitions=false;renderMatches();document.querySelector('[data-screen="live"]')?.scrollIntoView({behavior:'smooth',block:'start'})}
       const jump=e.target.closest('[data-filter-jump]');if(jump){state.filter=jump.dataset.filterJump;$$('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===state.filter));renderMatches()}
       const tc=e.target.closest('[data-team-choice]');if(tc){const id=tc.dataset.teamChoice;state.selectedTeams=state.selectedTeams.includes(id)?state.selectedTeams.filter(x=>x!==id):[...state.selectedTeams,id];renderChoices();updateStep()}
       const lc=e.target.closest('[data-league-choice]');if(lc){const id=lc.dataset.leagueChoice;state.selectedLeagues=state.selectedLeagues.includes(id)?state.selectedLeagues.filter(x=>x!==id):[...state.selectedLeagues,id];renderChoices();updateStep()}
@@ -756,7 +887,7 @@ body{padding-top:0}
     setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
     if(preview){state.selectedTeams=['real','liverpool','barca'];state.selectedLeagues=['laliga','premier','champions']}
     if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
-    hydratePersonalization();renderChoices();updateStep();renderMatches();hydrateBackendUI();fetchRealMatches(true);
+    hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();fetchRealMatches(true);
   </script>
 </body>
 </html>
