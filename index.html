@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#030506" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GoalApp" />
+  <title>GoalApp Beta</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #030506;
+      --surface: #0b1013;
+      --surface-2: #11181c;
+      --surface-3: #161e22;
+      --line: rgba(255,255,255,.09);
+      --line-strong: rgba(255,255,255,.16);
+      --text: #fff;
+      --muted: #8e9994;
+      --green: #00ed68;
+      --green-2: #55ff92;
+      --green-dark: #008f40;
+      --purple: #9b55ff;
+      --red: #ff4655;
+      --yellow: #ffc92e;
+      --blue: #57a6ff;
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; min-height: 100%; background: #010202; color: var(--text); font-family: Manrope, -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; }
+    body { overscroll-behavior-y: none; }
+    button, input, textarea { font: inherit; }
+    button { color: inherit; cursor: pointer; }
+    img { display: block; }
+    [hidden] { display: none !important; }
+
+    .app {
+      width: min(100%, 430px);
+      min-height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 95% 0, rgba(0,237,104,.11), transparent 27%),
+        radial-gradient(circle at 0 18%, rgba(99,62,255,.06), transparent 26%),
+        linear-gradient(#030506, #010202);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04), var(--shadow);
+    }
+
+    .icon { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .icon.fill { fill: currentColor; stroke: none; }
+
+    .splash {
+      position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+      background: radial-gradient(circle at 50% 40%, #0c2017, #020303 55%);
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+    .splash.done { opacity: 0; visibility: hidden; }
+    .splash-inner { text-align: center; animation: splashIn .8s cubic-bezier(.2,.8,.2,1) both; }
+    .splash-logo { width: 88px; height: 88px; filter: drop-shadow(0 0 30px rgba(0,237,104,.32)); }
+    .splash h1 { margin: 18px 0 5px; font-size: 30px; }
+    .splash h1 span { color: var(--green); }
+    .splash p { margin: 0; color: var(--muted); font-size: 12px; }
+    .splash-line { width: 54px; height: 3px; margin: 28px auto 0; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--green), transparent); animation: pulseLine 1.3s infinite; }
+    @keyframes splashIn { from { opacity: 0; transform: scale(.88) translateY(12px); } }
+    @keyframes pulseLine { 50% { width: 94px; opacity: .6; } }
+
+    /* Protección: el splash desaparece incluso si un script externo tarda o falla. */
+    #splash { animation: forceHideSplash .55s ease 2s forwards; }
+    @keyframes forceHideSplash { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 40; height: 70px; padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(3,5,6,.82); backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; font-size: 18px; font-weight: 800; }
+    .brand-logo { width: 35px; height: 35px; filter: drop-shadow(0 0 13px rgba(0,237,104,.32)); }
+    .top-actions { display: flex; gap: 8px; }
+    .circle-btn { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: rgba(13,19,22,.9); position: relative; }
+    .circle-btn .dot { position: absolute; width: 8px; height: 8px; right: 2px; top: 2px; background: var(--green); border: 2px solid var(--bg); border-radius: 50%; }
+    .avatar-btn { color: #021008; background: linear-gradient(135deg, #fff, var(--green)); font-weight: 900; }
+
+    main { padding-bottom: 102px; }
+    .screen { display: none; padding: 16px; min-height: calc(100dvh - 70px); }
+    .screen.active { display: block; animation: screenIn .38s cubic-bezier(.2,.78,.2,1) both; }
+    @keyframes screenIn { from { opacity: 0; transform: translateY(12px) scale(.992); } }
+
+    .eyebrow { color: var(--green); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.25px; }
+    .page-title { margin: 6px 0 4px; font-size: 29px; letter-spacing: -1.05px; line-height: 1.1; }
+    .sub { margin: 0 0 18px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin: 24px 1px 11px; }
+    .section-head > div { display: flex; align-items: center; gap: 8px; }
+    .section-head h2 { margin: 0; font-size: 18px; }
+    .link-btn { padding: 0; border: 0; background: none; color: var(--green); font-size: 11px; font-weight: 800; }
+
+    .card { border: 1px solid var(--line); background: linear-gradient(145deg, #10171a, #080c0e); border-radius: var(--radius-lg); box-shadow: 0 18px 45px rgba(0,0,0,.22); }
+    .ai-badge { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 9px; color: #031008; background: linear-gradient(135deg, #b86cff, var(--green)); font-size: 10px; font-weight: 950; }
+
+    .brief { padding: 15px; border-color: rgba(155,85,255,.5); background: radial-gradient(circle at 100% 0, rgba(155,85,255,.28), transparent 48%), linear-gradient(145deg,#171020,#090c0e); }
+    .brief-head { display: flex; justify-content: space-between; align-items: center; }
+    .brief-title { display: flex; align-items: center; gap: 9px; }
+    .brief small { color: #c7b1d7; }
+    .brief ul { list-style: none; padding: 0; margin: 15px 0 0; display: grid; gap: 9px; font-size: 12px; }
+    .brief li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(0,237,104,.5); }
+
+    .hero { position: relative; isolation: isolate; overflow: hidden; min-height: 286px; margin-top: 14px; padding: 17px; border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius-xl); box-shadow: 0 28px 70px rgba(0,0,0,.52); }
+    .hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); animation: stadiumZoom 13s ease-in-out infinite alternate; }
+    .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.48) 48%, rgba(0,0,0,.96)); }
+    @keyframes stadiumZoom { to { transform: scale(1.13); } }
+    .competition { text-align: center; color: #d7dddd; font-size: 11px; font-weight: 700; }
+    .scoreboard { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin: 25px 0 20px; }
+    .team { text-align: center; font-size: 11px; font-weight: 700; }
+    .team img { width: 63px; height: 63px; margin: 0 auto 8px; object-fit: contain; filter: drop-shadow(0 10px 16px rgba(0,0,0,.62)); animation: logoFloat 4s ease-in-out infinite; }
+    .team:nth-child(3) img { animation-delay: -.7s; }
+    @keyframes logoFloat { 50% { transform: translateY(-4px); } }
+    .score { text-align: center; }
+    .score strong { display: block; font-size: 42px; letter-spacing: -2px; }
+    .score b { display: block; color: var(--green); font-size: 20px; }
+    .score small { color: var(--green); font-size: 9px; font-weight: 900; }
+    .primary { width: 100%; min-height: 52px; border: 0; border-radius: 17px; color: #001609; background: linear-gradient(90deg, var(--green), var(--green-2)); font-weight: 900; box-shadow: 0 14px 30px rgba(0,237,104,.19); }
+    .primary:active { transform: scale(.975); }
+
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); animation: livePulse 1.25s infinite; }
+    @keyframes livePulse { 50% { opacity: .35; transform: scale(.72); } }
+    .horizontal { display: grid; grid-auto-flow: column; grid-auto-columns: 58%; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 3px; }
+    .horizontal::-webkit-scrollbar { display:none; }
+    .mini-match { scroll-snap-align: start; padding: 13px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,#10171a,#080c0e); text-align: left; }
+    .mini-match:first-child { border-color: rgba(0,237,104,.55); }
+    .mini-match small { color: var(--muted); font-size: 10px; }
+    .mini-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin: 13px 0; }
+    .mini-grid img { width: 35px; height: 35px; margin: auto; object-fit: contain; }
+    .mini-grid strong { font-size: 20px; }
+    .mini-match b { display: block; text-align: center; color: var(--green); font-size: 12px; }
+
+    .news { position: relative; display: grid; grid-template-columns: 1fr 112px; min-height: 164px; margin-bottom: 11px; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: linear-gradient(145deg,#101619,#080b0d); }
+    .news-copy { padding: 15px 7px 15px 15px; }
+    .tag { color: var(--green); font-size: 9px; font-weight: 900; }
+    .news h3 { margin: 9px 0 7px; font-size: 17px; line-height: 1.25; }
+    .news p { margin: 0 0 10px; color: #bec6c2; font-size: 11px; line-height: 1.45; }
+    .news small { color: var(--muted); font-size: 10px; }
+    .news > img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.86) contrast(1.08); }
+    .save { position: absolute; right: 9px; bottom: 9px; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: rgba(0,0,0,.68); display: grid; place-items: center; }
+    .save.saved { color: #031008; background: var(--green); }
+
+    .tabs { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    .tab { padding: 13px 4px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); }
+    .tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 800; }
+
+    .match-row { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; min-height: 90px; margin-bottom: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,#10171a,#080c0e); text-align: left; }
+    .match-row.favorite { border-color: rgba(0,237,104,.55); }
+    .side { display: flex; align-items: center; gap: 8px; }
+    .side.away { justify-content: flex-end; text-align: right; }
+    .side img { width: 36px; height: 36px; object-fit: contain; }
+    .side strong { display: block; font-size: 12px; }
+    .side small { color: var(--muted); font-size: 9px; }
+    .row-score { text-align: center; }
+    .row-score strong { font-size: 22px; }
+    .row-score b { display: block; color: var(--green); font-size: 10px; }
+
+    .back { border:0; background:none; color:var(--muted); padding:0 0 13px; display:flex; align-items:center; gap:7px; }
+    .match-hero { margin-top:0; min-height:225px; }
+    .panel { display:none; }
+    .panel.active { display:block; animation: screenIn .28s ease; }
+    .content-card { padding: 15px; }
+    .event { display:grid; grid-template-columns:32px 13px 1fr auto; align-items:center; gap:9px; min-height:60px; border-bottom:1px solid rgba(255,255,255,.05); font-size:12px; }
+    .event:last-child { border-bottom:0; }
+    .event small { display:block; margin-top:3px; color:var(--muted); }
+    .ball { width:12px; height:12px; border:3px solid var(--green); border-radius:50%; }
+    .yellow { width:10px; height:14px; border-radius:2px; background:var(--yellow); }
+    .event em { font-style:normal; padding:4px 7px; border:1px solid var(--line); border-radius:7px; }
+    .stat { margin-bottom:18px; }
+    .stat-top { display:grid; grid-template-columns:38px 1fr 38px; text-align:center; font-size:11px; }
+    .bar { height:7px; margin-top:8px; border-radius:99px; background:linear-gradient(90deg,#eff5f1 50%,#7957ff 50%); overflow:hidden; }
+    .bar i { display:block; height:100%; border-right:4px solid var(--green); transform-origin:left; animation:grow .7s both; }
+    @keyframes grow { from { transform:scaleX(0); } }
+    .ai-card { padding:15px; border-color:rgba(0,237,104,.24); background:radial-gradient(circle at 0 0,rgba(0,237,104,.12),transparent 40%),linear-gradient(145deg,#10171a,#080c0e); }
+    .ai-card p { color:#e8eeeb; line-height:1.55; font-size:13px; }
+    .insight { display:flex; gap:9px; margin:11px 0; color:#c8d0cc; font-size:11px; }
+    .insight b { color:var(--green); }
+    .chart { display:flex; align-items:flex-end; gap:7px; height:120px; padding-top:15px; border-bottom:1px solid var(--line); }
+    .chart span { flex:1; border-radius:4px 4px 0 0; background:linear-gradient(var(--green),#075f2d); animation:chartRise .7s both; }
+    @keyframes chartRise { from { height:0 !important; } }
+
+    .feed-item { display:grid; grid-template-columns:126px 1fr; min-height:178px; margin-bottom:11px; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:var(--surface); }
+    .feed-item > img { width:100%; height:100%; object-fit:cover; }
+    .feed-copy { padding:15px; }
+    .feed-copy h2 { margin:9px 0 7px; font-size:17px; }
+    .feed-copy p { margin:0 0 12px; color:#bdc6c1; font-size:11px; }
+
+    .club-card { display:grid; grid-template-columns:54px 1fr auto; align-items:center; gap:12px; padding:14px; margin-bottom:11px; border:1px solid var(--line); background:linear-gradient(145deg,#10171a,#080c0e); border-radius:18px; }
+    .club-card img { width:50px; height:50px; object-fit:contain; }
+    .club-card h3 { margin:0 0 4px; font-size:16px; }
+    .club-card p,.club-card small { display:block; margin:0; color:var(--muted); font-size:10px; }
+    .follow { padding:8px 10px; color:var(--green); border:1px solid rgba(0,237,104,.35); border-radius:10px; background:rgba(0,237,104,.07); font-size:10px; font-weight:800; }
+    .follow.on { color:#031008; background:var(--green); }
+
+    .profile { display:flex; align-items:center; gap:13px; padding:10px 2px 22px; }
+    .profile-photo { width:76px; height:76px; display:grid; place-items:center; border:3px solid var(--green); border-radius:50%; color:#031008; background:linear-gradient(135deg,#fff,var(--green)); font-size:29px; font-weight:950; }
+    .profile h1 { margin:0; }
+    .profile p { margin:3px 0 8px; color:var(--muted); font-size:12px; }
+    .premium-badge { padding:4px 7px; border-radius:7px; background:var(--green); color:#031008; font-size:8px; font-weight:900; }
+    .settings { padding:15px; }
+    .settings button { display:flex; justify-content:space-between; width:100%; padding:14px 0; border:0; border-bottom:1px solid var(--line); background:none; text-align:left; font-size:12px; }
+    .settings button:last-child { border-bottom:0; }
+    .settings b { color:var(--muted); font-size:10px; }
+    .premium { padding:15px; margin-top:11px; background:radial-gradient(circle at 100% 0,rgba(255,201,40,.18),transparent 42%),linear-gradient(145deg,#111713,#080c0a); }
+    .premium h2 { margin:0 0 5px; }
+    .premium p { color:var(--muted); font-size:11px; line-height:1.45; }
+
+    .skeleton { position:relative; overflow:hidden; background:#11171a; border-radius:16px; }
+    .skeleton::after { content:""; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent); animation:shimmer 1.25s infinite; }
+    @keyframes shimmer { to { transform:translateX(100%); } }
+    .skeleton-line { height:15px; margin-bottom:10px; }
+    .skeleton-line.short { width:60%; }
+    .loading-card { padding:15px; margin-bottom:10px; border:1px solid var(--line); border-radius:18px; background:var(--surface); }
+
+    .status-card { padding:18px; text-align:center; }
+    .status-card .status-icon { width:54px; height:54px; display:grid; place-items:center; margin:0 auto 12px; border-radius:17px; color:var(--green); background:rgba(0,237,104,.1); }
+    .status-card h3 { margin:0 0 6px; }
+    .status-card p { margin:0 0 14px; color:var(--muted); font-size:11px; line-height:1.45; }
+    .secondary { min-height:42px; padding:0 14px; border:1px solid var(--line-strong); border-radius:13px; background:var(--surface-2); font-size:11px; font-weight:800; }
+
+    .nav { position:fixed; z-index:50; left:50%; bottom:0; transform:translateX(-50%); width:min(100%,430px); display:grid; grid-template-columns:repeat(5,1fr); padding:8px 8px max(8px,env(safe-area-inset-bottom)); background:rgba(7,11,13,.94); backdrop-filter:blur(24px); border-top:1px solid var(--line); }
+    .nav button { display:grid; justify-items:center; gap:4px; border:0; background:none; color:#7e8984; font-size:9px; }
+    .nav .nav-icon { width:31px; height:31px; display:grid; place-items:center; border-radius:10px; transition:.24s; }
+    .nav button.active { color:var(--green); }
+    .nav button.active .nav-icon { background:var(--green); color:#031008; transform:translateY(-3px); box-shadow:0 0 24px rgba(0,237,104,.35); }
+
+    .toast { position:fixed; z-index:120; left:50%; bottom:100px; transform:translate(-50%,15px); width:calc(min(100%,430px) - 30px); padding:13px; border-radius:13px; background:var(--green); color:#031008; text-align:center; font-size:11px; font-weight:800; opacity:0; transition:.22s; pointer-events:none; }
+    .toast.on { opacity:1; transform:translate(-50%,0); }
+
+    .modal { position:fixed; inset:0; z-index:100; display:grid; align-items:end; background:rgba(0,0,0,.68); backdrop-filter:blur(8px); opacity:0; visibility:hidden; transition:.25s; }
+    .modal.open { opacity:1; visibility:visible; }
+    .modal-sheet { width:min(100%,430px); margin:0 auto; padding:20px 16px max(18px,env(safe-area-inset-bottom)); border:1px solid var(--line); border-bottom:0; border-radius:28px 28px 0 0; background:linear-gradient(180deg,#11181c,#06090b); transform:translateY(28px); transition:.28s cubic-bezier(.2,.8,.2,1); }
+    .modal.open .modal-sheet { transform:none; }
+    .modal h2 { margin:0 0 6px; }
+    .modal p { margin:0 0 14px; color:var(--muted); font-size:11px; }
+    .field { width:100%; min-height:48px; margin-bottom:10px; padding:12px 13px; color:#fff; border:1px solid var(--line); border-radius:13px; background:#0a0f12; outline:none; }
+    textarea.field { min-height:110px; resize:none; }
+    .modal-actions { display:grid; grid-template-columns:1fr 1.4fr; gap:9px; }
+
+    .onboarding { position:fixed; inset:0; z-index:150; overflow:auto; background:radial-gradient(circle at 50% 0,#0a2318,#020303 52%); }
+    .onboarding-inner { width:min(100%,430px); min-height:100dvh; margin:auto; padding:24px 16px 30px; }
+    .onboarding-head { display:flex; align-items:center; gap:10px; margin-bottom:26px; }
+    .onboarding-head .brand-logo { width:42px; height:42px; }
+    .step { display:none; animation:screenIn .35s ease both; }
+    .step.active { display:block; }
+    .step-indicator { display:flex; gap:6px; margin:18px 0 26px; }
+    .step-indicator span { flex:1; height:3px; border-radius:99px; background:#1a2420; }
+    .step-indicator span.active { background:var(--green); }
+    .welcome-art { position:relative; min-height:350px; overflow:hidden; margin:18px 0 20px; border:1px solid var(--line); border-radius:30px; background:linear-gradient(180deg,transparent,rgba(0,0,0,.82)),url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1000&q=86') center/cover; }
+    .welcome-art::after { content:"GOAL"; position:absolute; right:-18px; bottom:18px; color:rgba(255,255,255,.07); font-size:86px; font-weight:950; transform:rotate(-90deg); }
+    .choice-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .choice { position:relative; min-height:112px; display:grid; place-items:center; gap:6px; padding:11px; border:1px solid var(--line); border-radius:17px; background:linear-gradient(145deg,#11181c,#080c0e); text-align:center; }
+    .choice img { width:50px; height:50px; object-fit:contain; }
+    .choice strong { font-size:11px; }
+    .choice.selected { border-color:var(--green); box-shadow:0 0 0 1px rgba(0,237,104,.22),0 0 28px rgba(0,237,104,.08); }
+    .choice.selected::after { content:"✓"; position:absolute; right:8px; top:8px; width:20px; height:20px; display:grid; place-items:center; border-radius:50%; color:#031008; background:var(--green); font-size:11px; font-weight:900; }
+    .league-choice { min-height:82px; place-items:start; align-content:center; text-align:left; }
+    .league-choice span { color:var(--muted); font-size:9px; }
+    .onboarding-footer { position:sticky; bottom:0; padding-top:18px; background:linear-gradient(transparent,#020303 28%); }
+    .onboarding-message { min-height:22px; margin:7px 0 9px; color:var(--muted); text-align:center; font-size:10px; }
+
+    @media (min-width:650px){ .app { margin-top:20px; margin-bottom:20px; min-height:calc(100dvh - 40px); border-radius:34px; } .topbar{border-radius:34px 34px 0 0}.nav{bottom:20px;border:1px solid var(--line);border-radius:0 0 34px 34px}.onboarding-inner{margin-top:20px;margin-bottom:20px;border:1px solid var(--line);border-radius:34px;background:#030506} }
+    @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+
+    /* PWA-3: datos reales */
+    .data-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:10px 0 16px; padding:12px 13px; border:1px solid var(--line); border-radius:15px; background:rgba(11,16,19,.82); }
+    .data-source { display:grid; gap:3px; min-width:0; }
+    .data-source strong { display:flex; align-items:center; gap:7px; font-size:11px; }
+    .data-source small { color:var(--muted); font-size:9px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .source-dot { width:7px; height:7px; flex:0 0 auto; border-radius:50%; background:var(--yellow); box-shadow:0 0 10px rgba(255,201,46,.5); }
+    .source-dot.real { background:var(--green); box-shadow:0 0 10px rgba(0,237,104,.55); }
+    .source-dot.cache { background:var(--blue); box-shadow:0 0 10px rgba(87,166,255,.55); }
+    .refresh-btn { flex:0 0 auto; padding:8px 10px; border:1px solid var(--line-strong); border-radius:10px; background:var(--surface-2); color:var(--text); font-size:10px; font-weight:800; }
+    .refresh-btn.loading { opacity:.55; pointer-events:none; }
+    .real-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 8px; border-radius:99px; background:rgba(0,237,104,.1); color:var(--green); font-size:9px; font-weight:900; letter-spacing:.4px; }
+    .real-badge::before { content:""; width:6px; height:6px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; }
+    .team-name { display:block; max-width:115px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .match-meta { margin-top:4px; color:var(--muted); font-size:9px; }
+    .empty-actions { display:flex; justify-content:center; gap:8px; }
+    .home-data-note { margin-top:9px; color:var(--muted); text-align:center; font-size:9px; }
+    .detail-loading { display:grid; gap:9px; }
+    .detail-loading .skeleton { height:45px; }
+
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute"><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol><symbol id="i-club" viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6z"/><path d="M9 12h6M12 9v6"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 2l1.5 2M16 2l-1.5 2M7 9h10M5 13H2M22 13h-3M5 18H2M22 18h-3"/><rect x="6" y="5" width="12" height="16" rx="6"/><path d="M12 9v12"/></symbol></svg>
+
+  <div class="splash" id="splash"><div class="splash-inner"><svg class="splash-logo" viewBox="0 0 48 48"><defs><linearGradient id="g1"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g1)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg><h1>Goal<span>App</span></h1><p>Tu fútbol. Tu mundo.</p><div class="splash-line"></div></div></div>
+
+  <div class="onboarding" id="onboarding" hidden>
+    <div class="onboarding-inner">
+      <div class="onboarding-head"><svg class="brand-logo" viewBox="0 0 48 48"><defs><linearGradient id="g2"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g2)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg><strong>GoalApp</strong></div>
+      <div class="step-indicator"><span class="active"></span><span></span><span></span></div>
+      <section class="step active" data-step="0"><span class="eyebrow">Bienvenido</span><h1 class="page-title">Todo tu fútbol, sin el ruido.</h1><p class="sub">Elige lo que te importa y GoalApp organizará partidos, noticias y alertas para ti.</p><div class="welcome-art"></div></section>
+      <section class="step" data-step="1"><span class="eyebrow">Paso 1 de 2</span><h1 class="page-title">Elige tus equipos</h1><p class="sub">Selecciona al menos dos. Puedes cambiarlos después.</p><div class="choice-grid" id="teamChoices"></div></section>
+      <section class="step" data-step="2"><span class="eyebrow">Paso 2 de 2</span><h1 class="page-title">Elige tus ligas</h1><p class="sub">Selecciona al menos dos competiciones.</p><div class="choice-grid" id="leagueChoices"></div></section>
+      <div class="onboarding-footer"><div class="onboarding-message" id="onboardingMessage"></div><button class="primary" id="onboardingNext">Continuar</button></div>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="topbar"><button class="brand" data-go="home"><svg class="brand-logo" viewBox="0 0 48 48"><defs><linearGradient id="g3"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g3)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg>GoalApp</button><div class="top-actions"><button class="circle-btn" data-toast="No tienes alertas nuevas"><span class="dot"></span><svg class="icon"><use href="#i-bell"/></svg></button><button class="circle-btn avatar-btn" data-go="profile">J</button></div></header>
+    <main>
+      <section class="screen active" data-screen="home">
+        <span class="eyebrow">Tu fútbol, personalizado</span><h1 class="page-title" id="greeting">Buenas tardes, Jony</h1><p class="sub" id="homeSubtitle">Aquí tienes lo más importante para ti.</p>
+        <article class="card brief"><div class="brief-head"><div class="brief-title"><span class="ai-badge">AI</span><strong>Daily Brief</strong></div><small>Actualizado ahora</small></div><ul id="briefList"></ul></article>
+        <article class="hero" id="homeHero"><img class="hero-bg" id="heroBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="competition" id="heroCompetition">Conectando con datos reales…</div><div class="scoreboard"><div class="team"><img id="heroHomeLogo" src="" alt=""><span class="team-name" id="heroHomeName">Local</span></div><div class="score"><strong id="heroScore">—</strong><b id="heroStatus">Cargando</b><small id="heroDataLabel">DATOS REALES</small></div><div class="team"><img id="heroAwayLogo" src="" alt=""><span class="team-name" id="heroAwayName">Visitante</span></div></div><button class="primary" id="heroMatchButton" disabled>Abriendo calendario…</button><div class="home-data-note" id="heroUpdatedAt">Fuente: TheSportsDB</div></article>
+        <div class="section-head"><div><h2>Partidos reales</h2><span class="live-dot"></span></div><button class="link-btn" data-go="live">Ver todo</button></div>
+        <div class="horizontal" id="homeMatches"><div class="loading-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div></div></div>
+        <div class="section-head"><div><h2>Para ti</h2><span class="eyebrow">GoalAI</span></div><button class="link-btn" data-go="feed">Ver todo</button></div>
+        <article class="news"><div class="news-copy"><span class="tag">IMPORTANCIA 98%</span><h3>La estrella vuelve al once titular</h3><p>El cuerpo técnico confirma su regreso para el próximo partido.</p><small>Hace 1 hora</small></div><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=86" alt="Jugador"><button class="save" aria-label="Guardar"><svg class="icon"><use href="#i-club"/></svg></button></article>
+        <article class="news"><div class="news-copy"><span class="tag">IMPORTANCIA 92%</span><h3>Liverpool recupera una pieza clave</h3><p>El atacante completó el entrenamiento con normalidad.</p><small>Hace 2 horas</small></div><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=86" alt="Jugador"><button class="save" aria-label="Guardar"><svg class="icon"><use href="#i-club"/></svg></button></article>
+      </section>
+
+      <section class="screen" data-screen="live"><span class="eyebrow">Calendario real</span><h1 class="page-title">Partidos</h1><p class="sub">Resultados, horarios y competiciones actualizados desde una fuente externa.</p><div class="data-toolbar"><div class="data-source"><strong><span class="source-dot" id="sourceDot"></span><span id="dataSourceLabel">Conectando…</span></strong><small id="dataUpdatedAt">Esperando la primera actualización</small></div><button class="refresh-btn" id="refreshRealData">Actualizar</button></div><div class="tabs"><button class="tab active" data-filter="today">Hoy</button><button class="tab" data-filter="upcoming">Próximos</button><button class="tab" data-filter="finished">Finalizados</button></div><div id="matchState"></div><div id="matches"></div></section>
+
+      <section class="screen" data-screen="match"><button class="back" data-back><svg class="icon"><use href="#i-arrow"/></svg>Volver</button><article class="hero match-hero"><img class="hero-bg" id="matchBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86"><div class="competition" id="matchCompetition">Partido</div><div class="scoreboard"><div class="team"><img id="matchHomeLogo" src=""><span class="team-name" id="matchHomeName">Local</span></div><div class="score"><strong id="matchScore">—</strong><b id="matchStatus">—</b><small id="matchDate"></small></div><div class="team"><img id="matchAwayLogo" src=""><span class="team-name" id="matchAwayName">Visitante</span></div></div></article><div class="tabs"><button class="tab active" data-mtab="summary">Resumen</button><button class="tab" data-mtab="stats">Estadísticas</button><button class="tab" data-mtab="ai">GoalAI</button></div>
+        <div class="panel active" data-panel="summary"><article class="card content-card" id="matchEvents"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></article></div>
+        <div class="panel" data-panel="stats"><article class="card content-card" id="matchStats"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></article></div>
+        <div class="panel" data-panel="ai"><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>GoalAI · resumen automático</strong></div><p id="matchAIText">Selecciona un partido para generar contexto a partir de sus datos.</p><div id="matchAIFacts"></div></article><article class="card content-card" style="margin-top:11px"><div class="chart" id="matchChart"><span style="height:31%"></span><span style="height:58%"></span><span style="height:43%"></span><span style="height:76%"></span><span style="height:49%"></span><span style="height:69%"></span><span style="height:92%"></span><span style="height:64%"></span></div></article></div>
+      </section>
+
+      <section class="screen" data-screen="feed"><span class="eyebrow">Personalizado por IA</span><h1 class="page-title">GoalFeed</h1><p class="sub">Contenido ordenado por relevancia, no por ruido.</p><article class="feed-item"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=86"><div class="feed-copy"><span class="tag">IMPORTANCIA 98%</span><h2>Regresa al once titular</h2><p>La noticia más relevante para tus equipos.</p><small>Actualizado recientemente</small></div></article><article class="feed-item"><img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=86"><div class="feed-copy"><span class="tag">IMPORTANCIA 92%</span><h2>Liverpool recupera una figura</h2><p>El jugador vuelve a estar disponible.</p><small>Actualizado recientemente</small></div></article><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>Pregúntale a GoalAI</strong></div><p>Analiza partidos, jugadores, clasificaciones y estadísticas en segundos.</p><button class="primary" data-toast="GoalAI Chat se activará en PWA-3">Abrir GoalAI</button></article></section>
+
+      <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
+
+      <section class="screen" data-screen="profile"><div class="profile"><div class="profile-photo">J</div><div><h1>Jony</h1><p>@jonyfutbol</p><span class="premium-badge">BETA</span></div></div><article class="card settings"><button data-go="clubs"><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-toast="Tus ligas están guardadas en este dispositivo"><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-toast="Notificaciones: configuración pendiente de servidor"><span>Notificaciones</span><b>Preparadas ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar onboarding</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
+    </main>
+
+    <nav class="nav"><button class="active" data-go="home"><span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span>Inicio</button><button data-go="live"><span class="nav-icon"><svg class="icon"><use href="#i-live"/></svg></span>Live</button><button data-go="feed"><span class="nav-icon"><svg class="icon"><use href="#i-spark"/></svg></span>Feed</button><button data-go="clubs"><span class="nav-icon"><svg class="icon"><use href="#i-club"/></svg></span>Clubes</button><button data-go="profile"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button></nav>
+  </div>
+
+  <div class="modal" id="reportModal"><div class="modal-sheet"><h2>Reportar error</h2><p>Describe qué hiciste, qué esperabas y qué ocurrió.</p><input class="field" id="reportTitle" placeholder="Título breve"><textarea class="field" id="reportText" placeholder="Describe el problema o sugerencia"></textarea><div class="modal-actions"><button class="secondary" data-close-modal>Cancelar</button><button class="primary" id="sendReport">Guardar reporte</button></div></div></div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
+    const CACHE_KEY = 'goalapp_real_matches_v1';
+    const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
+
+    const TEAM_CATALOG = [
+      {id:'real',name:'Real Madrid',country:'España',logo:'https://media.api-sports.io/football/teams/541.png'},
+      {id:'barca',name:'Barcelona',country:'España',logo:'https://media.api-sports.io/football/teams/529.png'},
+      {id:'liverpool',name:'Liverpool',country:'Inglaterra',logo:'https://media.api-sports.io/football/teams/40.png'},
+      {id:'arsenal',name:'Arsenal',country:'Inglaterra',logo:'https://media.api-sports.io/football/teams/42.png'},
+      {id:'city',name:'Manchester City',country:'Inglaterra',logo:'https://media.api-sports.io/football/teams/50.png'},
+      {id:'psg',name:'Paris Saint-Germain',country:'Francia',logo:'https://media.api-sports.io/football/teams/85.png'},
+      {id:'bayern',name:'Bayern Munich',country:'Alemania',logo:'https://media.api-sports.io/football/teams/157.png'},
+      {id:'inter',name:'Inter Milan',country:'Italia',logo:'https://media.api-sports.io/football/teams/505.png'}
+    ];
+    const LEAGUES = [{id:'laliga',name:'LaLiga',region:'España'},{id:'premier',name:'Premier League',region:'Inglaterra'},{id:'champions',name:'Champions League',region:'Europa'},{id:'seriea',name:'Serie A',region:'Italia'},{id:'bundesliga',name:'Bundesliga',region:'Alemania'},{id:'ligue1',name:'Ligue 1',region:'Francia'}];
+    const FALLBACK_GAMES = [
+      {id:'demo-1',league:'LaLiga',homeName:'Real Madrid',awayName:'Barcelona',homeLogo:TEAM_CATALOG[0].logo,awayLogo:TEAM_CATALOG[1].logo,score:'2 - 1',statusText:"78'",state:'today',isToday:true,favorite:true,isDemo:true,date:new Date().toISOString()},
+      {id:'demo-2',league:'Premier League',homeName:'Liverpool',awayName:'Arsenal',homeLogo:TEAM_CATALOG[2].logo,awayLogo:TEAM_CATALOG[3].logo,score:'1 - 0',statusText:"65'",state:'today',isToday:true,favorite:true,isDemo:true,date:new Date().toISOString()},
+      {id:'demo-3',league:'Champions League',homeName:'Paris Saint-Germain',awayName:'Manchester City',homeLogo:TEAM_CATALOG[5].logo,awayLogo:TEAM_CATALOG[4].logo,score:'8:00 PM',statusText:'HOY',state:'upcoming',isToday:false,isDemo:true,date:new Date(Date.now()+86400000).toISOString()}
+    ];
+
+    const state = {
+      currentScreen:'home', previousScreen:'home', filter:'today', offline:false, loading:false,
+      matches:[], selectedMatch:null, dataMode:'loading', updatedAt:null,
+      selectedTeams: JSON.parse(localStorage.getItem('goalapp_teams') || '[]'),
+      selectedLeagues: JSON.parse(localStorage.getItem('goalapp_leagues') || '[]'),
+      onboardingStep:0
+    };
+
+    const $ = (q,root=document)=>root.querySelector(q);
+    const $$ = (q,root=document)=>[...root.querySelectorAll(q)];
+    const toast=$('#toast'); let toastTimer;
+
+    function showToast(msg){clearTimeout(toastTimer);toast.textContent=msg;toast.classList.add('on');toastTimer=setTimeout(()=>toast.classList.remove('on'),1900)}
+    function escapeHTML(value=''){return String(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
+    function normalizeName(value=''){return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'')}
+    function dateKey(date){return new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
+    function isSameDay(a,b){return dateKey(a)===dateKey(b)}
+    function formatTime(date){return new Intl.DateTimeFormat('es-SV',{hour:'numeric',minute:'2-digit'}).format(date)}
+    function formatDate(date){return new Intl.DateTimeFormat('es-SV',{weekday:'short',day:'numeric',month:'short'}).format(date)}
+    function formatUpdated(date){return new Intl.DateTimeFormat('es-SV',{hour:'numeric',minute:'2-digit',day:'numeric',month:'short'}).format(date)}
+    function logo(name){return TEAM_CATALOG.find(t=>t.id===name)}
+
+    const knownLogos = new Map(TEAM_CATALOG.flatMap(team=>{
+      const pairs=[[normalizeName(team.name),team.logo]];
+      if(team.id==='psg')pairs.push(['psg',team.logo],['parissaintgermain',team.logo]);
+      if(team.id==='inter')pairs.push(['inter',team.logo],['internazionale',team.logo]);
+      if(team.id==='bayern')pairs.push(['bayernmunchen',team.logo],['bayernmunich',team.logo]);
+      return pairs;
+    }));
+
+    function placeholderLogo(name='FC'){
+      const initials=name.split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase()||'FC';
+      const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#18242a"/><stop offset="1" stop-color="#00a94b"/></linearGradient></defs><circle cx="40" cy="40" r="37" fill="url(#g)" stroke="#00ed68" stroke-width="3"/><text x="40" y="47" text-anchor="middle" fill="white" font-family="Arial" font-weight="700" font-size="22">${escapeHTML(initials)}</text></svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+    function resolveLogo(name, supplied){return supplied||knownLogos.get(normalizeName(name))||placeholderLogo(name)}
+
+    function parseEventDate(event){
+      const raw=event.strTimestamp||event.dateEventLocal||event.dateEvent;
+      if(event.strTimestamp){const d=new Date(event.strTimestamp);if(!Number.isNaN(d.valueOf()))return d}
+      if(event.dateEvent){
+        const time=(event.strTime||'12:00:00').replace(/\s+/g,'');
+        const d=new Date(`${event.dateEvent}T${time.endsWith('Z')?time:time+'Z'}`);
+        if(!Number.isNaN(d.valueOf()))return d;
+      }
+      const d=new Date(raw||Date.now()); return Number.isNaN(d.valueOf())?new Date():d;
+    }
+    function numberOrNull(value){if(value===null||value===undefined||value==='')return null;const n=Number(value);return Number.isFinite(n)?n:null}
+    function normalizeEvent(event){
+      const date=parseEventDate(event), now=new Date();
+      const homeScore=numberOrNull(event.intHomeScore), awayScore=numberOrNull(event.intAwayScore);
+      const statusRaw=`${event.strStatus||''} ${event.strProgress||''}`.toLowerCase();
+      const live=/live|in progress|1h|2h|half time|extra time|penalt/i.test(statusRaw);
+      const explicitlyFinished=/finished|match finished|full time|ft|aet|after penalties/i.test(statusRaw);
+      const oldEnough=date.getTime()<now.getTime()-3.5*60*60*1000;
+      const finished=explicitlyFinished||(homeScore!==null&&awayScore!==null&&oldEnough&&!live);
+      const today=isSameDay(date,now);
+      const stateName=finished?'finished':today?'today':'upcoming';
+      const score=homeScore!==null&&awayScore!==null?`${homeScore} - ${awayScore}`:formatTime(date);
+      const statusText=live?(event.strProgress||event.strStatus||'EN VIVO'):finished?'FINAL':today?'HOY':formatDate(date).toUpperCase();
+      const homeName=event.strHomeTeam||'Equipo local', awayName=event.strAwayTeam||'Equipo visitante';
+      return {
+        id:String(event.idEvent||crypto.randomUUID()), source:'real', raw:event,
+        league:event.strLeague||event.strLeagueAlternate||'Competición',
+        homeName, awayName,
+        homeLogo:resolveLogo(homeName,event.strHomeTeamBadge||event.strHomeTeamLogo),
+        awayLogo:resolveLogo(awayName,event.strAwayTeamBadge||event.strAwayTeamLogo),
+        homeScore, awayScore, score, statusText, live, finished, isToday:today,
+        state:stateName, date:date.toISOString(), venue:event.strVenue||'',
+        background:event.strThumb||event.strPoster||event.strFanart||event.strBanner||''
+      };
+    }
+
+    async function fetchJSON(url,timeout=12000){
+      const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),timeout);
+      try{const response=await fetch(url,{cache:'no-store',signal:controller.signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}finally{clearTimeout(timer)}
+    }
+    function extractArray(data,preferred=[]){for(const key of preferred){if(Array.isArray(data?.[key]))return data[key]}for(const value of Object.values(data||{})){if(Array.isArray(value))return value}return[]}
+
+    function setDataSource(mode,message){
+      state.dataMode=mode;
+      const dot=$('#sourceDot'),label=$('#dataSourceLabel'),updated=$('#dataUpdatedAt');
+      dot.className=`source-dot ${mode==='real'?'real':mode==='cache'?'cache':''}`;
+      label.textContent=mode==='real'?'Datos reales · TheSportsDB':mode==='cache'?'Datos guardados · sin conexión':'Modo demostración';
+      updated.textContent=message||'Sin hora de actualización';
+      $('#heroDataLabel').textContent=mode==='real'?'DATOS REALES':mode==='cache'?'DATOS GUARDADOS':'DEMOSTRACIÓN';
+    }
+
+    function readCache(){
+      try{const cached=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(!cached?.matches?.length)return null;return cached}catch{return null}
+    }
+    function saveCache(matches){localStorage.setItem(CACHE_KEY,JSON.stringify({savedAt:Date.now(),matches}))}
+
+    async function fetchRealMatches(force=false){
+      if(state.offline){const cache=readCache();state.matches=cache?.matches||FALLBACK_GAMES;setDataSource(cache?'cache':'demo',cache?`Última actualización: ${formatUpdated(new Date(cache.savedAt))}`:'Sin conexión; se muestran datos de prueba');renderAllMatchData();return}
+      if(state.loading)return;
+      const cached=readCache();
+      if(!force&&cached&&Date.now()-cached.savedAt<CACHE_MAX_AGE){state.matches=cached.matches;state.updatedAt=new Date(cached.savedAt);setDataSource('cache',`Guardados: ${formatUpdated(state.updatedAt)}`);renderAllMatchData()}
+      state.loading=true;$('#refreshRealData')?.classList.add('loading');renderMatches();
+      try{
+        const base=new Date();
+        const dates=[-1,0,1].map(offset=>{const d=new Date(base);d.setDate(base.getDate()+offset);return dateKey(d)});
+        const results=await Promise.all(dates.map(date=>fetchJSON(`${API_BASE}/eventsday.php?d=${date}&s=Soccer`)));
+        const events=results.flatMap(data=>extractArray(data,['events']));
+        const unique=[...new Map(events.filter(Boolean).map(item=>[String(item.idEvent||JSON.stringify(item)),item])).values()];
+        const matches=unique.map(normalizeEvent).sort((a,b)=>new Date(a.date)-new Date(b.date));
+        if(!matches.length)throw new Error('La fuente no devolvió partidos para estos días');
+        state.matches=matches; state.updatedAt=new Date(); saveCache(matches);
+        setDataSource('real',`Actualizado: ${formatUpdated(state.updatedAt)}`);
+      }catch(error){
+        console.warn('GoalApp real data error:',error);
+        const cacheNow=readCache();
+        if(cacheNow){state.matches=cacheNow.matches;state.updatedAt=new Date(cacheNow.savedAt);setDataSource('cache',`No se pudo actualizar. Guardados: ${formatUpdated(state.updatedAt)}`);showToast('Usando la última actualización guardada')}
+        else{state.matches=FALLBACK_GAMES;setDataSource('demo','La fuente real no respondió; se muestran datos de prueba');showToast('No fue posible cargar la fuente de datos')}
+      }finally{state.loading=false;$('#refreshRealData')?.classList.remove('loading');renderAllMatchData()}
+    }
+
+    function renderChoices(){
+      $('#teamChoices').innerHTML=TEAM_CATALOG.map(t=>`<button class="choice ${state.selectedTeams.includes(t.id)?'selected':''}" data-team-choice="${t.id}"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><strong>${escapeHTML(t.name)}</strong></button>`).join('');
+      $('#leagueChoices').innerHTML=LEAGUES.map(l=>`<button class="choice league-choice ${state.selectedLeagues.includes(l.id)?'selected':''}" data-league-choice="${l.id}"><strong>${escapeHTML(l.name)}</strong><span>${escapeHTML(l.region)}</span></button>`).join('');
+    }
+    function updateStep(){
+      $$('.step').forEach(s=>s.classList.toggle('active',+s.dataset.step===state.onboardingStep));
+      $$('.step-indicator span').forEach((s,i)=>s.classList.toggle('active',i<=state.onboardingStep));
+      $('#onboardingNext').textContent=state.onboardingStep===2?'Crear mi GoalApp':'Continuar';
+      $('#onboardingMessage').textContent=state.onboardingStep===1?`${state.selectedTeams.length} equipos seleccionados`:state.onboardingStep===2?`${state.selectedLeagues.length} ligas seleccionadas`:'';
+    }
+    function openOnboarding(){state.onboardingStep=0;renderChoices();updateStep();$('#onboarding').hidden=false}
+    function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();showToast('Tu GoalApp personalizada está lista')}
+
+    function hydratePersonalization(){
+      const selected=TEAM_CATALOG.filter(t=>state.selectedTeams.includes(t.id));
+      const names=selected.slice(0,2).map(t=>t.name);
+      $('#homeSubtitle').textContent=selected.length?`Noticias, partidos y alertas de ${names.join(' y ')}.`:'Aquí tienes lo más importante para ti.';
+      const actual=state.matches.filter(m=>m.isToday);
+      const items=[];
+      if(actual[0])items.push(`${actual[0].homeName} vs ${actual[0].awayName}: ${actual[0].score}.`);
+      if(actual[1])items.push(`${actual[1].homeName} vs ${actual[1].awayName}: ${actual[1].score}.`);
+      if(!actual.length&&state.matches[0])items.push(`Próximo destacado: ${state.matches[0].homeName} vs ${state.matches[0].awayName}.`);
+      items.push(`${state.matches.length||0} partidos cargados desde la fuente de datos.`,'GoalAI priorizará tus equipos favoritos.');
+      $('#briefList').innerHTML=items.map(x=>`<li>${escapeHTML(x)}</li>`).join('');
+      $('#favoriteCount').textContent=`${state.selectedTeams.length} ›`; $('#leagueCount').textContent=`${state.selectedLeagues.length} ›`;
+      $('#clubList').innerHTML=TEAM_CATALOG.map(t=>`<article class="club-card"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><div><h3>${escapeHTML(t.name)}</h3><p>${escapeHTML(t.country)}</p><small>${state.selectedTeams.includes(t.id)?'Incluido en tu experiencia':'Disponible para seguir'}</small></div><button class="follow ${state.selectedTeams.includes(t.id)?'on':''}" data-follow="${t.id}">${state.selectedTeams.includes(t.id)?'Siguiendo':'Seguir'}</button></article>`).join('');
+    }
+
+    function renderHomeMatches(){
+      const matches=state.matches||[];
+      const featured=matches.find(m=>m.live)||matches.find(m=>m.isToday)||matches.find(m=>m.state==='upcoming')||matches[0];
+      if(!featured)return;
+      $('#heroCompetition').textContent=`${featured.league}${featured.venue?' · '+featured.venue:''}`;
+      $('#heroHomeLogo').src=featured.homeLogo;$('#heroHomeLogo').alt=featured.homeName;$('#heroHomeName').textContent=featured.homeName;
+      $('#heroAwayLogo').src=featured.awayLogo;$('#heroAwayLogo').alt=featured.awayName;$('#heroAwayName').textContent=featured.awayName;
+      $('#heroScore').textContent=featured.score;$('#heroStatus').textContent=featured.statusText;
+      if(featured.background)$('#heroBackground').src=featured.background;
+      const button=$('#heroMatchButton');button.disabled=false;button.dataset.matchId=featured.id;button.textContent=featured.finished?'Ver resumen →':featured.live?'Seguir partido →':'Ver partido →';
+      $('#heroUpdatedAt').textContent=state.updatedAt?`Fuente: TheSportsDB · ${formatUpdated(state.updatedAt)}`:'Fuente: TheSportsDB';
+      const cards=matches.filter(m=>m.id!==featured.id).slice(0,4);
+      $('#homeMatches').innerHTML=cards.length?cards.map(m=>`<button class="mini-match" data-match-id="${escapeHTML(m.id)}"><small>${escapeHTML(m.league)}</small><div class="mini-grid"><img src="${m.homeLogo}" alt="${escapeHTML(m.homeName)}"><strong>${escapeHTML(m.score)}</strong><img src="${m.awayLogo}" alt="${escapeHTML(m.awayName)}"></div><b>${escapeHTML(m.statusText)}</b></button>`).join(''):`<article class="card status-card"><p>No hay otros partidos disponibles.</p></article>`;
+    }
+
+    function loadingMatches(){return Array.from({length:4},()=>`<div class="loading-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div>`).join('')}
+    function filteredMatches(){
+      if(state.filter==='today')return state.matches.filter(m=>m.isToday);
+      if(state.filter==='upcoming')return state.matches.filter(m=>!m.finished&&!m.isToday);
+      return state.matches.filter(m=>m.finished);
+    }
+    function renderMatches(){
+      const container=$('#matches'),status=$('#matchState');
+      if(state.loading&&!state.matches.length){status.innerHTML='';container.innerHTML=loadingMatches();return}
+      if(state.offline&&!state.matches.length){container.innerHTML='';status.innerHTML=`<article class="card status-card"><div class="status-icon"><svg class="icon"><use href="#i-live"/></svg></div><h3>Sin conexión</h3><p>No hay datos guardados todavía. Conéctate una vez para almacenar el calendario.</p><button class="secondary" id="retryConnection">Reintentar</button></article>`;return}
+      status.innerHTML=''; const list=filteredMatches();
+      const rows=list.map(m=>`<button class="match-row ${m.live?'favorite':''}" data-match-id="${escapeHTML(m.id)}"><div class="side"><img src="${m.homeLogo}" alt="${escapeHTML(m.homeName)}"><div><strong>${escapeHTML(m.homeName)}</strong><small>${escapeHTML(m.league)}</small></div></div><div class="row-score"><strong>${escapeHTML(m.score)}</strong><b>${escapeHTML(m.statusText)}</b></div><div class="side away"><div><strong>${escapeHTML(m.awayName)}</strong><small>${escapeHTML(formatDate(new Date(m.date)))}</small></div><img src="${m.awayLogo}" alt="${escapeHTML(m.awayName)}"></div></button>`).join('');
+      container.innerHTML=rows||`<article class="card status-card"><h3>No hay partidos en esta vista</h3><p>La fuente gratuita puede devolver pocos encuentros por día. Prueba otro filtro o actualiza.</p><div class="empty-actions"><button class="secondary" data-filter-jump="today">Ver hoy</button><button class="secondary" id="refreshEmpty">Actualizar</button></div></article>`;
+    }
+    function renderAllMatchData(){renderHomeMatches();renderMatches();hydratePersonalization()}
+
+    function showScreen(name){
+      const apply=()=>{$$('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));state.previousScreen=state.currentScreen;state.currentScreen=name;window.scrollTo({top:0,behavior:'smooth'});if(name==='live'&&!state.matches.length)fetchRealMatches()};
+      document.startViewTransition?document.startViewTransition(apply):apply();
+    }
+
+    function renderMatchHeader(match){
+      $('#matchCompetition').textContent=`${match.league}${match.venue?' · '+match.venue:''}`;
+      $('#matchHomeName').textContent=match.homeName;$('#matchHomeLogo').src=match.homeLogo;
+      $('#matchAwayName').textContent=match.awayName;$('#matchAwayLogo').src=match.awayLogo;
+      $('#matchScore').textContent=match.score;$('#matchStatus').textContent=match.statusText;$('#matchDate').textContent=formatDate(new Date(match.date));
+      if(match.background)$('#matchBackground').src=match.background;
+    }
+    function renderNoDetail(target,title,text){target.innerHTML=`<div class="status-card"><h3>${escapeHTML(title)}</h3><p>${escapeHTML(text)}</p></div>`}
+    function timelineIcon(item){const raw=`${item.strTimeline||''} ${item.strTimelineDetail||''} ${item.strEvent||''} ${item.strType||''}`.toLowerCase();return /yellow|card/.test(raw)?'<span class="yellow"></span>':'<span class="ball"></span>'}
+    function renderTimeline(data,match){
+      const target=$('#matchEvents'),items=extractArray(data,['timeline','event','events']);
+      if(!items.length){renderNoDetail(target,'Timeline no disponible','La fuente no publicó eventos detallados para este partido.');return}
+      target.innerHTML=items.slice(0,12).map(item=>{
+        const minute=item.intTime||item.strTime||item.strTimeline||item.intEventMinute||'—';
+        const player=item.strPlayer||item.strPlayerName||item.strEvent||item.strTimelineDetail||'Evento del partido';
+        const detail=item.strTimelineDetail||item.strDetail||item.strAssist||item.strTeam||'';
+        return `<div class="event"><b>${escapeHTML(String(minute).replace("'",''))}'</b>${timelineIcon(item)}<div><strong>${escapeHTML(player)}</strong><small>${escapeHTML(detail)}</small></div><em>${escapeHTML(match.score)}</em></div>`;
+      }).join('');
+    }
+    function findStatValue(item,keys){for(const key of keys){if(item?.[key]!==undefined&&item[key]!==null&&item[key]!=='')return item[key]}return'—'}
+    function renderStats(data){
+      const target=$('#matchStats'),items=extractArray(data,['eventstats','statistics','stats']);
+      if(!items.length){renderNoDetail(target,'Estadísticas no disponibles','Esta competición no publicó estadísticas detalladas en la fuente gratuita.');return}
+      target.innerHTML=items.slice(0,10).map(item=>{
+        const label=findStatValue(item,['strStat','strStatistic','strType','strName']);
+        const home=findStatValue(item,['intHome','strHome','strHomeValue','intHomeValue']);
+        const away=findStatValue(item,['intAway','strAway','strAwayValue','intAwayValue']);
+        const hn=parseFloat(String(home).replace('%','')),an=parseFloat(String(away).replace('%',''));
+        const pct=Number.isFinite(hn)&&Number.isFinite(an)&&hn+an>0?Math.round(hn/(hn+an)*100):50;
+        return `<div class="stat"><div class="stat-top"><strong>${escapeHTML(home)}</strong><span>${escapeHTML(label)}</span><strong>${escapeHTML(away)}</strong></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+      }).join('');
+    }
+    function renderAIAuto(match,statsData){
+      const items=extractArray(statsData,['eventstats','statistics','stats']);
+      const scoreKnown=match.homeScore!==null&&match.awayScore!==null;
+      let text=scoreKnown?`${match.homeName} ${match.score} ${match.awayName}. `:`${match.homeName} se enfrenta a ${match.awayName}. `;
+      if(match.finished)text+='El encuentro ya finalizó; este resumen usa los datos publicados por la fuente.';
+      else if(match.live)text+='El partido figura en curso; la disponibilidad del minuto a minuto depende del proveedor.';
+      else text+=`El inicio está programado para ${formatTime(new Date(match.date))}.`;
+      $('#matchAIText').textContent=text;
+      const facts=[`Competición: ${match.league}`,`Fecha: ${formatDate(new Date(match.date))}`];
+      if(match.venue)facts.push(`Estadio: ${match.venue}`);
+      if(items.length)facts.push(`${items.length} estadísticas publicadas`);
+      $('#matchAIFacts').innerHTML=facts.map(f=>`<div class="insight"><b>↑</b>${escapeHTML(f)}</div>`).join('');
+    }
+    async function openMatch(matchId){
+      const match=state.matches.find(m=>m.id===String(matchId))||state.matches[0];if(!match)return;
+      state.selectedMatch=match;renderMatchHeader(match);
+      $('#matchEvents').innerHTML='<div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>';
+      $('#matchStats').innerHTML='<div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div>';
+      renderAIAuto(match,{});showScreen('match');
+      if(match.isDemo||!match.id||match.id.startsWith('demo-')){renderNoDetail($('#matchEvents'),'Datos de demostración','Este partido es un respaldo visual. Actualiza la fuente para abrir detalles reales.');renderNoDetail($('#matchStats'),'Datos de demostración','Las estadísticas reales aparecerán cuando el proveedor devuelva un evento válido.');return}
+      try{
+        const [eventResult,timelineResult,statsResult]=await Promise.allSettled([
+          fetchJSON(`${API_BASE}/lookupevent.php?id=${encodeURIComponent(match.id)}`),
+          fetchJSON(`${API_BASE}/lookuptimeline.php?id=${encodeURIComponent(match.id)}`),
+          fetchJSON(`${API_BASE}/lookupeventstats.php?id=${encodeURIComponent(match.id)}`)
+        ]);
+        if(eventResult.status==='fulfilled'){
+          const detail=extractArray(eventResult.value,['events'])[0];
+          if(detail){const richer=normalizeEvent({...match.raw,...detail});Object.assign(match,richer);renderMatchHeader(match)}
+        }
+        if(timelineResult.status==='fulfilled')renderTimeline(timelineResult.value,match);else renderNoDetail($('#matchEvents'),'Timeline no disponible','No fue posible obtener los eventos de este partido.');
+        if(statsResult.status==='fulfilled')renderStats(statsResult.value);else renderNoDetail($('#matchStats'),'Estadísticas no disponibles','No fue posible obtener las estadísticas de este partido.');
+        renderAIAuto(match,statsResult.status==='fulfilled'?statsResult.value:{});
+      }catch(error){console.warn(error);renderNoDetail($('#matchEvents'),'No se pudieron cargar los detalles','Comprueba tu conexión y vuelve a intentarlo.');renderNoDetail($('#matchStats'),'No se pudieron cargar las estadísticas','Comprueba tu conexión y vuelve a intentarlo.');}
+    }
+
+    const modal=$('#reportModal'); function openModal(){modal.classList.add('open')} function closeModal(){modal.classList.remove('open')}
+
+    document.addEventListener('click',e=>{
+      const go=e.target.closest('[data-go]'),match=e.target.closest('[data-match-id]'),back=e.target.closest('[data-back]'),filter=e.target.closest('[data-filter]'),mtab=e.target.closest('[data-mtab]'),save=e.target.closest('.save'),follow=e.target.closest('[data-follow]'),toastBtn=e.target.closest('[data-toast]');
+      if(go)showScreen(go.dataset.go);if(match)openMatch(match.dataset.matchId);if(back)showScreen(state.previousScreen||'home');
+      if(filter){state.filter=filter.dataset.filter;$$('[data-filter]').forEach(b=>b.classList.toggle('active',b===filter));renderMatches()}
+      if(mtab){$$('[data-mtab]').forEach(b=>b.classList.toggle('active',b===mtab));$$('[data-panel]').forEach(p=>p.classList.toggle('active',p.dataset.panel===mtab.dataset.mtab))}
+      if(save){save.classList.toggle('saved');showToast(save.classList.contains('saved')?'Contenido guardado':'Contenido eliminado')}
+      if(follow){const id=follow.dataset.follow;state.selectedTeams=state.selectedTeams.includes(id)?state.selectedTeams.filter(x=>x!==id):[...state.selectedTeams,id];localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));hydratePersonalization();showToast(state.selectedTeams.includes(id)?'Equipo agregado':'Equipo eliminado')}
+      if(toastBtn)showToast(toastBtn.dataset.toast);
+      if(e.target.closest('[data-report]'))openModal();if(e.target.closest('[data-close-modal]'))closeModal();if(e.target===modal)closeModal();
+      if(e.target.closest('#retryConnection')){state.offline=false;$('#offlineLabel').textContent='En línea ›';fetchRealMatches(true);showToast('Reconectando…')}
+      if(e.target.closest('#refreshEmpty'))fetchRealMatches(true);
+      const jump=e.target.closest('[data-filter-jump]');if(jump){state.filter=jump.dataset.filterJump;$$('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===state.filter));renderMatches()}
+      const tc=e.target.closest('[data-team-choice]');if(tc){const id=tc.dataset.teamChoice;state.selectedTeams=state.selectedTeams.includes(id)?state.selectedTeams.filter(x=>x!==id):[...state.selectedTeams,id];renderChoices();updateStep()}
+      const lc=e.target.closest('[data-league-choice]');if(lc){const id=lc.dataset.leagueChoice;state.selectedLeagues=state.selectedLeagues.includes(id)?state.selectedLeagues.filter(x=>x!==id):[...state.selectedLeagues,id];renderChoices();updateStep()}
+    });
+
+    $('#refreshRealData').addEventListener('click',()=>fetchRealMatches(true));
+    $('#onboardingNext').addEventListener('click',()=>{if(state.onboardingStep===0){state.onboardingStep=1}else if(state.onboardingStep===1){if(state.selectedTeams.length<2){showToast('Selecciona al menos 2 equipos');return}state.onboardingStep=2}else{if(state.selectedLeagues.length<2){showToast('Selecciona al menos 2 ligas');return}finishOnboarding();return}updateStep()});
+    $('#toggleOffline').addEventListener('click',()=>{state.offline=!state.offline;$('#offlineLabel').textContent=state.offline?'Sin conexión ›':'En línea ›';fetchRealMatches(false);showToast(state.offline?'Modo sin conexión activado':'Conexión restablecida')});
+    $('#resetApp').addEventListener('click',()=>{localStorage.removeItem('goalapp_onboarded');state.selectedTeams=[];state.selectedLeagues=[];openOnboarding()});
+    $('#sendReport').addEventListener('click',()=>{const title=$('#reportTitle').value.trim(),text=$('#reportText').value.trim();if(!title||!text){showToast('Completa título y descripción');return}const reports=JSON.parse(localStorage.getItem('goalapp_reports')||'[]');reports.push({title,text,date:new Date().toISOString()});localStorage.setItem('goalapp_reports',JSON.stringify(reports));$('#reportTitle').value='';$('#reportText').value='';closeModal();showToast('Reporte guardado en este dispositivo')});
+    window.addEventListener('online',()=>{state.offline=false;$('#offlineLabel').textContent='En línea ›';fetchRealMatches(true)});
+    window.addEventListener('offline',()=>{state.offline=true;$('#offlineLabel').textContent='Sin conexión ›';fetchRealMatches(false)});
+
+    const preview=new URLSearchParams(location.search).get('preview');
+    window.addEventListener('error',()=>{const splash=document.getElementById('splash');if(splash)splash.classList.add('done')});
+    setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
+    if(preview){state.selectedTeams=['real','liverpool','barca'];state.selectedLeagues=['laliga','premier','champions']}
+    hydratePersonalization();renderChoices();updateStep();renderMatches();fetchRealMatches();
+  </script>
+</body>
+</html>
