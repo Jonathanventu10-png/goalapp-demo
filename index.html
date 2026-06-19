@@ -815,6 +815,81 @@ body{padding-top:0}
     .match-preview-kpis strong { display:block; font-size:16px; }
     .match-preview-kpis span { display:block; margin-top:4px; color:var(--muted); font-size:9px; }
 
+  
+    /* MATCHPRO-1 · Previa interactiva premium */
+    .match-nav-pro { overflow-x:auto; scroll-snap-type:x mandatory; gap:10px; scrollbar-width:none; padding-bottom:8px; }
+    .match-nav-pro::-webkit-scrollbar { display:none; }
+    .match-nav-pro .tab { min-width:max-content; scroll-snap-align:center; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.07); border-radius:999px; padding:12px 18px; }
+    .match-nav-pro .tab.active { background:rgba(255,255,255,.12); border-color:#fff; box-shadow:0 0 0 1px rgba(255,255,255,.32) inset; }
+    .match-pro-stack { display:grid; gap:14px; }
+    .match-pro-card { position:relative; overflow:hidden; padding:16px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(145deg,#10171a,#080c0e); box-shadow:0 18px 42px rgba(0,0,0,.25); }
+    .match-pro-card h3 { margin:0 0 8px; font-size:18px; letter-spacing:-.3px; }
+    .match-pro-card p { margin:0; color:#c4ccc8; font-size:12px; line-height:1.55; }
+    .match-pro-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:14px; }
+    .match-pro-kpi { padding:12px 8px; border-radius:16px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.055); text-align:center; }
+    .match-pro-kpi strong { display:block; font-size:18px; }
+    .match-pro-kpi span { display:block; margin-top:4px; color:var(--muted); font-size:9px; }
+    .form-split { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .form-team { padding:12px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.045); }
+    .form-team-head { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+    .form-team-head img { width:28px; height:28px; object-fit:contain; border-radius:50%; }
+    .form-dots-pro { display:flex; gap:8px; flex-wrap:wrap; }
+    .form-dots-pro i { display:grid; place-items:center; width:30px; height:30px; border-radius:9px; font-size:11px; font-style:normal; font-weight:900; color:#071008; }
+    .form-dots-pro .G { background:#58f28c; } .form-dots-pro .E { background:#d5d5d5; } .form-dots-pro .P { background:#ff5968; color:#fff; }
+    .prediction-card { padding:16px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(145deg,#171b1d,#0a0e10); }
+    .prediction-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+    .prediction-head h3 { margin:0; font-size:16px; text-transform:uppercase; letter-spacing:.9px; }
+    .prediction-head span { color:#d7dfda; font-size:12px; font-weight:800; }
+    .prediction-options { display:grid; grid-template-columns:1fr 1fr 1fr; border:2px solid rgba(0,237,104,.35); border-radius:999px; overflow:hidden; }
+    .prediction-options button { display:grid; place-items:center; min-height:54px; border:0; border-right:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.035); font-weight:900; }
+    .prediction-options button:last-child { border-right:0; }
+    .prediction-options button.active { background:rgba(0,237,104,.2); color:var(--green); }
+    .prediction-bar { height:4px; margin:12px 0 0; background:rgba(255,255,255,.1); border-radius:99px; overflow:hidden; display:flex; }
+    .prediction-bar i { display:block; height:100%; background:var(--green); }
+    .score-predictor { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; }
+    .score-stepper { display:grid; place-items:center; gap:10px; }
+    .score-stepper button { width:42px; height:42px; border:1px solid var(--line); border-radius:13px; background:rgba(255,255,255,.06); font-size:22px; font-weight:900; }
+    .score-stepper strong { font-size:26px; }
+    .pro-ad-free { display:flex; align-items:center; gap:10px; padding:12px; border-radius:18px; background:rgba(0,237,104,.08); border:1px solid rgba(0,237,104,.22); color:#dfffee; }
+    .probable-lineup-switch { display:flex; gap:8px; overflow:auto; scrollbar-width:none; margin:12px 0; }
+    .probable-lineup-switch::-webkit-scrollbar { display:none; }
+    .probable-lineup-switch button { min-width:max-content; padding:9px 13px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.06); }
+    .probable-lineup-switch button.active { color:#031008; background:var(--green); border-color:var(--green); font-weight:900; }
+    .photo-lineup-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .photo-player-card { min-height:148px; position:relative; overflow:hidden; border-radius:18px; background:#10171a; border:1px solid var(--line); }
+    .photo-player-card img { width:100%; height:100%; min-height:148px; object-fit:cover; filter:saturate(1.05) contrast(1.02); }
+    .photo-player-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent,rgba(0,0,0,.85)); }
+    .photo-player-card span { position:absolute; left:9px; right:9px; bottom:9px; z-index:1; }
+    .photo-player-card strong { display:block; font-size:12px; line-height:1.12; }
+    .photo-player-card small { display:block; color:#d6ded9; font-size:9px; margin-top:3px; }
+    .group-pro-table { overflow:hidden; border:1px solid var(--line); border-radius:18px; background:#11181c; }
+    .group-pro-row { display:grid; grid-template-columns:34px 1fr 34px 34px 40px; align-items:center; gap:8px; padding:11px 12px; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; }
+    .group-pro-row:last-child { border-bottom:0; }
+    .group-pro-row.header { color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.8px; }
+    .group-pro-team { display:flex; align-items:center; gap:9px; min-width:0; }
+    .group-pro-team img { width:24px; height:24px; border-radius:50%; object-fit:contain; }
+    .group-pro-team strong { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .group-pro-row.highlight { background:rgba(0,237,104,.09); }
+    .knockout-scroll { overflow-x:auto; padding-bottom:8px; scrollbar-width:none; }
+    .knockout-scroll::-webkit-scrollbar { display:none; }
+    .knockout-stage { display:grid; grid-template-columns:repeat(4,156px); gap:14px; min-width:680px; align-items:start; }
+    .stage-col h3 { text-align:center; font-size:15px; margin:0 0 12px; }
+    .ko-card { min-height:88px; margin-bottom:12px; padding:10px; border:1px solid var(--line); border-radius:16px; background:linear-gradient(145deg,#14191c,#080b0d); text-align:center; }
+    .ko-card .logos { display:flex; justify-content:center; gap:12px; margin-bottom:8px; }
+    .ko-card img { width:28px; height:28px; border-radius:50%; object-fit:contain; }
+    .ko-card strong { display:block; font-size:12px; }
+    .ko-card small { color:var(--muted); }
+    .media-pro-grid { display:grid; gap:12px; }
+    .media-pro-card { min-height:175px; position:relative; overflow:hidden; border:1px solid var(--line); border-radius:22px; background:#11181c; }
+    .media-pro-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .media-pro-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.88)); }
+    .media-pro-copy { position:relative; z-index:1; min-height:175px; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; }
+    .media-pro-copy h3 { margin:10px 0 0; font-size:18px; line-height:1.18; }
+    .match-chat-card textarea { width:100%; min-height:92px; margin-top:12px; padding:13px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.05); color:#fff; resize:none; }
+    .match-chat-bubbles { display:grid; gap:8px; margin-top:12px; }
+    .match-chat-bubbles div { padding:10px 12px; border-radius:16px; background:rgba(255,255,255,.055); color:#dbe3df; font-size:12px; }
+    @media (max-width:390px){ .photo-lineup-grid { grid-template-columns:repeat(2,1fr); } .match-pro-kpis { grid-template-columns:1fr; } .form-split { grid-template-columns:1fr; } }
+
   </style>
 </head>
 <body>
@@ -899,8 +974,12 @@ body{padding-top:0}
         <article class="hero match-hero"><img class="hero-bg" id="matchBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86"><div class="competition" id="matchCompetition">Partido</div><div class="scoreboard"><div class="team"><img id="matchHomeLogo" src=""><span class="team-name" id="matchHomeName">Local</span></div><div class="score"><strong id="matchScore">—</strong><b id="matchStatus">—</b><small id="matchDate"></small></div><div class="team"><img id="matchAwayLogo" src=""><span class="team-name" id="matchAwayName">Visitante</span></div></div></article>
         <div class="match-live-toolbar"><div class="match-update-status"><span class="source-dot real"></span><div><strong id="matchRefreshLabel">Match Center conectado</strong><small id="matchLastUpdated">Esperando datos del partido</small></div></div><button class="compact-refresh" id="refreshMatch">Actualizar</button></div>
         <div class="match-meta-grid"><div class="match-meta-item"><span>Jornada</span><strong id="matchRound">—</strong></div><div class="match-meta-item"><span>Estadio</span><strong id="matchVenue">—</strong></div><div class="match-meta-item"><span>Árbitro</span><strong id="matchReferee">—</strong></div><div class="match-meta-item"><span>Descanso</span><strong id="matchHalftime">—</strong></div></div>
-        <div class="match-nav" role="tablist"><button class="tab active" data-mtab="summary">Resumen</button><button class="tab" data-mtab="stats">Estadísticas</button><button class="tab" data-mtab="lineups">Alineación</button><button class="tab" data-mtab="standings">Tabla</button><button class="tab" data-mtab="h2h">H2H</button><button class="tab" data-mtab="ai">GoalAI</button></div>
+        <div class="match-nav match-nav-pro" role="tablist"><button class="tab active" data-mtab="summary">Resumen</button><button class="tab" data-mtab="preview">La previa</button><button class="tab" data-mtab="predictions">Predicciones</button><button class="tab" data-mtab="lineups">Alineación</button><button class="tab" data-mtab="standings">Clasificación</button><button class="tab" data-mtab="h2h">Cara a Cara</button><button class="tab" data-mtab="knockout">Knockout</button><button class="tab" data-mtab="media">TV</button><button class="tab" data-mtab="ai">GoalAI</button></div>
         <div class="panel active" data-panel="summary"><article class="card content-card"><div class="detail-section-title"><h3>Eventos del partido</h3><small id="eventCount">—</small></div><div id="matchEvents"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div></article></div>
+        <div class="panel" data-panel="preview"><div id="matchPreviewPro"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></article></div></div>
+        <div class="panel" data-panel="predictions"><div id="matchPredictionsPro"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div></div></article></div></div>
+        <div class="panel" data-panel="knockout"><div id="matchKnockoutPro"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div></div></article></div></div>
+        <div class="panel" data-panel="media"><div id="matchMediaPro"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div></div></article></div></div>
         <div class="panel" data-panel="stats"><article class="card content-card"><div class="detail-section-title"><h3>Estadísticas</h3><small>Comparación en vivo</small></div><div id="matchStats"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></div><div class="top-players" id="matchTopPlayers"></div></article></div>
         <div class="panel" data-panel="lineups"><div id="matchLineups"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></article></div></div>
         <div class="panel" data-panel="standings"><article class="card content-card"><div class="detail-section-title"><h3>Tabla de posiciones</h3><small id="standingsLabel">Temporada actual</small></div><div id="matchStandings"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></div></article></div>
@@ -2368,6 +2447,393 @@ body{padding-top:0}
     document.addEventListener('click', e => {
       const speak = e.target.closest('[data-speak]');
       if (speak) speakGoalAudio(speak.dataset.speak || 'brief');
+    });
+
+
+
+    /* MATCHPRO-1 · Better-than-empty pre-match experience */
+
+    const MATCHPRO_STORAGE = 'goalapp_matchpro_votes_v1';
+
+    function stableNumber(seed, min, max) {
+      const s = String(seed || 'goalapp');
+      let n = 0;
+      for (let i = 0; i < s.length; i++) n = (n * 33 + s.charCodeAt(i)) >>> 0;
+      return min + (n % (max - min + 1));
+    }
+
+    function getPredictionVotes(match) {
+      const base = stableNumber(match?.id || match?.homeName || 'match', 9000, 24000);
+      const h = stableNumber(`${match?.homeName}-h`, 26, 45);
+      const a = stableNumber(`${match?.awayName}-a`, 22, 42);
+      const d = Math.max(12, 100 - h - a);
+      let stored = {};
+      try { stored = JSON.parse(localStorage.getItem(MATCHPRO_STORAGE) || '{}') } catch {}
+      const key = String(match?.id || 'demo');
+      return stored[key] || { total: base, home: h, draw: d, away: a, choice: '' };
+    }
+
+    function savePredictionVotes(match, votes) {
+      let stored = {};
+      try { stored = JSON.parse(localStorage.getItem(MATCHPRO_STORAGE) || '{}') } catch {}
+      stored[String(match?.id || 'demo')] = votes;
+      localStorage.setItem(MATCHPRO_STORAGE, JSON.stringify(stored));
+    }
+
+    function ensurePct(votes) {
+      const sum = Number(votes.home) + Number(votes.draw) + Number(votes.away);
+      if (!sum) return { home: 34, draw: 32, away: 34 };
+      return {
+        home: Math.round(votes.home / sum * 100),
+        draw: Math.round(votes.draw / sum * 100),
+        away: Math.max(1, 100 - Math.round(votes.home / sum * 100) - Math.round(votes.draw / sum * 100))
+      };
+    }
+
+    function formLetters(seed) {
+      const letters = ['G','E','P'];
+      return Array.from({length:5}, (_, i) => letters[stableNumber(`${seed}-${i}`, 0, 2)]);
+    }
+
+    function renderFormDots(seed) {
+      return `<span class="form-dots-pro">${formLetters(seed).map(x => `<i class="${x}">${x}</i>`).join('')}</span>`;
+    }
+
+    function groupRowsForMatch(match) {
+      const groups = state.worldCupStandings || [];
+      let rows = [];
+      for (const group of groups) {
+        if (Array.isArray(group) && group.some(row => [match.homeTeamId, match.awayTeamId].map(String).includes(String(row.team?.id)))) {
+          rows = group;
+          break;
+        }
+      }
+      if (!rows.length && groups[0]?.length) rows = groups[0];
+      if (!rows.length) {
+        rows = [
+          {rank:1, team:{id:match.homeTeamId, name:match.homeName, logo:match.homeLogo}, all:{played:1}, goalsDiff:'+1', points:3},
+          {rank:2, team:{id:match.awayTeamId, name:match.awayName, logo:match.awayLogo}, all:{played:1}, goalsDiff:'0', points:1},
+          {rank:3, team:{id:'placeholder-1', name:'Rival del grupo', logo:placeholderLogo('RG')}, all:{played:1}, goalsDiff:'0', points:1},
+          {rank:4, team:{id:'placeholder-2', name:'Rival del grupo', logo:placeholderLogo('RG')}, all:{played:1}, goalsDiff:'-1', points:0}
+        ];
+      }
+      return rows.slice(0, 4);
+    }
+
+    function renderGroupTableCompact(match) {
+      const rows = groupRowsForMatch(match);
+      const ids = new Set([String(match.homeTeamId || ''), String(match.awayTeamId || '')]);
+      return `<div class="group-pro-table">
+        <div class="group-pro-row header"><span>#</span><span>Equipo</span><span>J</span><span>DG</span><span>Pts.</span></div>
+        ${rows.map(row => `<div class="group-pro-row ${ids.has(String(row.team?.id)) ? 'highlight' : ''}"><strong>${row.rank || '—'}</strong><span class="group-pro-team"><img src="${row.team?.logo || placeholderLogo(row.team?.name || 'FC')}" alt=""><strong>${escapeHTML(row.team?.name || 'Equipo')}</strong></span><span>${row.all?.played ?? '—'}</span><span>${row.goalsDiff ?? '—'}</span><strong>${row.points ?? '—'}</strong></div>`).join('')}
+      </div>`;
+    }
+
+    function relatedMatchesForMatch(match) {
+      const same = (state.matches || []).filter(m =>
+        m.id !== match.id &&
+        (m.competitionId && match.competitionId ? Number(m.competitionId) === Number(match.competitionId) : normalizeName(m.league) === normalizeName(match.league))
+      );
+      return same.sort(compareByRelevance).slice(0, 6);
+    }
+
+    function teamSquadPlayers(teamId, fallbackName) {
+      const key = String(teamId || fallbackName || '');
+      return (state.matchSquads?.[key] || []).map(p => normalizeFeaturedPlayer(p, { id: teamId, name: fallbackName, logo: '' }));
+    }
+
+    function matchPlayerPool(match) {
+      const home = teamSquadPlayers(match.homeTeamId, match.homeName);
+      const away = teamSquadPlayers(match.awayTeamId, match.awayName);
+      const rich = richPlayerPool();
+      const names = [normalizeName(match.homeName), normalizeName(match.awayName)];
+      const linked = rich.filter(p => names.some(n => normalizeName(playerTeamName(p)).includes(n)));
+      return [...home, ...away, ...linked].filter(p => p.name).slice(0, 28);
+    }
+
+    async function loadMatchSquads(match) {
+      if (!match || !hasProfessionalBackend()) return;
+      state.matchSquads = state.matchSquads || {};
+      const pairs = [
+        [match.homeTeamId, match.homeName],
+        [match.awayTeamId, match.awayName]
+      ].filter(([id]) => id && !state.matchSquads[String(id)]);
+      if (!pairs.length) return;
+      const settled = await Promise.allSettled(pairs.map(([id, name]) =>
+        fetchJSON(`${professionalBase()}/api/team/${encodeURIComponent(id)}/squad`, 15000).then(data => ({ id, name, players: data.players || [] }))
+      ));
+      settled.forEach(result => {
+        if (result.status === 'fulfilled') state.matchSquads[String(result.value.id)] = result.value.players;
+      });
+    }
+
+    function renderMatchPreviewPro(match = state.selectedMatch) {
+      const target = $('#matchPreviewPro');
+      if (!target || !match) return;
+      const related = relatedMatchesForMatch(match);
+      const news = matchRelatedNews(match);
+      target.innerHTML = `<div class="match-pro-stack">
+        <article class="match-pro-card">
+          <span class="eyebrow">Previa GoalApp</span>
+          <h3>${escapeHTML(match.homeName)} vs ${escapeHTML(match.awayName)}</h3>
+          <p>${match.finished ? `El partido terminó ${escapeHTML(match.score)}. Revisa eventos, tabla y contexto.` : match.live ? `El partido está en vivo con marcador ${escapeHTML(match.score)}.` : `Comienza ${escapeHTML(countdownText(match.date))}. GoalApp preparó contexto antes del inicio.`}</p>
+          <div class="match-pro-kpis">
+            <div class="match-pro-kpi"><strong>${escapeHTML(match.statusText)}</strong><span>Estado</span></div>
+            <div class="match-pro-kpi"><strong>${escapeHTML(formatTime(new Date(match.date)))}</strong><span>Hora</span></div>
+            <div class="match-pro-kpi"><strong>${escapeHTML(match.competitionRound || 'Fase')}</strong><span>Ronda</span></div>
+          </div>
+        </article>
+        <article class="match-pro-card">
+          <h3>Últimos partidos</h3>
+          <div class="form-split">
+            <div class="form-team"><div class="form-team-head"><img src="${match.homeLogo}" alt=""><strong>${escapeHTML(match.homeName)}</strong></div>${renderFormDots(match.homeName)}</div>
+            <div class="form-team"><div class="form-team-head"><img src="${match.awayLogo}" alt=""><strong>${escapeHTML(match.awayName)}</strong></div>${renderFormDots(match.awayName)}</div>
+          </div>
+        </article>
+        <article class="match-pro-card">
+          <h3>Datos del partido</h3>
+          <p>${escapeHTML(match.venue || match.venueCity || 'Sede por confirmar')} · ${escapeHTML(match.league)}. ${news[0] ? `Noticia relacionada: ${news[0].title}` : 'Las noticias relacionadas aparecerán cuando lleguen desde GoalNews.'}</p>
+        </article>
+        <article class="match-pro-card">
+          <h3>Otros partidos de la competición</h3>
+          <div class="match-context-list">${related.length ? related.map(r => `<div class="context-row"><span>${escapeHTML(r.homeName)} vs ${escapeHTML(r.awayName)}</span><small>${escapeHTML(r.finished ? r.score : r.statusText)}</small></div>`).join('') : '<div class="context-row"><span>GoalApp mostrará aquí la agenda del grupo o torneo.</span><small>Próximamente</small></div>'}</div>
+        </article>
+      </div>`;
+    }
+
+    function renderPredictionsPro(match = state.selectedMatch) {
+      const target = $('#matchPredictionsPro');
+      if (!target || !match) return;
+      const votes = getPredictionVotes(match), pct = ensurePct(votes);
+      target.innerHTML = `<div class="match-pro-stack">
+        <article class="prediction-card">
+          <div class="prediction-head"><h3>¿Quién ganará?</h3><span>${Number(votes.total || 0).toLocaleString('es-SV')} votos</span></div>
+          <div class="prediction-options">
+            <button class="${votes.choice==='home'?'active':''}" data-prediction="home"><img src="${match.homeLogo}" style="width:26px;height:26px;border-radius:50%;object-fit:contain" alt=""></button>
+            <button class="${votes.choice==='draw'?'active':''}" data-prediction="draw">Empate</button>
+            <button class="${votes.choice==='away'?'active':''}" data-prediction="away"><img src="${match.awayLogo}" style="width:26px;height:26px;border-radius:50%;object-fit:contain" alt=""></button>
+          </div>
+          <div class="prediction-bar"><i style="width:${pct.home}%"></i><i style="width:${pct.draw}%;background:#fff"></i><i style="width:${pct.away}%;background:#5d6bff"></i></div>
+        </article>
+        <article class="prediction-card">
+          <div class="prediction-head"><h3>¿3 o más goles?</h3><span>${stableNumber(match.id + 'goals', 600, 1500)} votos</span></div>
+          <div class="prediction-options" style="grid-template-columns:1fr 1fr"><button data-toast="Voto guardado">Sí</button><button data-toast="Voto guardado">No</button></div>
+        </article>
+        <article class="prediction-card">
+          <div class="prediction-head"><h3>Tu marcador final</h3><span>Interactivo</span></div>
+          <div class="score-predictor">
+            <div class="score-stepper"><button data-score-step="home:1">+</button><strong id="predictHomeScore">0</strong><button data-score-step="home:-1">−</button></div>
+            <strong>—</strong>
+            <div class="score-stepper"><button data-score-step="away:1">+</button><strong id="predictAwayScore">0</strong><button data-score-step="away:-1">−</button></div>
+          </div>
+        </article>
+        <div class="pro-ad-free"><strong>Sin apuestas.</strong><span>GoalApp usa predicciones sociales para engagement, no para gambling.</span></div>
+      </div>`;
+    }
+
+    function renderLineups(matchLineups = [], playersRows = []) {
+      const target = $('#matchLineups');
+      if (!target) return;
+      if (matchLineups.length) {
+        const ratings = playerRatingsMap(playersRows);
+        target.innerHTML = matchLineups.map(lineup => {
+          const rowMax = new Map(); lineup.startXI.forEach(p => { const [r,c] = String(p.grid||'').split(':').map(Number); if(r&&c) rowMax.set(r, Math.max(rowMax.get(r)||0,c)) });
+          const pitchPlayers = lineup.startXI.map((p,index) => { const pos = playerPitchPosition(p,rowMax) || {x:15+(index%4)*23,y:88-Math.floor(index/4)*28}; const rating = ratings.get(String(p.id))?.rating; const short = (p.name||'Jugador').split(' ').slice(-1)[0]; return `<div class="pitch-player" style="left:${pos.x}%;top:${pos.y}%"><span class="player-number">${p.number??'—'}</span>${rating?`<b class="rating">${rating.toFixed(1)}</b>`:''}<span>${escapeHTML(short)}</span></div>` }).join('');
+          const bench = lineup.substitutes.slice(0,12).map(p => `<div class="bench-player"><b>${p.number??'—'}</b><span>${escapeHTML(p.name)}</span></div>`).join('');
+          return `<article class="card lineup-card"><div class="lineup-head"><div class="lineup-team"><img src="${lineup.team.logo||placeholderLogo(lineup.team.name)}" alt=""><div><strong>${escapeHTML(lineup.team.name)}</strong><small>${lineup.coach?.name?`DT: ${escapeHTML(lineup.coach.name)}`:'Entrenador no publicado'}</small></div></div><span class="formation-badge">${escapeHTML(lineup.formation||'XI')}</span></div><div class="pitch"><div class="center-circle"></div>${pitchPlayers}</div><div class="bench-title">Suplentes</div><div class="bench-list">${bench||'<span class="sub">No publicados</span>'}</div></article>`;
+        }).join('');
+        return;
+      }
+      const match = state.selectedMatch;
+      const players = matchPlayerPool(match);
+      const home = players.filter(p => normalizeName(playerTeamName(p)).includes(normalizeName(match.homeName)) || String(p.statistics?.[0]?.team?.id)===String(match.homeTeamId)).slice(0,6);
+      const away = players.filter(p => normalizeName(playerTeamName(p)).includes(normalizeName(match.awayName)) || String(p.statistics?.[0]?.team?.id)===String(match.awayTeamId)).slice(0,6);
+      const use = home.length || away.length ? [...home, ...away] : players.slice(0,9);
+      target.innerHTML = `<article class="card lineup-card">
+        <div class="lineup-head"><div><strong>Probable / jugadores a seguir</strong><small>Fotos reales cuando el proveedor entrega plantillas. Alineaciones oficiales aparecen cerca del inicio.</small></div><span class="formation-badge">PREVIA</span></div>
+        <div class="probable-lineup-switch"><button class="active">${escapeHTML(match.homeName)}</button><button>${escapeHTML(match.awayName)}</button><button>Valor de mercado</button><button>Temporada</button></div>
+        <div class="photo-lineup-grid">${use.length ? use.map(p => `<article class="photo-player-card"><img src="${playerPhoto(p)}" alt="${escapeHTML(p.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><span><strong>${escapeHTML(p.name)}</strong><small>${escapeHTML(playerTeamName(p))}</small></span></article>`).join('') : '<p class="sub">Cargando jugadores reales del partido…</p>'}</div>
+      </article>`;
+    }
+
+    function renderStandings(data, match) {
+      const target = $('#matchStandings');
+      if (!target) return;
+      const groups = data?.standings?.length ? data.standings : (state.worldCupStandings || []);
+      let rows = [];
+      for (const group of groups) {
+        if (Array.isArray(group) && group.some(row => [match.homeTeamId, match.awayTeamId].map(String).includes(String(row.team?.id)))) { rows = group; break; }
+      }
+      if (!rows.length) rows = groupRowsForMatch(match);
+      const groupTitle = rows[0]?.group || match.competitionRound || 'Grupo destacado';
+      $('#standingsLabel').textContent = groupTitle;
+      target.innerHTML = `<div class="match-pro-stack"><article class="match-pro-card"><h3>${escapeHTML(groupTitle)}</h3>${renderGroupTableCompact(match)}</article><article class="match-pro-card"><h3>Qué significa</h3><p>GoalApp resalta los equipos del partido y te muestra el contexto del grupo o competición. Si el proveedor no publica una tabla oficial, se muestra una vista de previa hasta recibir datos.</p></article></div>`;
+    }
+
+    function renderKnockoutPro(match = state.selectedMatch) {
+      const target = $('#matchKnockoutPro');
+      if (!target || !match) return;
+      const wc = (state.matches || []).filter(isWorldCupMatch).sort((a,b)=>new Date(a.date)-new Date(b.date));
+      const logos = [match.homeLogo, match.awayLogo, ...wc.map(m=>m.homeLogo), ...wc.map(m=>m.awayLogo)].filter(Boolean);
+      const slot = i => logos[i % Math.max(1, logos.length)] || placeholderLogo('KO');
+      const dates = wc.length ? wc : [match];
+      const card = (label, i) => `<div class="ko-card"><div class="logos"><img src="${slot(i)}" alt=""><img src="${slot(i+1)}" alt=""></div><strong>${escapeHTML(label)}</strong><small>${escapeHTML(formatDate(new Date((dates[i % dates.length] || match).date)))} · ${escapeHTML(formatTime(new Date((dates[i % dates.length] || match).date)))}</small></div>`;
+      target.innerHTML = `<article class="match-pro-card"><h3>Camino del torneo</h3><p>Visualización dinámica de eliminatorias y cruces. Se completará automáticamente con resultados reales.</p><div class="knockout-scroll"><div class="knockout-stage">
+        <div class="stage-col"><h3>Dieciseisavos</h3>${Array.from({length:4},(_,i)=>card('Cruce '+(i+1),i)).join('')}</div>
+        <div class="stage-col"><h3>Octavos</h3>${Array.from({length:3},(_,i)=>card('Octavos '+(i+1),i+4)).join('')}</div>
+        <div class="stage-col"><h3>Cuartos</h3>${Array.from({length:2},(_,i)=>card('Cuartos '+(i+1),i+7)).join('')}</div>
+        <div class="stage-col"><h3>Semifinal / Final</h3>${card('Semifinal',9)}${card('Final',10)}</div>
+      </div></div></article>`;
+    }
+
+    function renderMatchMediaPro(match = state.selectedMatch) {
+      const target = $('#matchMediaPro');
+      if (!target || !match) return;
+      const items = (state.videos && state.videos.length ? state.videos : demoVideoItems()).slice(0, 3);
+      const news = matchRelatedNews(match);
+      target.innerHTML = `<div class="media-pro-grid">
+        ${items.map((item, i) => `<button class="media-pro-card" data-news-link="${escapeHTML(item.link || '')}"><img src="${safeNewsImage(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div class="media-pro-copy"><span class="play-badge">▶</span>${sourceBadgeHTML(item)}<h3>${escapeHTML(item.title || 'Video destacado')}</h3></div></button>`).join('')}
+        <article class="match-pro-card speak-card" data-speak="match"><h3>GoalAudio del partido</h3><p>Toca para escuchar una previa rápida con hora, torneo y contexto.</p><span class="audio-now">▶ Escuchar previa</span></article>
+        <article class="match-pro-card"><h3>Noticias relacionadas</h3><div class="context-news">${news.length ? news.map(n => `<a href="${escapeHTML(n.link || '#')}" target="_blank" rel="noopener noreferrer">${sourceBadgeHTML(n)}<br>${escapeHTML(n.title)}</a>`).join('') : '<a>Cuando GoalNews detecte contenido de estos equipos, aparecerá aquí.</a>'}</div></article>
+      </div>`;
+    }
+
+    function renderMatchChatPro(match = state.selectedMatch) {
+      return `<article class="match-pro-card match-chat-card"><h3>Chat GoalApp</h3><p>Espacio interactivo local para opinión antes del partido. En una versión futura podrá ser comunidad real.</p><textarea placeholder="¿Cuál es tu pronóstico para ${escapeHTML(match?.homeName || 'local')} vs ${escapeHTML(match?.awayName || 'visitante')}?"></textarea><div class="match-chat-bubbles"><div>🔥 Partido marcado como importante por GoalAI.</div><div>⚽ Revisa predicciones y grupo antes del inicio.</div></div></article>`;
+    }
+
+    function renderMatchOverview(match = state.selectedMatch) {
+      if (!match) return '';
+      const related = relatedMatchesForMatch(match);
+      const news = matchRelatedNews(match);
+      return `<div class="match-pro-stack">
+        <article class="match-pro-card">
+          <span class="eyebrow">Vista inteligente</span>
+          <h3>${match.finished ? 'Resumen del partido' : match.live ? 'Partido en vivo' : 'Previa completa'}</h3>
+          <p>${escapeHTML(match.homeName)} vs ${escapeHTML(match.awayName)} · ${escapeHTML(match.league)}. ${match.finished ? `Terminó ${escapeHTML(match.score)}.` : match.live ? `Marcador actual: ${escapeHTML(match.score)}.` : `Comienza ${escapeHTML(countdownText(match.date))}.`}</p>
+          <div class="match-pro-kpis"><div class="match-pro-kpi"><strong>${escapeHTML(match.statusText)}</strong><span>Estado</span></div><div class="match-pro-kpi"><strong>${escapeHTML(formatTime(new Date(match.date)))}</strong><span>Hora</span></div><div class="match-pro-kpi"><strong>${escapeHTML(match.competitionRound || 'Ronda')}</strong><span>Fase</span></div></div>
+        </article>
+        <article class="match-pro-card"><h3>Clasificación rápida</h3>${renderGroupTableCompact(match)}</article>
+        <article class="match-pro-card"><h3>Noticias relevantes</h3><div class="context-news">${news.length ? news.map(n => `<a href="${escapeHTML(n.link || '#')}" target="_blank" rel="noopener noreferrer">${sourceBadgeHTML(n)}<br>${escapeHTML(n.title)}</a>`).join('') : '<a>GoalNews agregará titulares relacionados antes del partido.</a>'}</div></article>
+        ${renderMatchChatPro(match)}
+      </div>`;
+    }
+
+    function renderAllMatchPro(match = state.selectedMatch) {
+      if (!match) return;
+      renderMatchPreviewPro(match);
+      renderPredictionsPro(match);
+      renderKnockoutPro(match);
+      renderMatchMediaPro(match);
+    }
+
+    function renderTimeline(data, match) {
+      const target = $('#matchEvents'), items = extractArray(data, ['timeline', 'event', 'events']);
+      $('#eventCount').textContent = items.length ? `${items.length} eventos` : 'Previa';
+      if (!items.length) { target.innerHTML = renderMatchOverview(match); return; }
+      const ordered = [...items].sort((a,b)=>(Number(b.minute)||0)-(Number(a.minute)||0));
+      target.innerHTML = ordered.slice(0,24).map(item => {
+        const minute = item.minuteDisplay || item.minute || item.intTime || item.strTime || item.strTimeline || item.intEventMinute || '—';
+        const player = item.player?.name || item.strPlayer || item.strPlayerName || item.strEvent || item.strTimelineDetail || 'Evento del partido';
+        const detail = item.detail || (item.assist?.name ? `Asistencia: ${item.assist.name}` : '') || item.strTimelineDetail || item.strDetail || item.strAssist || '';
+        const teamName = item.team?.name || item.strTeam || ''; const teamLogo = item.team?.logo || '';
+        return `<div class="event"><b>${escapeHTML(String(minute).replace("'",''))}'</b>${eventIcon(item)}<div><strong>${escapeHTML(player)}</strong><small>${escapeHTML(detail)}</small>${teamName?`<span class="event-team">${teamLogo?`<img src="${teamLogo}" alt="">`:''}${escapeHTML(teamName)}</span>`:''}</div><em>${escapeHTML(match.score)}</em></div>`;
+      }).join('');
+    }
+
+    async function loadStandings() {
+      const match = state.selectedMatch;
+      if (!match || state.matchLazy.standings) return;
+      state.matchLazy.standings = true;
+      try {
+        if (!match.competitionId || !match.season) throw new Error('missing ids');
+        const data = await fetchJSON(`${professionalBase()}/api/standings?league=${encodeURIComponent(match.competitionId)}&season=${encodeURIComponent(match.season)}`, 16000);
+        renderStandings(data, match);
+      } catch (error) {
+        renderStandings({}, match);
+      }
+    }
+
+    async function refreshSelectedMatch(automatic = false) {
+      const match = state.selectedMatch;
+      if (!match) return;
+      $('#refreshMatch').classList.add('loading');
+      try {
+        await loadMatchSquads(match);
+        let detail = {};
+        if (match.source === 'professional' && hasProfessionalBackend()) {
+          try { detail = await fetchJSON(`${professionalBase()}/api/match/${encodeURIComponent(match.id)}?timezone=America%2FEl_Salvador`, 18000); } catch (e) { detail = {}; }
+        }
+        if (detail.match) { const richer = normalizeProfessionalMatch(detail.match); Object.assign(match, richer); state.selectedMatch = match; renderMatchHeader(match); }
+        state.matchDetail = detail;
+        const availability = detail.availability || {};
+        $('#matchLastUpdated').textContent = `Actualizado ${formatTime(new Date(detail.fetchedAt || Date.now()))}`;
+        renderTimeline({events: detail.events || []}, match);
+        renderStats({statistics: detail.statistics || []});
+        renderTopPlayers(detail.players || []);
+        renderLineups(detail.lineups || [], detail.players || []);
+        renderAIAuto(match, {statistics: detail.statistics || []}, detail.events || []);
+        renderAllMatchPro(match);
+        $('#availabilityRow')?.remove();
+        const chips = [['Eventos', availability.events], ['Stats', availability.statistics], ['Alineaciones', availability.lineups], ['Jugadores', Boolean(matchPlayerPool(match).length || availability.players)]];
+        const holder = $('#matchAIFacts');
+        holder.insertAdjacentHTML('beforebegin', `<div class="availability-row" id="availabilityRow">${chips.map(([name,on]) => `<span class="availability-chip ${on?'on':''}">${name}</span>`).join('')}</div>`);
+        startMatchRefresh(Number(detail.refreshAfter) || 35);
+        if (!automatic) showToast('Match Center actualizado');
+      } catch (error) {
+        $('#matchLastUpdated').textContent = `Previa lista · ${error.message}`;
+        renderTimeline({events: []}, match);
+        renderStats({statistics: []});
+        renderLineups([], []);
+        renderAIAuto(match, {}, []);
+        renderAllMatchPro(match);
+        if (!automatic) showToast('Mostrando previa interactiva');
+      } finally {
+        $('#refreshMatch').classList.remove('loading');
+      }
+    }
+
+    async function openMatch(matchId) {
+      const match = state.matches.find(m => m.id === String(matchId)) || state.matches[0];
+      if (!match) return;
+      clearMatchTimers();
+      state.selectedMatch = match;
+      state.matchDetail = null;
+      state.matchLazy = { standings:false, h2h:false };
+      renderMatchHeader(match);
+      $('#matchRefreshLabel').textContent = match.finished ? 'Resumen del partido' : match.live ? 'Partido en vivo' : 'Previa interactiva';
+      $('#matchLastUpdated').textContent = 'Preparando datos, previa y contenido';
+      $('#matchEvents').innerHTML = renderMatchOverview(match);
+      $('#matchStats').innerHTML = '<div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div>';
+      $('#matchTopPlayers').innerHTML = '';
+      $('#matchLineups').innerHTML = '<article class="card content-card"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></article>';
+      $('#matchStandings').innerHTML = '<div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div>';
+      $('#matchH2H').innerHTML = '<div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div>';
+      renderAIAuto(match, {}, []);
+      renderAllMatchPro(match);
+      $$('[data-mtab]').forEach((b,i) => b.classList.toggle('active', i === 0));
+      $$('[data-panel]').forEach(p => p.classList.toggle('active', p.dataset.panel === 'summary'));
+      showScreen('match');
+      await refreshSelectedMatch(false);
+    }
+
+    document.addEventListener('click', e => {
+      const pred = e.target.closest('[data-prediction]');
+      if (pred && state.selectedMatch) {
+        const votes = getPredictionVotes(state.selectedMatch);
+        if (!votes.choice) votes.total = Number(votes.total || 0) + 1;
+        votes.choice = pred.dataset.prediction;
+        votes[votes.choice] = Number(votes[votes.choice] || 0) + 3;
+        savePredictionVotes(state.selectedMatch, votes);
+        renderPredictionsPro(state.selectedMatch);
+        showToast('Voto guardado');
+      }
+      const step = e.target.closest('[data-score-step]');
+      if (step) {
+        const [side, amount] = step.dataset.scoreStep.split(':');
+        const el = side === 'home' ? $('#predictHomeScore') : $('#predictAwayScore');
+        if (el) el.textContent = String(Math.max(0, Math.min(9, Number(el.textContent || 0) + Number(amount))));
+      }
     });
 
 
