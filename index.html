@@ -978,6 +978,33 @@ body{padding-top:0}
       .wc-match-score { text-align:left; }
     }
 
+  
+    /* MATCHPRO-4 · Native video player + live data */
+    .native-video-card { position:relative; overflow:hidden; min-height:210px; border:1px solid var(--line); border-radius:24px; background:#10171a; text-align:left; box-shadow:0 18px 42px rgba(0,0,0,.24); }
+    .native-video-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.05); }
+    .native-video-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.55) 52%,rgba(0,0,0,.93)); }
+    .native-video-copy { position:relative; z-index:1; min-height:210px; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; }
+    .native-video-copy h3 { margin:12px 0 8px; font-size:20px; line-height:1.14; }
+    .native-video-copy small { color:#d9e2de; font-size:10px; }
+    .native-play { width:54px; height:54px; display:grid; place-items:center; border-radius:50%; background:var(--green); color:#031008; font-weight:950; box-shadow:0 16px 34px rgba(0,237,104,.28); }
+    .video-player-modal { position:fixed; inset:0; z-index:120; background:rgba(0,0,0,.82); backdrop-filter:blur(12px); display:none; align-items:center; justify-content:center; padding:18px; }
+    .video-player-modal.open { display:flex; }
+    .video-player-shell { width:min(940px,100%); border:1px solid rgba(255,255,255,.12); border-radius:22px; overflow:hidden; background:#07090a; box-shadow:0 28px 90px rgba(0,0,0,.55); }
+    .video-player-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .video-player-head strong { font-size:13px; line-height:1.25; }
+    .video-player-head small { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+    .video-player-close { width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:rgba(255,255,255,.08); color:#fff; font-size:20px; }
+    .video-frame-wrap { position:relative; width:100%; aspect-ratio:16/9; background:#000; }
+    .video-frame-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    .video-credit { padding:10px 14px; color:var(--muted); font-size:11px; }
+    .video-credit b { color:#fff; }
+    .local-news-grid { display:grid; gap:10px; }
+    .standings-updated-chip { display:inline-flex; align-items:center; gap:7px; padding:8px 10px; border-radius:999px; background:rgba(0,237,104,.09); border:1px solid rgba(0,237,104,.2); color:#dfffee; font-size:10px; font-weight:900; }
+    .player-source-note { margin-top:10px; color:var(--muted); font-size:10px; line-height:1.4; }
+    .trend-player-empty { padding:16px; border:1px solid rgba(255,209,102,.2); border-radius:18px; background:rgba(255,209,102,.06); color:#f1e7c8; font-size:12px; line-height:1.45; }
+    .wc-table-topline { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; color:var(--muted); font-size:10px; border-bottom:1px solid rgba(255,255,255,.06); }
+    @media (max-width:390px){ .native-video-card { min-height:188px; } .native-video-copy { min-height:188px; } .native-video-copy h3 { font-size:18px; } }
+
   </style>
 </head>
 <body>
@@ -1038,6 +1065,10 @@ body{padding-top:0}
         <article class="news-spotlight reveal-card" id="homeNewsSpotlight"><div class="news-spotlight-copy"><span class="source-badge">GoalNews</span><h3>Cargando noticia principal…</h3><p>Estamos reuniendo lo más importante del momento para tu pantalla de inicio.</p></div></article>
         <div class="headline-strip" id="headlineStrip"><div class="headline-pill"><div><strong>Actualizando titulares…</strong><small>GoalNews</small></div></div></div>
         <div class="home-news-grid" id="homeNews"><div class="news-skeleton-row"><div class="skeleton"></div><div class="news-skeleton-lines"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div></div>
+
+        <div class="section-head"><div><h2>Fútbol de El Salvador</h2><span class="eyebrow">LOCAL</span></div><button class="link-btn" data-news-category="elsalvador" data-go="feed">Ver local</button></div>
+        <div class="home-news-grid" id="homeLocalNews"><article class="card status-card"><p>Cargando noticias locales…</p></article></div>
+
         <div class="section-head"><div><h2>Video destacado</h2><span class="eyebrow">VER</span></div><button class="link-btn" data-news-category="videos" data-go="feed">Videos</button></div>
         <div class="home-media-grid" id="homeVideoHighlight"><article class="home-video-card"><div class="home-media-copy"><span class="source-badge video">Video</span><h3>Cargando videos destacados…</h3></div></article></div>
 
@@ -3778,6 +3809,280 @@ body{padding-top:0}
         renderWorldCupCenterPro(wc.dataset.wcTab);
         document.getElementById('worldCupCenterPro')?.scrollIntoView({ behavior:'smooth', block:'nearest' });
       }
+    });
+
+
+
+    /* MATCHPRO-4 · Native videos, updated standings and real-player recovery */
+
+    const TRENDING_PLAYERS_CACHE = 'goalapp_trending_players_v1';
+
+    function videoEmbedUrl(item = {}) {
+      const link = String(item.embed || item.embedUrl || item.link || '');
+      const id = youtubeIdFromUrl(link) || item.videoId || '';
+      if (id) return `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&playsinline=1&rel=0`;
+      if (/scorebat\.com|videos\.scorebat/i.test(link)) return link.replace(/^http:\/\//, 'https://');
+      return '';
+    }
+
+    function videoThumb(item = {}) {
+      const id = youtubeIdFromUrl(item.link || item.embed || '') || item.videoId || '';
+      return item.image || item.thumbnail || (id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : newsFallbackImage(item));
+    }
+
+    function ensureVideoModal() {
+      let modal = $('#videoPlayerModal');
+      if (modal) return modal;
+      modal = document.createElement('div');
+      modal.id = 'videoPlayerModal';
+      modal.className = 'video-player-modal';
+      modal.innerHTML = `<div class="video-player-shell"><div class="video-player-head"><div><strong id="videoPlayerTitle">Video</strong><small id="videoPlayerSource">Fuente</small></div><button class="video-player-close" data-close-video>×</button></div><div class="video-frame-wrap" id="videoFrameWrap"></div><div class="video-credit" id="videoCredit">Video enlazado desde su fuente original.</div></div>`;
+      document.body.appendChild(modal);
+      return modal;
+    }
+
+    function openNativeVideo(item = {}) {
+      const url = videoEmbedUrl(item);
+      if (!url) {
+        if (item.link) window.open(item.link, '_blank', 'noopener,noreferrer');
+        else showToast('Video no disponible todavía');
+        return;
+      }
+      const modal = ensureVideoModal();
+      $('#videoPlayerTitle').textContent = item.title || 'Video destacado';
+      $('#videoPlayerSource').textContent = item.source || 'Fuente original';
+      $('#videoFrameWrap').innerHTML = `<iframe src="${escapeHTML(url)}" title="${escapeHTML(item.title || 'Video')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+      $('#videoCredit').innerHTML = `Crédito: <b>${escapeHTML(item.source || 'Fuente original')}</b>. El video se reproduce embebido desde la fuente original.`;
+      modal.classList.add('open');
+    }
+
+    function closeNativeVideo() {
+      const modal = $('#videoPlayerModal');
+      if (!modal) return;
+      $('#videoFrameWrap').innerHTML = '';
+      modal.classList.remove('open');
+    }
+
+    function registerVideoItem(item = {}) {
+      state.videoRegistry = state.videoRegistry || {};
+      const id = item.id || `video-${hashString ? hashString(item.link || item.title || Math.random()) : Math.random().toString(36).slice(2)}`;
+      state.videoRegistry[id] = item;
+      return id;
+    }
+
+    function videoCardRichHTML(item = {}, index = 0) {
+      const id = registerVideoItem(item);
+      return `<button class="native-video-card reveal-card" style="--i:${index}" data-video-id="${escapeHTML(id)}"><img src="${videoThumb(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div class="native-video-copy"><span class="native-play">▶</span>${sourceBadgeHTML(item)}<h3>${escapeHTML(item.title || 'Video destacado')}</h3><small>${escapeHTML(item.source || 'Fuente')} · ${relativeTime(item.publishedAt)}</small></div></button>`;
+    }
+
+    function videoCardHTML(item = {}) {
+      const id = registerVideoItem(item);
+      return `<button class="native-video-card video-card-modern" data-video-id="${escapeHTML(id)}"><img loading="lazy" src="${videoThumb(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div class="native-video-copy"><span class="native-play">▶</span>${sourceBadgeHTML(item)}<h3>${escapeHTML(item.title || 'Video destacado')}</h3><small>${escapeHTML(item.source || 'Fuente')} · reproducir en GoalApp</small></div></button>`;
+    }
+
+    function diverseVideos(items = []) {
+      const base = (Array.isArray(items) ? items : []).filter(item => videoEmbedUrl(item) || youtubeIdFromUrl(item.link || item.embed || ''));
+      const required = [
+        { source:'ESPN Deportes', title:'Últimos videos y resúmenes de ESPN Deportes', link:'https://www.youtube.com/watch?v=Vab794tpW0U', image:newsFallbackImage({source:'ESPN Deportes'}), type:'video' },
+        { source:'FIFA', title:'Videos oficiales recientes de FIFA', link:'https://www.youtube.com/watch?v=coDV-jfLqvk', image:newsFallbackImage({source:'FIFA'}), type:'video' },
+        { source:'TUDN', title:'Noticias, goles y clips de TUDN', link:'https://www.youtube.com/watch?v=2pLT-olgUJs', image:newsFallbackImage({source:'TUDN'}), type:'video' }
+      ];
+      for (const item of required) {
+        if (!base.some(v => normalizeName(v.source || '').includes(normalizeName(item.source)))) base.push(item);
+      }
+      return base;
+    }
+
+    function computeStandingsFromMatches(matches = []) {
+      const groups = {};
+      for (const [g, codes] of Object.entries(WC_GROUP_CODES)) {
+        groups[g] = codes.map(code => ({ code, team:{ id:code, name:staticTeam(code).name, logo:flagLogoFromCode(code) }, all:{ played:0, win:0, draw:0, lose:0, goals:{for:0, against:0} }, goalsDiff:0, points:0, form:'' }));
+      }
+      const all = [...staticWorldCupFixtures(), ...(matches || [])];
+      for (const match of all) {
+        if (!match.finished) continue;
+        const group = match.group || groupForTeamName(match.homeName) || groupForTeamName(match.awayName);
+        if (!group || !groups[group]) continue;
+        const hCode = match.homeCode || Object.keys(WC_TEAMS).find(c => normalizeName(staticTeam(c).name) === normalizeName(match.homeName) || normalizeName(match.homeName).includes(normalizeName(staticTeam(c).name)));
+        const aCode = match.awayCode || Object.keys(WC_TEAMS).find(c => normalizeName(staticTeam(c).name) === normalizeName(match.awayName) || normalizeName(match.awayName).includes(normalizeName(staticTeam(c).name)));
+        const hg = Number(match.homeScore ?? String(match.score || '').split('-')[0]);
+        const ag = Number(match.awayScore ?? String(match.score || '').split('-')[1]);
+        if (!hCode || !aCode || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+        const hr = groups[group].find(x => x.code === hCode), ar = groups[group].find(x => x.code === aCode);
+        if (!hr || !ar || hr._seen?.has(match.id)) continue;
+        hr._seen = hr._seen || new Set(); ar._seen = ar._seen || new Set();
+        hr._seen.add(match.id); ar._seen.add(match.id);
+        hr.all.played++; ar.all.played++;
+        hr.all.goals.for += hg; hr.all.goals.against += ag; ar.all.goals.for += ag; ar.all.goals.against += hg;
+        if (hg > ag) { hr.points += 3; hr.all.win++; ar.all.lose++; hr.form += 'W'; ar.form += 'L'; }
+        else if (hg < ag) { ar.points += 3; ar.all.win++; hr.all.lose++; ar.form += 'W'; hr.form += 'L'; }
+        else { hr.points++; ar.points++; hr.all.draw++; ar.all.draw++; hr.form += 'D'; ar.form += 'D'; }
+      }
+      return Object.entries(groups).map(([group, rows]) => rows
+        .map(row => ({ ...row, group:`Grupo ${group}`, goalsDiff: row.all.goals.for - row.all.goals.against, _seen:undefined }))
+        .sort((a,b)=>b.points-a.points||b.goalsDiff-a.goalsDiff||b.all.goals.for-a.all.goals.for||a.team.name.localeCompare(b.team.name))
+        .map((row,i)=>({ ...row, rank:i+1 })));
+    }
+
+    function betterWorldCupStandings() {
+      const computed = computeStandingsFromMatches([...(state.worldCupOverview?.matches || []), ...(state.matches || [])]);
+      const official = state.worldCupStandings || [];
+      const officialPlayed = official.flat().reduce((sum,row)=>sum + Number(row.all?.played || 0), 0);
+      const computedPlayed = computed.flat().reduce((sum,row)=>sum + Number(row.all?.played || 0), 0);
+      return officialPlayed > computedPlayed ? official : computed;
+    }
+
+    function getWorldCupStandingsGroups() {
+      return betterWorldCupStandings();
+    }
+
+    function renderWorldCupGroupCard(rows, groupName, highlightNames = []) {
+      const highlight = new Set(highlightNames.map(normalizeName));
+      const updated = new Date().toLocaleTimeString('es-SV', { hour:'numeric', minute:'2-digit' });
+      return `<article class="wc-group-card"><h3>${escapeHTML(groupName || rows[0]?.group || 'Grupo')}</h3><div class="wc-table-topline"><span>Actualizado ${updated}</span><span class="standings-updated-chip">Tabla viva</span></div>
+        <div class="wc-row head"><span>#</span><span>Equipo</span><span>J</span><span>DG</span><span>Pts.</span></div>
+        ${rows.map(row => {
+          const name = row.team?.name || 'Equipo';
+          const played = row.all?.played ?? row.played ?? '—';
+          const gd = row.goalsDiff ?? row.goalsDiffs ?? '—';
+          const pts = row.points ?? '—';
+          return `<div class="wc-row ${highlight.has(normalizeName(name)) ? 'highlight' : ''}"><strong>${row.rank || '—'}</strong><span class="wc-team"><span class="wc-flag">${teamFlagForName(name)}</span><strong>${escapeHTML(name)}</strong></span><span>${played}</span><span>${gd}</span><strong>${pts}</strong></div>`;
+        }).join('')}</article>`;
+    }
+
+    function localNewsItems() {
+      const items = (state.news || []).filter(item => {
+        const hay = normalizeName(`${item.source || ''} ${item.title || ''} ${item.description || ''}`);
+        return hay.includes('salvador') || hay.includes('grafico') || hay.includes('laprensagrafica') || hay.includes('selecta') || hay.includes('primeradivision');
+      });
+      if (items.length) return items;
+      const now = new Date().toISOString();
+      return [
+        { source:'El Gráfico', title:'Fútbol salvadoreño: agenda, resultados y actualidad de La Selecta', publishedAt:now, link:'https://www.elgrafico.com/', image:newsFallbackImage({source:'El Gráfico'}) },
+        { source:'La Prensa Gráfica', title:'Deportes El Salvador: noticias locales y de selección', publishedAt:now, link:'https://www.laprensagrafica.com/seccion/deportes', image:newsFallbackImage({source:'La Prensa Gráfica'}) }
+      ];
+    }
+
+    function renderHomePersonalNews() {
+      const target=$('#homeNews'); if(!target) return;
+      const items=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));
+      const spotlight=$('#homeNewsSpotlight'), headlineStrip=$('#headlineStrip');
+      if(spotlight){
+        const main=items[0] || demoNewsItems()[0];
+        spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+        spotlight.dataset.newsLink=main.link||'';
+      }
+      if(headlineStrip){
+        const strips=items.slice(1,6);
+        headlineStrip.innerHTML=strips.length?strips.map(item=>`<button class="headline-pill" data-news-link="${escapeHTML(item.link||'')}"><img loading="lazy" src="${safeNewsImage(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div>${sourceBadgeHTML(item)}<strong>${escapeHTML(item.title||'Titular')}</strong><small>${relativeTime(item.publishedAt)} · ${isWorldCupNews(item)?'Mundial':selectedNewsScore(item)>0?'Para ti':'Última hora'}</small></div></button>`).join(''):'<div class="headline-pill"><div><strong>Preparando titulares</strong><small>GoalNews actualizará esta tira en cuanto lleguen nuevas publicaciones.</small></div></div>';
+      }
+      const feed=items.slice(1,5);
+      target.innerHTML=feed.length?`<div class="news-mini-grid">${feed.map(newsCardHTML).join('')}</div>`:'<article class="card status-card"><p>Conectando noticias de tus equipos y del Mundial…</p></article>';
+      const localTarget=$('#homeLocalNews');
+      if(localTarget) localTarget.innerHTML=`<div class="local-news-grid">${localNewsItems().slice(0,3).map(newsCardHTML).join('')}</div>`;
+    }
+
+    function renderWorldCupPlayers() {
+      const target = $('#worldCupPlayers');
+      if (!target) return;
+      let players = richPlayerPool();
+      if (!players.length) {
+        try { players = JSON.parse(localStorage.getItem(TRENDING_PLAYERS_CACHE) || '[]') } catch {}
+      }
+      if (!players.length) {
+        target.innerHTML = `<div class="trend-player-empty">Buscando jugadores reales en API-Football. Si no aparecen después de actualizar, la competición todavía no está entregando fotos/plantillas para estos equipos.</div>`;
+        setTimeout(() => loadTrendingPlayers(true), 150);
+        return;
+      }
+      try { localStorage.setItem(TRENDING_PLAYERS_CACHE, JSON.stringify(players.slice(0,18))) } catch {}
+      target.innerHTML = players.slice(0, 12).map((player, index) => {
+        const goals = playerGoals(player);
+        const metric = goals ? `${goals} G` : (player.position || 'Jugador');
+        return `<button class="player-trend-card reveal-card" style="--i:${index}" data-toast="${escapeHTML(player.name)} · ${escapeHTML(playerTeamName(player))}"><img src="${playerPhoto(player)}" alt="${escapeHTML(player.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><span class="player-trend-goals">${escapeHTML(metric)}</span><span class="player-trend-copy"><strong>${escapeHTML(player.name)}</strong><span>${escapeHTML(playerTeamName(player))}</span></span></button>`;
+      }).join('') + `<div class="player-source-note">Fotos y datos enlazados desde el proveedor deportivo cuando están disponibles.</div>`;
+    }
+
+    async function loadTrendingPlayers(force=false) {
+      if (!hasProfessionalBackend() || (state.playersLoading && !force)) return;
+      state.playersLoading = true;
+      try {
+        const data = await fetchJSON(`${professionalBase()}/api/worldcup/players?limit=24`, 9000);
+        if (data.players?.length) {
+          state.worldCupPlayers = data.players;
+          state.featuredPlayers = data.players;
+          try { localStorage.setItem(TRENDING_PLAYERS_CACHE, JSON.stringify(data.players.slice(0,24))) } catch {}
+          renderWorldCupPlayers();
+          renderPlayerOfDay();
+        }
+      } catch (e) {
+        console.warn('Trending players', e);
+      } finally {
+        state.playersLoading = false;
+      }
+    }
+
+    async function loadHomeIntelligence(force = false) {
+      if (state.homeExtrasLoading) return;
+      state.worldCupStandings = betterWorldCupStandings();
+      renderHomeIntelligence();
+      renderWorldCupCenterPro(state.wcTab || 'groups');
+      setTimeout(() => loadWorldCupOverview(force), 50);
+      setTimeout(() => loadTrendingPlayers(force), 180);
+      if (!hasProfessionalBackend()) return;
+      const cached = !force && readHomeExtrasCache();
+      if (cached) {
+        state.favoriteNextMatches = cached.favoriteNextMatches || [];
+        state.worldCupPlayers = cached.worldCupPlayers || state.worldCupPlayers || [];
+        state.featuredPlayers = cached.featuredPlayers || state.featuredPlayers || [];
+        renderHomeIntelligence();
+        return;
+      }
+      state.homeExtrasLoading = true;
+      try {
+        const teams = selectedCatalogTeams().filter(team => team.apiId).slice(0, 3);
+        const teamMatchRequests = teams.map(team => fetchJSON(`${professionalBase()}/api/matches?team=${team.apiId}&next=2&timezone=America%2FEl_Salvador`, 7000));
+        const results = await Promise.allSettled(teamMatchRequests);
+        state.favoriteNextMatches = dedupeMatches(results.filter(r => r.status === 'fulfilled').flatMap(r => (r.value.matches || []).map(normalizeProfessionalMatch))).filter(match => !match.finished);
+        saveHomeExtrasCache();
+      } catch (error) {
+        console.warn('Home intelligence M4', error);
+      } finally {
+        state.homeExtrasLoading = false;
+        renderHomeIntelligence();
+      }
+    }
+
+    function renderNews() {
+      renderNewsSources();
+      const target = $('#newsFeed');
+      if (!target) return;
+      const category = state.newsCategory;
+      const videosMode = category === 'videos';
+      const audioMode = category === 'audio';
+      const items = videosMode ? diverseVideos(state.videos || []) : audioMode ? (state.audio?.length ? state.audio : demoAudioItems()) : category === 'elsalvador' ? localNewsItems() : (state.news || []);
+      if (!items.length) {
+        target.innerHTML = '<div class="news-empty-modern"><div class="news-empty-icon">✦</div><h3>No hay publicaciones disponibles</h3><p>Una o más fuentes no respondieron. Puedes actualizar de nuevo sin perder el resto de la app.</p></div>';
+        return;
+      }
+      if (videosMode) {
+        target.innerHTML = `<div class="video-strip">${items.slice(0, 24).map(videoCardHTML).join('')}</div>`;
+      } else if (audioMode) {
+        target.innerHTML = `<div class="audio-list-modern">${items.slice(0, 18).map(audioCardHTML).join('')}</div>`;
+      } else {
+        const [hero, ...rest] = items;
+        target.innerHTML = newsHeroHTML(hero) + `<div class="news-list-modern">${rest.slice(0, 18).map(newsCardHTML).join('')}</div>`;
+      }
+      renderHomePersonalNews(); renderHomeMedia(); hydratePersonalization();
+    }
+
+    document.addEventListener('click', e => {
+      const video = e.target.closest('[data-video-id]');
+      if (video) {
+        e.preventDefault();
+        e.stopPropagation();
+        openNativeVideo(state.videoRegistry?.[video.dataset.videoId] || {});
+      }
+      if (e.target.closest('[data-close-video]') || e.target.id === 'videoPlayerModal') closeNativeVideo();
     });
 
 
