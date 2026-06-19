@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GoalApp" />
-  <title>GoalApp HOME-2 · Personalized World Cup</title>
+  <title>GoalApp GOALAI-1 · Inteligencia personalizada</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -624,6 +624,47 @@ body{padding-top:0}
       .favorite-team-chip { min-width:132px; }
     }
 
+  
+
+    /* GOALAI-1 */
+    .goalai-radar { margin-top: 14px; padding: 15px; border-color: rgba(0,237,104,.28); background: radial-gradient(circle at 100% 0, rgba(0,237,104,.13), transparent 42%), linear-gradient(145deg,#10171a,#080c0e); }
+    .goalai-radar-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    .goalai-radar-head h2 { margin:4px 0 4px; font-size:17px; letter-spacing:-.25px; }
+    .goalai-radar-head p { margin:0; color:var(--muted); font-size:10px; line-height:1.45; }
+    .ai-pulse { width:42px; height:42px; display:grid; place-items:center; flex:0 0 auto; border-radius:15px; color:#041008; background:linear-gradient(135deg,var(--green-2),var(--green)); font-weight:950; box-shadow:0 0 28px rgba(0,237,104,.22); animation:aiPulse 1.8s ease-in-out infinite; }
+    @keyframes aiPulse { 50% { transform:scale(.94); box-shadow:0 0 14px rgba(0,237,104,.12); } }
+    .ai-signal-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:9px; }
+    .ai-signal { min-height:82px; padding:11px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.035); }
+    .ai-signal span { display:block; color:var(--muted); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.7px; }
+    .ai-signal strong { display:block; margin-top:7px; font-size:17px; line-height:1.12; }
+    .ai-signal small { display:block; margin-top:6px; color:#c7d2cc; font-size:9px; line-height:1.35; }
+    .why-card { padding:15px; border-color:rgba(155,85,255,.35); background:radial-gradient(circle at 0 0,rgba(155,85,255,.15),transparent 42%),linear-gradient(145deg,#10171a,#080c0e); }
+    .why-card h3 { margin:0 0 7px; font-size:16px; }
+    .why-card p { margin:0; color:#cbd4cf; font-size:11px; line-height:1.5; }
+    .why-card .why-source { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px; color:var(--muted); font-size:9px; }
+    .player-of-day { display:grid; grid-template-columns:76px 1fr; gap:13px; align-items:center; padding:13px; border-color:rgba(0,237,104,.25); }
+    .player-of-day img { width:76px; height:76px; border-radius:19px; object-fit:cover; background:#111; }
+    .player-of-day h3 { margin:0 0 4px; font-size:18px; }
+    .player-of-day p { margin:0 0 9px; color:var(--muted); font-size:10px; line-height:1.45; }
+    .player-metrics { display:flex; gap:7px; flex-wrap:wrap; }
+    .player-metrics span { padding:6px 8px; border-radius:999px; background:rgba(0,237,104,.1); color:#dfffea; font-size:9px; font-weight:800; }
+    .smart-alerts { display:grid; gap:9px; }
+    .alert-item { display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px; padding:11px; border:1px solid var(--line); border-radius:15px; background:linear-gradient(145deg,#10171a,#080c0e); }
+    .alert-icon { width:34px; height:34px; display:grid; place-items:center; border-radius:12px; background:rgba(0,237,104,.12); color:var(--green); font-size:16px; }
+    .alert-item strong { display:block; font-size:12px; }
+    .alert-item small { display:block; margin-top:3px; color:var(--muted); font-size:9px; }
+    .alert-item b { color:var(--green); font-size:10px; }
+    .story-card { margin-top:11px; padding:15px; }
+    .story-card h3 { margin:0 0 12px; font-size:15px; }
+    .story-track { display:grid; gap:10px; }
+    .story-step { display:grid; grid-template-columns:43px 28px 1fr; gap:10px; align-items:center; }
+    .story-minute { color:var(--green); font-size:11px; font-weight:900; }
+    .story-dot { width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:rgba(0,237,104,.11); border:1px solid rgba(0,237,104,.35); }
+    .story-copy strong { display:block; font-size:12px; }
+    .story-copy small { display:block; color:var(--muted); font-size:9px; margin-top:2px; }
+    .ai-confidence { display:flex; align-items:center; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid var(--line); color:var(--muted); font-size:9px; }
+    .ai-confidence i { width:56px; height:5px; border-radius:99px; background:linear-gradient(90deg,var(--green) 76%, rgba(255,255,255,.16) 76%); }
+
   </style>
 </head>
 <body>
@@ -651,6 +692,10 @@ body{padding-top:0}
         <span class="eyebrow">Tu fútbol, personalizado</span><h1 class="page-title" id="greeting">Buenas tardes, Jony</h1><p class="sub" id="homeSubtitle">Aquí tienes lo más importante para ti.</p>
         <div class="favorite-team-strip" id="homeFavoriteTeams"></div>
         <article class="card brief reveal-card" style="--i:0"><div class="brief-head"><div class="brief-title"><span class="ai-badge">AI</span><strong>Daily Brief</strong></div><small>Actualizado ahora</small></div><ul id="briefList"></ul></article>
+        <article class="card goalai-radar reveal-card" id="goalaiRadar" style="--i:1">
+          <div class="goalai-radar-head"><div><span class="eyebrow">GoalAI OS</span><h2>Radar inteligente</h2><p>La app prioriza tus equipos, Mundial, noticias y partidos con mayor impacto.</p></div><div class="ai-pulse">AI</div></div>
+          <div class="ai-signal-grid" id="aiSignalGrid"><div class="ai-signal"><span>Estado</span><strong>Analizando</strong><small>Cargando datos reales…</small></div><div class="ai-signal"><span>Prioridad</span><strong>Tus favoritos</strong><small>Primero tus equipos.</small></div></div>
+        </article>
         <article class="hero reveal-card" id="homeHero" style="--i:1"><img class="hero-bg" id="heroBackground" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="competition" id="heroCompetition">Conectando con datos reales…</div><div class="hero-priority"><span class="priority-pill" id="heroPriority"><i></i>Lo más importante ahora</span></div><div class="scoreboard"><div class="team"><img id="heroHomeLogo" src="" alt=""><span class="team-name" id="heroHomeName">Local</span></div><div class="score"><strong id="heroScore">—</strong><b id="heroStatus">Cargando</b><small id="heroDataLabel">DATOS REALES</small></div><div class="team"><img id="heroAwayLogo" src="" alt=""><span class="team-name" id="heroAwayName">Visitante</span></div></div><div class="hero-countdown" id="heroCountdown" hidden><span>Comienza en</span><b data-countdown-value>—</b></div><button class="primary" id="heroMatchButton" disabled>Abriendo calendario…</button><div class="home-data-note" id="heroUpdatedAt">Fuente: GoalApp Data API</div></article>
 
         <div class="section-head"><div><h2>Tus partidos</h2><span class="eyebrow">PRIMERO TÚ</span></div><button class="link-btn" data-go="clubs">Editar</button></div>
@@ -666,6 +711,15 @@ body{padding-top:0}
 
         <div class="section-head"><div><h2>Noticias para ti</h2><span class="eyebrow">ACTUALIZADAS</span></div><button class="link-btn" data-go="feed">Ver todas</button></div>
         <div class="home-news-grid" id="homeNews"><div class="news-skeleton-row"><div class="skeleton"></div><div class="news-skeleton-lines"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div></div>
+
+        <div class="section-head"><div><h2>Por qué importa</h2><span class="eyebrow">CONTEXTO</span></div></div>
+        <article class="card why-card" id="whyMatters"><h3>GoalAI está leyendo tus fuentes</h3><p>Cuando lleguen noticias de tus equipos, te explicaremos por qué son relevantes.</p><div class="why-source"><span>Confianza: media</span><span>Fuentes enlazadas</span></div></article>
+
+        <div class="section-head"><div><h2>Jugador del día</h2><span class="eyebrow">FORMA</span></div></div>
+        <article class="card player-of-day" id="playerOfDay"><img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 rx=%2220%22 fill=%22%2311181c%22/%3E%3Ctext x=%2240%22 y=%2247%22 text-anchor=%22middle%22 fill=%22%2300ed68%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2220%22%3EAI%3C/text%3E%3C/svg%3E" alt=""><div><h3>Esperando datos</h3><p>El jugador destacado aparecerá según goles, rating y relevancia para tus equipos.</p><div class="player-metrics"><span>Rating —</span><span>Goles —</span></div></div></article>
+
+        <div class="section-head"><div><h2>Centro de alertas</h2><span class="eyebrow">SMART ALERTS</span></div><button class="link-btn" data-go="profile">Configurar</button></div>
+        <div class="smart-alerts" id="smartAlerts"><div class="alert-item"><span class="alert-icon">✦</span><div><strong>Preparando alertas</strong><small>GoalAI usará tus preferencias guardadas.</small></div><b>Activo</b></div></div>
 
         <div class="section-head"><div><h2>El torneo en 20 segundos</h2><span class="eyebrow">GRUPO DESTACADO</span></div></div>
         <div class="home-module-grid"><article class="card quick-table-card" id="worldCupTable"><div class="quick-table-empty">Cargando tabla del Mundial…</div></article></div>
@@ -693,7 +747,7 @@ body{padding-top:0}
         <div class="panel" data-panel="lineups"><div id="matchLineups"><article class="card content-card"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></article></div></div>
         <div class="panel" data-panel="standings"><article class="card content-card"><div class="detail-section-title"><h3>Tabla de posiciones</h3><small id="standingsLabel">Temporada actual</small></div><div id="matchStandings"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></div></article></div>
         <div class="panel" data-panel="h2h"><article class="card content-card"><div class="detail-section-title"><h3>Enfrentamientos directos</h3><small>Últimos 5</small></div><div id="matchH2H"><div class="detail-loading"><div class="skeleton"></div><div class="skeleton"></div></div></div></article></div>
-        <div class="panel" data-panel="ai"><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>GoalAI · análisis basado en datos</strong></div><p id="matchAIText">Selecciona un partido para generar contexto a partir de sus datos.</p><div id="matchAIFacts"></div></article><article class="card content-card" style="margin-top:11px"><div class="detail-section-title"><h3>Momento del partido</h3><small>Indicador experimental</small></div><div class="chart" id="matchChart"><span style="height:31%"></span><span style="height:58%"></span><span style="height:43%"></span><span style="height:76%"></span><span style="height:49%"></span><span style="height:69%"></span><span style="height:92%"></span><span style="height:64%"></span></div></article></div>
+        <div class="panel" data-panel="ai"><article class="card ai-card"><div style="display:flex;align-items:center;gap:9px"><span class="ai-badge">AI</span><strong>GoalAI · análisis basado en datos</strong></div><p id="matchAIText">Selecciona un partido para generar contexto a partir de sus datos.</p><div id="matchAIFacts"></div></article><article class="card story-card" id="matchStoryCard"><h3>Match Story</h3><div class="story-track" id="matchStory"><div class="story-step"><span class="story-minute">—</span><span class="story-dot">✦</span><div class="story-copy"><strong>Esperando eventos</strong><small>Los momentos clave aparecerán aquí.</small></div></div></div></article><article class="card content-card" style="margin-top:11px"><div class="detail-section-title"><h3>Momento del partido</h3><small>Indicador experimental</small></div><div class="chart" id="matchChart"><span style="height:31%"></span><span style="height:58%"></span><span style="height:43%"></span><span style="height:76%"></span><span style="height:49%"></span><span style="height:69%"></span><span style="height:92%"></span><span style="height:64%"></span></div></article></div>
       </section>
 
       <section class="screen" data-screen="feed">
@@ -1051,7 +1105,7 @@ body{padding-top:0}
     }
     function hydrateOnboardingProfile(){if($('#onboardingName'))$('#onboardingName').value=state.profile?.name||'';if($('#onboardingCountry'))$('#onboardingCountry').value=state.profile?.country||'El Salvador';if($('#onboardingLanguage'))$('#onboardingLanguage').value=state.profile?.language||'Español'}
     function openOnboarding(){state.onboardingStep=0;hydrateOnboardingProfile();renderChoices();updateStep();$('#onboarding').hidden=false}
-    function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;localStorage.removeItem(HOME_EXTRAS_CACHE_KEY);hydratePersonalization();renderAllMatchData();loadHomeIntelligence(true);showToast('Tu GoalApp personalizada está lista')}
+    function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();renderAllMatchData();showToast('Tu GoalApp personalizada está lista')}
 
 
     const HOME_EXTRAS_CACHE_KEY='goalapp_home_extras_v2';
@@ -1139,7 +1193,36 @@ body{padding-top:0}
       const target=$('#homeNews');if(!target)return;const items=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));
       target.innerHTML=items.length?items.slice(0,5).map(newsCardHTML).join(''):'<article class="card status-card"><p>Conectando noticias de tus equipos y del Mundial…</p></article>';
     }
-    function renderHomeIntelligence(){renderHomeFavoriteTeams();renderHomeFavoriteMatches();renderWorldCupHub();renderWorldCupTable();renderWorldCupPlayers();renderHomePersonalNews()}
+    function renderHomeIntelligence(){renderHomeFavoriteTeams();renderHomeFavoriteMatches();renderWorldCupHub();renderWorldCupTable();renderWorldCupPlayers();renderHomePersonalNews();renderGoalAIHome()}
+
+    function selectedDisplayNames(){return selectedCatalogTeams().map(t=>t.name)}
+    function nextRelevantMatch(){const all=dedupeMatches([...(state.matches||[]),...(state.favoriteNextMatches||[])]).sort(compareByRelevance);return all.find(m=>isSelectedTeamMatch(m)&&m.live)||all.find(m=>isSelectedTeamMatch(m)&&!m.finished)||all.find(m=>isWorldCupMatch(m)&&m.live)||all.find(m=>isWorldCupMatch(m)&&!m.finished)||all.find(m=>m.live)||all.find(m=>!m.finished)||all[0]||null}
+    function generateDailyBriefItems(){
+      const items=[];const profile=state.profile||DEFAULT_PROFILE;const teams=selectedDisplayNames();const next=nextRelevantMatch();
+      if(next){items.push(next.live?`${next.homeName} vs ${next.awayName} está en vivo: ${next.score}.`:next.finished?`${next.homeName} vs ${next.awayName} terminó ${next.score}.`:`${next.homeName} vs ${next.awayName} empieza ${countdownText(next.date)}.`)}
+      const favCount=dedupeMatches([...(state.matches||[]),...(state.favoriteNextMatches||[])]).filter(isSelectedTeamMatch).length;if(favCount)items.push(`${favCount} partidos relacionados con tus equipos favoritos.`);
+      const wc=(state.matches||[]).filter(isWorldCupMatch);if(wc.length)items.push(`Mundial 2026: ${wc.length} partidos en la fecha seleccionada.`);
+      const relevantNews=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));if(relevantNews[0])items.push(`Noticia clave: ${relevantNews[0].title}.`);
+      if(teams.length)items.push(`Prioridad actual: ${teams.slice(0,3).join(', ')}.`);else items.push(`${profile.name||'Jony'}, selecciona equipos para un resumen más preciso.`);
+      return items;
+    }
+    function aiPriorityLabel(match){if(!match)return 'Sin prioridad';if(isSelectedTeamMatch(match))return 'Favorito';if(isWorldCupMatch(match))return 'Mundial';if(match.live)return 'En vivo';if(isPriorityCompetition(match))return 'Competición top';return 'Descubrimiento'}
+    function renderGoalAIHome(){
+      const radar=$('#aiSignalGrid'); if(!radar)return; const next=nextRelevantMatch(); const news=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a)); const favMatches=dedupeMatches([...(state.matches||[]),...(state.favoriteNextMatches||[])]).filter(isSelectedTeamMatch); const live=(state.matches||[]).filter(m=>m.live).length;
+      radar.innerHTML=`<div class="ai-signal"><span>Prioridad</span><strong>${escapeHTML(aiPriorityLabel(next))}</strong><small>${next?escapeHTML(`${next.homeName} vs ${next.awayName}`):'Sin partido destacado.'}</small></div><div class="ai-signal"><span>Alertas</span><strong>${state.alertPreferences.length}</strong><small>${state.alertPreferences.includes('daily')?'Daily Brief activo':'Configura tu briefing diario.'}</small></div><div class="ai-signal"><span>Favoritos</span><strong>${favMatches.length}</strong><small>Partidos detectados para tus equipos.</small></div><div class="ai-signal"><span>En vivo</span><strong>${live}</strong><small>${live?'Hay partidos activos ahora.':'Sin partidos en vivo ahora.'}</small></div>`;
+      renderWhyMatters(news[0],next); renderPlayerOfDay(); renderSmartAlerts(next,news[0]);
+    }
+    function renderWhyMatters(item,next){const target=$('#whyMatters'); if(!target)return; const teams=selectedDisplayNames(); let title='Por qué importa'; let reason='GoalAI prioriza esta información porque está conectada con tus equipos, el Mundial o una competición principal.'; let source='Fuentes enlazadas';
+      if(item){title=item.title||title; const related=teams.find(t=>normalizeName(item.title+' '+(item.description||'')).includes(normalizeName(t))); reason=related?`Afecta directamente a ${related}, uno de tus equipos favoritos. Puede cambiar el contexto del próximo partido o la conversación del día.`:isWorldCupNews(item)?'Está relacionada con el Mundial 2026, el torneo que más atención concentra ahora mismo.':`Viene de ${item.source||'una fuente deportiva'} y aparece entre las noticias más recientes.`; source=`${item.source||'GoalNews'} · ${relativeTime(item.publishedAt)}`;}
+      else if(next){title=`${next.homeName} vs ${next.awayName}`; reason=next.live?'Es el partido más urgente ahora porque está en vivo. GoalApp lo mantiene arriba para acceso rápido.':next.finished?'Ya terminó: puedes revisar resumen, eventos y contexto postpartido.':`Todavía no empieza. GoalApp lo destaca para que sepas cuánto falta y puedas seguir la previa.`; source=`${next.league} · ${next.statusText}`;}
+      target.innerHTML=`<h3>${escapeHTML(title)}</h3><p>${escapeHTML(reason)}</p><div class="why-source"><span>${escapeHTML(source)}</span><span>Confianza: ${item||next?'alta':'media'}</span></div>`;}
+    function isWorldCupNews(item){return /mundial|world cup|fifa|selecci[oó]n/i.test(`${item?.title||''} ${item?.description||''} ${item?.category||''}`)}
+    function renderPlayerOfDay(){const target=$('#playerOfDay'); if(!target)return; const players=[...(state.worldCupPlayers||[])]; let p=players[0]; if(!p){target.innerHTML=`<img src="${newsFallbackImage({source:'GoalAI'})}" alt=""><div><h3>Jugador a vigilar</h3><p>Cuando haya estadísticas suficientes, GoalAI destacará al jugador con mayor impacto para tus equipos.</p><div class="player-metrics"><span>Rating pendiente</span><span>Datos reales</span></div></div>`;return}
+      const stat=p.statistics?.[0]||{};const goals=stat.goals?.total??0,assists=stat.goals?.assists??0,games=stat.games?.appearences??stat.games?.appearances??'—';
+      target.innerHTML=`<img src="${p.photo||newsFallbackImage({source:'Mundial 2026'})}" alt="${escapeHTML(p.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><div><h3>${escapeHTML(p.name)}</h3><p>${escapeHTML(stat.team?.name||p.nationality||'Jugador destacado')} aparece arriba por producción ofensiva y relevancia del torneo.</p><div class="player-metrics"><span>${goals} goles</span><span>${assists??0} asist.</span><span>${games} PJ</span></div></div>`;}
+    function renderSmartAlerts(next,news){const target=$('#smartAlerts'); if(!target)return; const alerts=[]; if(next)alerts.push({icon:next.live?'⚽':'⏱',title:next.live?`Marcador en vivo: ${next.score}`:`${next.homeName} vs ${next.awayName}`,text:next.live?`${next.homeName} vs ${next.awayName} · ${next.statusText}`:`Comienza ${countdownText(next.date)} · ${next.league}`,state:next.live?'Ahora':'Programada'}); if(news)alerts.push({icon:'◆',title:'Noticia importante',text:news.title,state:'Nueva'}); if(state.alertPreferences.includes('daily'))alerts.push({icon:'✦',title:'Daily Brief activo',text:'Recibirás un resumen personalizado cuando abras GoalApp.',state:'Activo'}); if(!alerts.length)alerts.push({icon:'✓',title:'Sin alertas críticas',text:'GoalAI seguirá vigilando tus equipos.',state:'OK'});
+      target.innerHTML=alerts.slice(0,4).map(a=>`<div class="alert-item"><span class="alert-icon">${a.icon}</span><div><strong>${escapeHTML(a.title)}</strong><small>${escapeHTML(a.text)}</small></div><b>${escapeHTML(a.state)}</b></div>`).join('');}
+
     function readHomeExtrasCache(){try{const value=JSON.parse(localStorage.getItem(HOME_EXTRAS_CACHE_KEY)||'null');return value&&Date.now()-value.savedAt<HOME_EXTRAS_TTL?value:null}catch{return null}}
     function saveHomeExtrasCache(){localStorage.setItem(HOME_EXTRAS_CACHE_KEY,JSON.stringify({savedAt:Date.now(),favoriteNextMatches:state.favoriteNextMatches,worldCupStandings:state.worldCupStandings,worldCupPlayers:state.worldCupPlayers}))}
     async function loadHomeIntelligence(force=false){
@@ -1166,12 +1249,8 @@ body{padding-top:0}
       const hour=new Date().getHours();const salutation=hour<12?'Buenos días':hour<19?'Buenas tardes':'Buenas noches';
       $('#greeting').textContent=`${salutation}, ${profile.name||'Jony'}`;
       $('#homeSubtitle').textContent=selected.length?`Primero ${names.join(' y ')}; después, lo más importante del fútbol.`:'Elige equipos para que GoalApp priorice lo que te importa.';
-      const items=[];const favorite=combinedFavoriteMatches();const next=favorite.find(match=>match.live)||favorite.find(match=>!match.finished)||favorite[0];
-      if(next)items.push(next.live?`${next.homeName} vs ${next.awayName} está en vivo: ${next.score}.`:next.finished?`${next.homeName} vs ${next.awayName} terminó ${next.score}.`:`${next.homeName} vs ${next.awayName} comienza en ${countdownText(next.date)}.`);
-      const worldCup=(state.matches||[]).filter(isWorldCupMatch);if(worldCup.length)items.push(`El Mundial tiene ${worldCup.length} partidos en la fecha seleccionada.`);
-      const relevantNews=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));if(relevantNews[0])items.push(`Última hora: ${relevantNews[0].title}.`);
-      if(state.alertPreferences.includes('daily'))items.push('Tu Daily Brief está activado.');
-      $('#briefList').innerHTML=items.slice(0,4).map(x=>`<li>${escapeHTML(x)}</li>`).join('');
+      const items=generateDailyBriefItems();
+      $('#briefList').innerHTML=items.slice(0,5).map(x=>`<li>${escapeHTML(x)}</li>`).join('');
       const initial=(profile.name||'J').trim().charAt(0).toUpperCase()||'J';
       $('#topAvatar').textContent=initial;$('#profileAvatar').textContent=initial;$('#profileName').textContent=profile.name||'Jony';
       $('#profileHandle').textContent=`@${normalizeName(profile.name||'jony')||'jony'}futbol`;$('#profileCountry').textContent=profile.country||'El Salvador';$('#profileLanguage').textContent=profile.language||'Español';
@@ -1442,6 +1521,33 @@ body{padding-top:0}
       if(match.venue)facts.push(`Estadio: ${match.venue}`);
       $('#matchAIFacts').innerHTML=facts.map(f=>`<div class="insight"><b>↑</b>${escapeHTML(f)}</div>`).join('');
     }
+
+    function renderMatchStoryFromEvents(events=[],match=state.selectedMatch){
+      const target=$('#matchStory'); if(!target)return; const relevant=[...(events||[])].filter(item=>/goal|card|subst|var|penalty|Gol|Tarjeta|sustit/i.test(`${item.type||''} ${item.detail||''}`)).sort((a,b)=>(Number(a.minute)||0)-(Number(b.minute)||0));
+      const steps=relevant.slice(-6); if(!steps.length){target.innerHTML=`<div class="story-step"><span class="story-minute">${match?.statusText||'—'}</span><span class="story-dot">✦</span><div class="story-copy"><strong>${match?escapeHTML(match.homeName+' vs '+match.awayName):'Sin eventos clave'}</strong><small>La historia visual aparecerá cuando el proveedor publique eventos.</small></div></div>`;return}
+      target.innerHTML=steps.map(item=>{const raw=`${item.type||''} ${item.detail||''}`.toLowerCase();const icon=raw.includes('goal')||raw.includes('gol')?'⚽':raw.includes('card')||raw.includes('tarjeta')?'▮':raw.includes('subst')||raw.includes('sustit')?'↔':'✦';const title=item.player?.name||item.strPlayer||item.detail||item.type||'Evento';const detail=item.assist?.name?`Asistencia: ${item.assist.name}`:(item.detail||item.comments||item.team?.name||'Momento clave');return `<div class="story-step"><span class="story-minute">${escapeHTML(item.minuteDisplay||item.minute||'—')}</span><span class="story-dot">${icon}</span><div class="story-copy"><strong>${escapeHTML(title)}</strong><small>${escapeHTML(detail)}</small></div></div>`}).join('');
+    }
+    function renderAIAuto(match,statsData,events=[]){
+      const items=extractArray(statsData,['eventstats','statistics','stats']);
+      const statMap=new Map(items.map(item=>[normalizeName(item.type||''),item]));
+      const possession=statMap.get('ballpossession'),shots=statMap.get('totalshots'),xg=statMap.get('expectedgoals'),onTarget=statMap.get('shotsongoal');
+      const hpos=possession?.home||possession?.intHome||'', apos=possession?.away||possession?.intAway||'';
+      const hshots=shots?.home||shots?.intHome||'', ashots=shots?.away||shots?.intAway||'';
+      const hxg=xg?.home||xg?.intHome||'', axg=xg?.away||xg?.intAway||'';
+      let text=`${match.homeName} ${match.score} ${match.awayName}. `;
+      if(match.live)text+='El partido está en desarrollo; el análisis se actualiza con los datos disponibles. ';
+      else if(match.finished)text+='Resumen postpartido generado con eventos y estadísticas disponibles. ';
+      else text+='Previa generada con calendario, favoritos y contexto de competición. ';
+      if(hxg&&axg)text+=`xG: ${match.homeName} ${hxg} vs ${match.awayName} ${axg}. `;
+      else if(hshots&&ashots)text+=`Remates: ${match.homeName} ${hshots} vs ${match.awayName} ${ashots}. `;
+      if(hpos&&apos)text+=`Posesión registrada: ${hpos} - ${apos}.`;
+      const facts=[`Competición: ${match.league}`,`Estado: ${match.statusText}`];
+      if(match.venue)facts.push(`Sede: ${match.venue}`); if(match.referee)facts.push(`Árbitro: ${match.referee}`); if(onTarget)facts.push(`Remates a puerta: ${onTarget.home||'—'} - ${onTarget.away||'—'}`); if(events.length)facts.push(`${events.length} eventos publicados por el proveedor.`);
+      $('#matchAIText').textContent=text;
+      $('#matchAIFacts').innerHTML=facts.map(f=>`<div class="insight"><b>↑</b>${escapeHTML(f)}</div>`).join('')+`<div class="ai-confidence"><i></i><span>Análisis GoalAI: datos reales + interpretación. No es predicción.</span></div>`;
+      renderMatchStoryFromEvents(events,match);
+    }
+
     function clearMatchTimers(){
       if(state.matchRefreshTimer)clearTimeout(state.matchRefreshTimer);if(state.matchCountdownTimer)clearInterval(state.matchCountdownTimer);
       state.matchRefreshTimer=null;state.matchCountdownTimer=null;
