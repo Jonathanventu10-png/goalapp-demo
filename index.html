@@ -1005,6 +1005,33 @@ body{padding-top:0}
     .wc-table-topline { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; color:var(--muted); font-size:10px; border-bottom:1px solid rgba(255,255,255,.06); }
     @media (max-width:390px){ .native-video-card { min-height:188px; } .native-video-copy { min-height:188px; } .native-video-copy h3 { font-size:18px; } }
 
+  
+    /* MATCHPRO-5 · Truth data mode */
+    .truth-status { display:flex; align-items:center; gap:9px; padding:13px 14px; border:1px solid rgba(255,209,102,.24); background:rgba(255,209,102,.07); border-radius:18px; color:#f5e8bf; font-size:12px; line-height:1.45; }
+    .truth-status.ok { border-color:rgba(0,237,104,.22); background:rgba(0,237,104,.08); color:#dfffee; }
+    .truth-dot { width:10px; height:10px; border-radius:50%; background:#ffd166; flex:0 0 auto; }
+    .truth-status.ok .truth-dot { background:var(--green); }
+    .empty-real-data { padding:22px 16px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(145deg,#10171a,#080c0e); text-align:center; }
+    .empty-real-data h3 { margin:0 0 8px; font-size:17px; }
+    .empty-real-data p { margin:0; color:var(--muted); font-size:12px; line-height:1.5; }
+    .video-real-grid { display:grid; gap:14px; }
+    .video-real-grid .native-video-card { min-height:224px; }
+    .source-health-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:12px; }
+    .source-health { padding:10px; border:1px solid var(--line); border-radius:14px; background:rgba(255,255,255,.045); }
+    .source-health strong { display:block; font-size:11px; }
+    .source-health span { display:block; margin-top:4px; color:var(--muted); font-size:9px; }
+    .updated-pill { padding:6px 9px; border-radius:999px; background:rgba(0,237,104,.12); border:1px solid rgba(0,237,104,.24); color:#dfffee; font-size:9px; font-weight:900; }
+
+  
+    /* DATAENGINE-1 · provider diagnostics */
+    .provider-stack { display:grid; gap:10px; margin-top:12px; }
+    .provider-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 12px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.045); font-size:12px; }
+    .provider-row strong { display:flex; align-items:center; gap:8px; }
+    .provider-row i { width:10px; height:10px; border-radius:50%; background:#ff5968; display:inline-block; }
+    .provider-row.ok i { background:var(--green); }
+    .provider-row.warn i { background:#ffd166; }
+    .dataengine-badge { display:inline-flex; align-items:center; gap:8px; padding:9px 11px; border-radius:999px; background:rgba(0,237,104,.09); border:1px solid rgba(0,237,104,.22); color:#dfffee; font-size:10px; font-weight:900; }
+
   </style>
 </head>
 <body>
@@ -1173,7 +1200,7 @@ body{padding-top:0}
     const LEGACY_API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
     const DEFAULT_PROFESSIONAL_BACKEND = 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev';
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
-    const CACHE_KEY = 'goalapp_real_matches_v2';
+    const CACHE_KEY = 'goalapp_real_matches_dataengine1';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
     const TEAM_CATALOG = [
@@ -1571,7 +1598,7 @@ body{padding-top:0}
     function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();renderAllMatchData();showToast('Tu GoalApp personalizada está lista')}
 
 
-    const HOME_EXTRAS_CACHE_KEY='goalapp_home_extras_v2';
+    const HOME_EXTRAS_CACHE_KEY='goalapp_home_extras_dataengine1';
     const HOME_EXTRAS_TTL=15*60*1000;
     const WORLD_CUP_LEAGUE_ID=1;
     const WORLD_CUP_SEASON=2026;
@@ -3339,8 +3366,8 @@ body{padding-top:0}
 
     /* MATCHPRO-3 · Fast loading + correct World Cup groups */
 
-    const WC_NEWS_CACHE = 'goalapp_news_cache_v4';
-    const WC_OVERVIEW_CACHE = 'goalapp_worldcup_overview_v1';
+    const WC_NEWS_CACHE = 'goalapp_news_cache_dataengine1';
+    const WC_OVERVIEW_CACHE = 'goalapp_worldcup_overview_dataengine1';
     const WC_GROUP_CODES = {
       A:['MEX','RSA','KOR','CZE'],
       B:['CAN','BIH','QAT','SUI'],
@@ -3815,7 +3842,7 @@ body{padding-top:0}
 
     /* MATCHPRO-4 · Native videos, updated standings and real-player recovery */
 
-    const TRENDING_PLAYERS_CACHE = 'goalapp_trending_players_v1';
+    const TRENDING_PLAYERS_CACHE = 'goalapp_trending_players_dataengine1';
 
     function videoEmbedUrl(item = {}) {
       const link = String(item.embed || item.embedUrl || item.link || '');
@@ -4084,6 +4111,594 @@ body{padding-top:0}
       }
       if (e.target.closest('[data-close-video]') || e.target.id === 'videoPlayerModal') closeNativeVideo();
     });
+
+
+
+    /* MATCHPRO-5 · single source of truth; no fake standings/scores/videos */
+
+    function appVersionReset() {
+      const key = 'goalapp_version_seen';
+      if (localStorage.getItem(key) === 'MATCHPRO-5') return;
+      [
+        'goalapp_news_cache_v4','goalapp_worldcup_overview_v1','goalapp_real_matches_v2','goalapp_home_extras_v2','goalapp_trending_players_v1',
+        'goalapp_news_cache_v3','goalapp_worldcup_overview_v4'
+      ].forEach(k => localStorage.removeItem(k));
+      localStorage.setItem(key, 'MATCHPRO-5');
+    }
+    appVersionReset();
+
+    function noRealDataHTML(title, body) {
+      return `<div class="empty-real-data"><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p></div>`;
+    }
+
+    function truthStatusHTML(ok, text) {
+      return `<div class="truth-status ${ok?'ok':''}"><span class="truth-dot"></span><span>${escapeHTML(text)}</span></div>`;
+    }
+
+    function staticWorldCupFixtures() { return []; }
+    function staticStandingsFromFixtures() { return []; }
+
+    function validStandingGroups(groups) {
+      return Array.isArray(groups) && groups.some(group => Array.isArray(group) && group.some(row => row?.team?.name && Number(row?.all?.played ?? row?.played ?? 0) >= 0));
+    }
+
+    function getWorldCupStandingsGroups() {
+      const overview = state.worldCupOverview || {};
+      if (validStandingGroups(overview.standings)) return overview.standings;
+      if (validStandingGroups(state.worldCupStandings)) return state.worldCupStandings;
+      return [];
+    }
+
+    function allWorldCupMatches() {
+      const overviewMatches = Array.isArray(state.worldCupOverview?.matches) ? state.worldCupOverview.matches.map(normalizeProfessionalMatch) : [];
+      const real = (state.matches || []).filter(isWorldCupMatch);
+      return dedupeMatches([...real, ...overviewMatches]).sort((a,b) => new Date(a.date) - new Date(b.date));
+    }
+
+    function renderWorldCupGroupCard(rows, groupName, highlightNames = []) {
+      const highlight = new Set(highlightNames.map(normalizeName));
+      const update = state.worldCupOverview?.fetchedAt ? formatUpdated(new Date(state.worldCupOverview.fetchedAt)) : 'pendiente';
+      return `<article class="wc-group-card"><h3>${escapeHTML(groupName || rows[0]?.group || 'Grupo')}</h3><div class="wc-table-topline"><span>Fuente: ${escapeHTML(state.worldCupOverview?.provider || 'API-Football')}</span><span class="updated-pill">${escapeHTML(update)}</span></div>
+        <div class="wc-row head"><span>#</span><span>Equipo</span><span>J</span><span>DG</span><span>Pts.</span></div>
+        ${rows.map(row => {
+          const name = row.team?.name || 'Equipo';
+          const played = row.all?.played ?? row.played ?? '—';
+          const gd = row.goalsDiff ?? row.goalsDiffs ?? '—';
+          const pts = row.points ?? '—';
+          return `<div class="wc-row ${highlight.has(normalizeName(name)) ? 'highlight' : ''}"><strong>${row.rank || '—'}</strong><span class="wc-team"><span class="wc-flag">${teamFlagForName(name)}</span><strong>${escapeHTML(name)}</strong></span><span>${played}</span><span>${gd}</span><strong>${pts}</strong></div>`;
+        }).join('')}</article>`;
+    }
+
+    function renderWorldCupTable() {
+      const target = $('#worldCupTable');
+      if (!target) return;
+      const groups = getWorldCupStandingsGroups();
+      const group = groups.find(rows => Array.isArray(rows) && rows.length >= 4) || groups[0];
+      if (!group) {
+        target.innerHTML = truthStatusHTML(false, 'Actualizando tabla real desde API-Football. GoalApp no mostrará puntajes inventados.');
+        renderWorldCupCenterPro(state.wcTab || 'groups');
+        return;
+      }
+      target.innerHTML = renderWorldCupGroupCard(group, group[0]?.group || 'Grupo destacado');
+      renderWorldCupCenterPro(state.wcTab || 'groups');
+    }
+
+    function renderWorldCupCenterPro(tab = state.wcTab || 'groups') {
+      state.wcTab = tab;
+      const body = $('#worldCupCenterBody');
+      if (!body) return;
+      $$('.wc-tabs button').forEach(btn => btn.classList.toggle('active', btn.dataset.wcTab === tab));
+      const groups = getWorldCupStandingsGroups();
+      const matches = allWorldCupMatches();
+      const finished = matches.filter(m => m.finished).slice(-16).reverse();
+      const upcoming = matches.filter(m => !m.finished).slice(0, 18);
+      const wcNews = (state.news || []).filter(isWorldCupNews).slice(0, 8);
+      if (tab === 'groups') {
+        body.innerHTML = groups.length
+          ? `<div class="wc-speed-banner"><b>Datos reales:</b><span>${escapeHTML(state.worldCupOverview?.provider || 'API-Football')}</span></div><div class="wc-groups-list">${groups.map((rows, index) => renderWorldCupGroupCard(rows, rows[0]?.group || `Grupo ${String.fromCharCode(65+index)}`)).join('')}</div>`
+          : noRealDataHTML('Tabla real no disponible todavía', 'El Worker está consultando API-Football. No se mostrarán tablas guardadas con resultados incorrectos.');
+      } else if (tab === 'results') {
+        body.innerHTML = finished.length ? `<div class="wc-match-list">${finished.map(wcMatchCardHTML).join('')}</div>` : noRealDataHTML('Sin resultados reales cargados', 'Cuando API-Football entregue fixtures terminados, aparecerán aquí.');
+      } else if (tab === 'upcoming') {
+        body.innerHTML = upcoming.length ? `<div class="wc-match-list">${upcoming.map(wcMatchCardHTML).join('')}</div>` : noRealDataHTML('Sin próximos partidos cargados', 'El calendario se actualizará desde la fuente profesional.');
+      } else {
+        body.innerHTML = wcNews.length ? `<div class="wc-news-list">${wcNews.map(n => `<button data-news-link="${escapeHTML(n.link || '')}">${sourceBadgeHTML(n)}<strong>${escapeHTML(n.title)}</strong><small>${relativeTime(n.publishedAt)}</small></button>`).join('')}</div>` : noRealDataHTML('Noticias del Mundial en actualización', 'GoalNews está consultando fuentes enlazadas.');
+      }
+    }
+
+    function renderStandings(data, match) {
+      const target = $('#matchStandings');
+      if (!target) return;
+      if (data?.standings?.length) state.worldCupStandings = data.standings;
+      const groups = getWorldCupStandingsGroups();
+      const names = [normalizeName(match.homeName), normalizeName(match.awayName)];
+      let rows = [];
+      for (const group of groups) {
+        if (group.some(row => names.some(n => normalizeName(row.team?.name || '').includes(n) || n.includes(normalizeName(row.team?.name || ''))))) { rows = group; break; }
+      }
+      if (!rows.length && groups.length) rows = groups[0];
+      $('#standingsLabel').textContent = rows[0]?.group || match.competitionRound || 'Grupo';
+      target.innerHTML = rows.length
+        ? `<div class="match-pro-stack"><article class="match-pro-card"><h3>${escapeHTML(rows[0]?.group || 'Grupo destacado')}</h3>${renderWorldCupGroupCard(rows, rows[0]?.group || 'Grupo', [match.homeName, match.awayName])}</article><article class="match-pro-card"><h3>Todos los grupos</h3><div class="wc-groups-list">${groups.map((g, i) => renderWorldCupGroupCard(g, g[0]?.group || `Grupo ${String.fromCharCode(65+i)}`, [match.homeName, match.awayName])).join('')}</div></article></div>`
+        : noRealDataHTML('Clasificación real en actualización', 'No se muestran placeholders. Actualiza el Worker si esto permanece vacío.');
+    }
+
+    function renderWorldCupHub() {
+      const matches = allWorldCupMatches();
+      const todayKey = dateKey(new Date());
+      const today = matches.filter(match => dateKey(new Date(match.date)) === todayKey);
+      const live = today.filter(match => match.live).length;
+      const progress = worldCupProgressData();
+      $('#worldCupStage').textContent = worldCupStageLabel();
+      $('#worldCupTodayCount').textContent = today.length || '—';
+      $('#worldCupLiveCount').textContent = live || '—';
+      $('#worldCupDaysLeft').textContent = progress.days;
+      $('#worldCupProgress').style.width = `${progress.pct}%`;
+      $('#worldCupProgressText').textContent = `${Math.round(progress.pct)}% del torneo`;
+      $('#worldCupMatches').innerHTML = (today.length ? today : matches.filter(m => !m.finished).slice(0, 6)).map(worldCupMiniHTML).join('') || truthStatusHTML(false, 'Calendario real en actualización.');
+      renderWorldCupCenterPro(state.wcTab || 'groups');
+    }
+
+    function readNewsCache() { return null; }
+    function writeNewsCache() {}
+
+    function demoNewsItems() { return []; }
+
+    function localNewsItems() {
+      return (state.localNews || state.news || []).filter(item => {
+        const hay = normalizeName(`${item.source || ''} ${item.title || ''} ${item.description || ''}`);
+        return hay.includes('salvador') || hay.includes('grafico') || hay.includes('laprensagrafica') || hay.includes('selecta') || hay.includes('primeradivision') || hay.includes('diarioelsalvador');
+      });
+    }
+
+    async function loadLocalNews(force = false) {
+      if (!hasProfessionalBackend()) return;
+      try {
+        const data = await fetchJSON(`${professionalBase()}/api/news?category=elsalvador&limit=12`, 8000);
+        state.localNews = data.news || [];
+        renderHomePersonalNews();
+        if (state.newsCategory === 'elsalvador') renderNews();
+      } catch (e) {
+        console.warn('local news', e);
+      }
+    }
+
+    function renderHomePersonalNews() {
+      const target=$('#homeNews'); if(!target) return;
+      const items=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));
+      const spotlight=$('#homeNewsSpotlight'), headlineStrip=$('#headlineStrip');
+      if(spotlight){
+        if (items[0]) {
+          const main=items[0];
+          spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+          spotlight.dataset.newsLink=main.link||'';
+        } else {
+          spotlight.innerHTML=`<div class="news-spotlight-copy">${truthStatusHTML(false,'Consultando noticias reales. GoalApp no mostrará titulares temporales como si fueran reales.')}</div>`;
+        }
+      }
+      if(headlineStrip){
+        headlineStrip.innerHTML=items.slice(1,6).map(item=>`<button class="headline-pill" data-news-link="${escapeHTML(item.link||'')}"><img loading="lazy" src="${safeNewsImage(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div>${sourceBadgeHTML(item)}<strong>${escapeHTML(item.title||'Titular')}</strong><small>${relativeTime(item.publishedAt)}</small></div></button>`).join('') || `<div class="headline-pill"><div><strong>Actualizando fuentes</strong><small>Esperando respuesta de medios reales.</small></div></div>`;
+      }
+      target.innerHTML=items.length?`<div class="news-mini-grid">${items.slice(1,5).map(newsCardHTML).join('')}</div>`:truthStatusHTML(false,'Noticias reales en actualización.');
+      const localTarget=$('#homeLocalNews');
+      if(localTarget) {
+        const local = localNewsItems();
+        localTarget.innerHTML = local.length ? `<div class="local-news-grid">${local.slice(0,3).map(newsCardHTML).join('')}</div>` : truthStatusHTML(false,'Consultando fuentes locales de El Salvador.');
+      }
+    }
+
+    function renderHomeMedia() {
+      const videoTarget = $('#homeVideoHighlight');
+      const audioTarget = $('#homeAudioHighlight');
+      const videos = diverseVideos(state.videos || []);
+      const audio = state.audio && state.audio.length ? state.audio : demoAudioItems();
+      if (videoTarget) videoTarget.innerHTML = videos.length ? `<div class="video-real-grid">${videos.slice(0, 4).map(videoCardRichHTML).join('')}</div>` : truthStatusHTML(false,'Consultando videos embebibles recientes. No se mostrarán enlaces a canales como sustituto.');
+      if (audioTarget) audioTarget.innerHTML = audio.slice(0, 2).map((item, index) => audioCardRichHTML(item, index, true)).join('');
+    }
+
+    function renderNews() {
+      renderNewsSources();
+      const target = $('#newsFeed');
+      if (!target) return;
+      const category = state.newsCategory;
+      const videosMode = category === 'videos';
+      const audioMode = category === 'audio';
+      const items = videosMode ? diverseVideos(state.videos || []) : audioMode ? (state.audio?.length ? state.audio : demoAudioItems()) : category === 'elsalvador' ? localNewsItems() : (state.news || []);
+      if (!items.length) {
+        target.innerHTML = videosMode ? noRealDataHTML('Videos reales en actualización', 'GoalApp está consultando YouTube RSS, ScoreBat y TheSportsDB. No se mostrarán enlaces a canales como si fueran videos.') : noRealDataHTML('Sin publicaciones reales todavía', 'La fuente no respondió o sigue actualizando.');
+        renderHomePersonalNews();
+        renderHomeMedia();
+        return;
+      }
+      if (videosMode) {
+        target.innerHTML = `<div class="video-real-grid">${items.slice(0, 24).map(videoCardHTML).join('')}</div>`;
+      } else if (audioMode) {
+        target.innerHTML = `<div class="audio-list-modern">${items.slice(0, 18).map(audioCardHTML).join('')}</div>`;
+      } else {
+        const [hero, ...rest] = items;
+        target.innerHTML = newsHeroHTML(hero) + `<div class="news-list-modern">${rest.slice(0, 18).map(newsCardHTML).join('')}</div>`;
+      }
+      renderHomePersonalNews(); renderHomeMedia(); hydratePersonalization();
+    }
+
+    function diverseVideos(items = []) {
+      return (Array.isArray(items) ? items : []).filter(item => videoEmbedUrl(item));
+    }
+
+    async function loadNews(category = state.newsCategory, force = false) {
+      if (state.newsLoading && !force) return;
+      state.newsLoading = true;
+      state.newsCategory = category;
+      $$('.news-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.newsCategory === category));
+      $('#refreshNews')?.classList.add('loading');
+      if (category !== 'all') $('#newsFeed')?.classList.add('feed-loading-reduced');
+      try {
+        if (category === 'videos') {
+          const data = await fetchJSON(`${professionalBase()}/api/videos?limit=30`, 10000);
+          state.videos = diverseVideos(data.videos || []);
+          state.newsSources = data.sourceStatus || [];
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+        } else if (category === 'audio') {
+          const data = await fetchJSON(`${professionalBase()}/api/audio?limit=18`, 8000);
+          state.audio = data.audio || [];
+          state.newsSources = data.sourceStatus || [];
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+        } else {
+          const data = await fetchJSON(`${professionalBase()}/api/news?category=${encodeURIComponent(category)}&limit=36`, 9000);
+          if (category === 'elsalvador') state.localNews = data.news || [];
+          else state.news = data.news || [];
+          state.newsSources = data.sourceStatus || [];
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+          Promise.allSettled([
+            fetchJSON(`${professionalBase()}/api/videos?limit=18`, 10000).then(videoData => { state.videos = diverseVideos(videoData.videos || []); }),
+            fetchJSON(`${professionalBase()}/api/news?category=elsalvador&limit=12`, 8000).then(localData => { state.localNews = localData.news || []; }),
+            fetchJSON(`${professionalBase()}/api/audio?limit=10`, 8000).then(audioData => { state.audio = audioData.audio || []; })
+          ]).then(() => { renderHomeMedia(); renderHomePersonalNews(); if (state.newsCategory === 'videos' || state.newsCategory === 'elsalvador') renderNews(); });
+        }
+      } catch (error) {
+        console.warn('GoalNews MATCHPRO-5', error);
+        showToast('No se pudo actualizar una fuente real');
+      } finally {
+        state.newsLoading = false;
+        $('#refreshNews')?.classList.remove('loading');
+        $('#newsFeed')?.classList.remove('feed-loading-reduced');
+        renderNews();
+        renderWorldCupCenterPro(state.wcTab || 'groups');
+      }
+    }
+
+    async function loadWorldCupOverview(force = false) {
+      renderWorldCupTable();
+      try {
+        const overview = await fetchJSON(`${professionalBase()}/api/worldcup/overview?timezone=America%2FEl_Salvador`, 12000);
+        state.worldCupOverview = overview;
+        state.worldCupStandings = overview?.standings || [];
+        renderWorldCupTable();
+        renderWorldCupHub();
+      } catch (error) {
+        state.worldCupOverview = { ok:false, provider:'Sin conexión', standings:[], matches:[], error:error.message };
+        renderWorldCupTable();
+        renderWorldCupHub();
+      }
+    }
+
+    async function fetchRealMatches(force = false) {
+      renderDateStrip();
+      if (state.loading) return;
+      state.loading = true;
+      $('#refreshRealData')?.classList.add('loading');
+      try {
+        let matches = [];
+        if (hasProfessionalBackend()) {
+          const backend = professionalBase();
+          const requests = [fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`, 10000)];
+          if (state.selectedDate === dateKey(new Date())) requests.push(fetchJSON(`${backend}/api/matches?live=all&timezone=America%2FEl_Salvador`, 8000));
+          const results = await Promise.allSettled(requests);
+          const successful = results.filter(result => result.status === 'fulfilled').map(result => result.value);
+          if (!successful.length) throw new Error(results[0]?.reason?.message || 'La fecha no pudo cargarse');
+          const events = successful.flatMap(data => Array.isArray(data?.matches) ? data.matches : []);
+          const unique = [...new Map(events.filter(Boolean).map(item => [String(item.id || JSON.stringify(item)), item])).values()];
+          matches = unique.map(normalizeProfessionalMatch).sort(compareByRelevance);
+          state.providerName = 'GoalApp Data API';
+        }
+        state.matches = dedupeMatches(matches).sort(compareByRelevance);
+        state.updatedAt = new Date();
+        saveCache(state.matches);
+        setDataSource('real', `Actualizado: ${formatUpdated(state.updatedAt)}`);
+      } catch (error) {
+        console.warn('GoalApp MATCHPRO-5 data error:', error);
+        const cacheNow = readCache();
+        if (cacheNow) {
+          state.matches = cacheNow.matches || [];
+          state.providerName = cacheNow.provider || state.providerName;
+          state.updatedAt = new Date(cacheNow.savedAt);
+          setDataSource('cache', `Últimos datos reales guardados: ${formatUpdated(state.updatedAt)}`);
+        } else {
+          state.matches = [];
+          setDataSource('demo', `Sin datos reales: ${error?.message || 'Error desconocido'}`);
+        }
+      } finally {
+        state.loading = false;
+        $('#refreshRealData')?.classList.remove('loading');
+        renderAllMatchData();
+        hydrateBackendUI();
+        scheduleListRefresh();
+        setTimeout(() => loadWorldCupOverview(force), 80);
+        setTimeout(() => loadHomeIntelligence(false), 160);
+      }
+    }
+
+    function renderWorldCupPlayers() {
+      const target = $('#worldCupPlayers');
+      if (!target) return;
+      const players = richPlayerPool();
+      if (!players.length) {
+        target.innerHTML = truthStatusHTML(false, 'Consultando jugadores reales. No se mostrarán jugadores inventados.');
+        setTimeout(() => loadTrendingPlayers(true), 150);
+        return;
+      }
+      target.innerHTML = players.slice(0, 12).map((player, index) => {
+        const goals = playerGoals(player);
+        const metric = goals ? `${goals} G` : (player.position || 'Jugador');
+        return `<button class="player-trend-card reveal-card" style="--i:${index}" data-toast="${escapeHTML(player.name)} · ${escapeHTML(playerTeamName(player))}"><img src="${playerPhoto(player)}" alt="${escapeHTML(player.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><span class="player-trend-goals">${escapeHTML(metric)}</span><span class="player-trend-copy"><strong>${escapeHTML(player.name)}</strong><span>${escapeHTML(playerTeamName(player))}</span></span></button>`;
+      }).join('') + `<div class="player-source-note">Fotos reales desde API-Football cuando están disponibles.</div>`;
+    }
+
+    async function loadTrendingPlayers(force=false) {
+      if (!hasProfessionalBackend() || (state.playersLoading && !force)) return;
+      state.playersLoading = true;
+      try {
+        const data = await fetchJSON(`${professionalBase()}/api/worldcup/players?limit=24`, 12000);
+        if (data.players?.length) {
+          state.worldCupPlayers = data.players;
+          state.featuredPlayers = data.players;
+          renderWorldCupPlayers();
+          renderPlayerOfDay();
+        }
+      } catch (e) {
+        console.warn('Trending players', e);
+      } finally {
+        state.playersLoading = false;
+      }
+    }
+
+    async function loadHomeIntelligence(force = false) {
+      if (state.homeExtrasLoading) return;
+      renderHomeIntelligence();
+      setTimeout(() => loadWorldCupOverview(force), 50);
+      setTimeout(() => loadTrendingPlayers(force), 180);
+    }
+
+    document.addEventListener('click', e => {
+      const video = e.target.closest('[data-video-id]');
+      if (video) {
+        e.preventDefault(); e.stopPropagation();
+        openNativeVideo(state.videoRegistry?.[video.dataset.videoId] || {});
+      }
+      if (e.target.closest('[data-close-video]') || e.target.id === 'videoPlayerModal') closeNativeVideo();
+    });
+
+
+
+    /* DATAENGINE-1 · Sportmonks primary data layer */
+
+    function dataengineBase() { return `${professionalBase()}/api/v2`; }
+
+    async function checkDataEngineHealth() {
+      try {
+        const health = await fetchJSON(`${dataengineBase()}/health`, 9000);
+        state.dataengineHealth = health;
+        const sport = health.providers?.sportmonks?.configured;
+        const api = health.providers?.apiFootball?.configured;
+        const score = health.providers?.scorebat?.available;
+        setDataSource(sport ? 'real' : api ? 'cache' : 'demo', sport ? 'Sportmonks activo' : api ? 'API-Football respaldo' : 'Proveedor principal no configurado');
+        return health;
+      } catch (error) {
+        state.dataengineHealth = { ok:false, error:error.message };
+        return state.dataengineHealth;
+      }
+    }
+
+    function normalizeV2Match(item = {}) {
+      const base = {
+        id: String(item.id || item.fixtureId || item.sportmonksId || item.apiFootballId || Math.random()),
+        source: item.source || item.provider || 'dataengine',
+        provider: item.provider || item.source || 'DataEngine',
+        league: item.league?.name || item.leagueName || item.competition || 'Football',
+        competitionId: item.league?.id || item.leagueId || item.competitionId || '',
+        season: item.season?.id || item.seasonId || item.season || '',
+        competitionRound: item.round?.name || item.roundName || item.stage?.name || item.stageName || '',
+        competitionCountry: item.country?.name || item.country || '',
+        homeTeamId: item.home?.id || item.homeTeamId || '',
+        awayTeamId: item.away?.id || item.awayTeamId || '',
+        homeName: item.home?.name || item.homeName || 'Local',
+        awayName: item.away?.name || item.awayName || 'Visitante',
+        homeLogo: item.home?.logo || item.homeLogo || placeholderLogo(item.home?.name || item.homeName || 'Local'),
+        awayLogo: item.away?.logo || item.awayLogo || placeholderLogo(item.away?.name || item.awayName || 'Visitante'),
+        homeScore: item.score?.home ?? item.homeScore ?? null,
+        awayScore: item.score?.away ?? item.awayScore ?? null,
+        statusText: item.status?.label || item.statusText || item.status?.name || '',
+        statusShort: item.status?.short || item.statusShort || '',
+        date: item.date || item.startingAt || item.starting_at || new Date().toISOString(),
+        venue: item.venue?.name || item.venue || '',
+        venueCity: item.venue?.city || item.venueCity || '',
+        referee: item.referee || '',
+        background: chooseFromPool ? chooseFromPool('worldcup', item.id || item.homeName || 'match') : '',
+        raw: item
+      };
+      const now = Date.now();
+      const start = new Date(base.date).getTime();
+      const finishedCodes = ['FT','AET','PEN','FINISHED','FIN','FULL_TIME'];
+      const liveCodes = ['LIVE','1H','2H','HT','ET','BT','INT'];
+      base.finished = Boolean(item.finished) || finishedCodes.includes(String(base.statusShort).toUpperCase()) || /finished|full|final|ft/i.test(base.statusText);
+      base.live = Boolean(item.live) || liveCodes.includes(String(base.statusShort).toUpperCase()) || /live|inplay|1st|2nd|half/i.test(base.statusText);
+      base.state = base.live ? 'live' : base.finished ? 'finished' : start > now ? 'upcoming' : 'today';
+      base.score = base.homeScore !== null && base.awayScore !== null ? `${base.homeScore} - ${base.awayScore}` : formatTime(new Date(base.date));
+      if (!base.statusText) base.statusText = base.live ? 'En vivo' : base.finished ? 'Finalizado' : formatTime(new Date(base.date));
+      return base;
+    }
+
+    function normalizeV2Player(item = {}) {
+      return {
+        id: item.id || item.playerId || item.player?.id || null,
+        name: item.name || item.displayName || item.player?.name || 'Jugador',
+        photo: item.photo || item.image || item.player?.image_path || item.player?.photo || '',
+        nationality: item.nationality || item.country?.name || '',
+        position: item.position || item.positionName || item.player?.position?.name || '',
+        number: item.number || item.jerseyNumber || null,
+        statistics: [{
+          team: { id:item.team?.id || item.teamId || '', name:item.team?.name || item.teamName || 'Equipo', logo:item.team?.logo || item.team?.image_path || '' },
+          games: { rating:item.rating || '', position:item.position || '' },
+          goals: { total:item.goals ?? item.statistics?.goals ?? null, assists:item.assists ?? item.statistics?.assists ?? null },
+          cards: item.cards || {},
+          passes: item.passes || {}
+        }]
+      };
+    }
+
+    function normalizeV2StandingGroup(group = []) {
+      return (group || []).map(row => ({
+        rank: row.rank ?? row.position ?? row.place ?? '—',
+        team: {
+          id: row.team?.id || row.participant?.id || row.teamId || row.participantId || '',
+          name: row.team?.name || row.participant?.name || row.teamName || row.name || 'Equipo',
+          logo: row.team?.logo || row.participant?.logo || row.team?.image_path || row.participant?.image_path || placeholderLogo(row.team?.name || row.participant?.name || 'FC')
+        },
+        points: row.points ?? row.pts ?? 0,
+        goalsDiff: row.goalsDiff ?? row.goalDifference ?? row.details?.goal_difference ?? row.details?.goaldifference ?? 0,
+        form: row.form || '',
+        group: row.group || row.groupName || '',
+        all: {
+          played: row.played ?? row.matchesPlayed ?? row.details?.played ?? 0,
+          win: row.won ?? row.win ?? row.details?.won ?? 0,
+          draw: row.draw ?? row.drawn ?? row.details?.drawn ?? 0,
+          lose: row.lost ?? row.lose ?? row.details?.lost ?? 0,
+          goals: { for: row.goalsFor ?? row.gf ?? row.details?.goals_for ?? 0, against: row.goalsAgainst ?? row.ga ?? row.details?.goals_against ?? 0 }
+        }
+      }));
+    }
+
+    function getWorldCupStandingsGroups() {
+      const groups = state.worldCupOverview?.standings || state.worldCupStandings || [];
+      return Array.isArray(groups) ? groups.map(normalizeV2StandingGroup).filter(g => g.length) : [];
+    }
+
+    function allWorldCupMatches() {
+      const overview = (state.worldCupOverview?.matches || []).map(normalizeV2Match);
+      const real = (state.matches || []).filter(isWorldCupMatch);
+      return dedupeMatches([...real, ...overview]).sort((a,b) => new Date(a.date) - new Date(b.date));
+    }
+
+    async function loadWorldCupOverview(force = false) {
+      renderWorldCupTable();
+      try {
+        const overview = await fetchJSON(`${dataengineBase()}/worldcup/overview?timezone=America%2FEl_Salvador`, 14000);
+        state.worldCupOverview = overview;
+        state.worldCupStandings = overview?.standings || [];
+        renderWorldCupTable();
+        renderWorldCupHub();
+        renderWorldCupCenterPro(state.wcTab || 'groups');
+      } catch (error) {
+        state.worldCupOverview = { ok:false, provider:'DataEngine', standings:[], matches:[], error:error.message };
+        renderWorldCupTable();
+        renderWorldCupHub();
+      }
+    }
+
+    async function fetchRealMatches(force = false) {
+      renderDateStrip();
+      if (state.loading) return;
+      state.loading = true;
+      $('#refreshRealData')?.classList.add('loading');
+      try {
+        const data = await fetchJSON(`${dataengineBase()}/matches/today?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`, 14000);
+        state.matches = (data.matches || []).map(normalizeV2Match).sort(compareByRelevance);
+        state.providerName = data.provider || 'DataEngine';
+        state.updatedAt = new Date(data.fetchedAt || Date.now());
+        saveCache(state.matches);
+        setDataSource('real', `Fuente: ${state.providerName}`);
+      } catch (error) {
+        console.warn('DataEngine matches error', error);
+        const cacheNow = readCache();
+        if (cacheNow) {
+          state.matches = cacheNow.matches || [];
+          state.providerName = cacheNow.provider || state.providerName;
+          state.updatedAt = new Date(cacheNow.savedAt);
+          setDataSource('cache', `Últimos datos reales guardados: ${formatUpdated(state.updatedAt)}`);
+        } else {
+          state.matches = [];
+          setDataSource('demo', `Sin datos reales: ${error?.message || 'Error desconocido'}`);
+        }
+      } finally {
+        state.loading = false;
+        $('#refreshRealData')?.classList.remove('loading');
+        renderAllMatchData();
+        hydrateBackendUI();
+        scheduleListRefresh();
+        setTimeout(() => loadWorldCupOverview(force), 80);
+        setTimeout(() => loadHomeIntelligence(false), 160);
+      }
+    }
+
+    async function refreshSelectedMatch(automatic = false) {
+      const match = state.selectedMatch;
+      if (!match) return;
+      $('#refreshMatch').classList.add('loading');
+      try {
+        const detail = await fetchJSON(`${dataengineBase()}/match/${encodeURIComponent(match.id)}?source=${encodeURIComponent(match.source || '')}&timezone=America%2FEl_Salvador`, 14000);
+        if (detail.match) {
+          const richer = normalizeV2Match(detail.match);
+          Object.assign(match, richer);
+          state.selectedMatch = match;
+          renderMatchHeader(match);
+        }
+        state.matchDetail = detail;
+        $('#matchLastUpdated').textContent = `Fuente: ${detail.provider || 'DataEngine'} · ${formatTime(new Date(detail.fetchedAt || Date.now()))}`;
+        renderTimeline({events: detail.events || []}, match);
+        renderStats({statistics: detail.statistics || []});
+        renderTopPlayers((detail.players || []).map(p => ({ player: normalizeV2Player(p), statistics:[{}], team:p.team || {} })));
+        renderLineups(detail.lineups || [], detail.players || []);
+        renderAIAuto(match, {statistics: detail.statistics || []}, detail.events || []);
+        renderAllMatchPro?.(match);
+        startMatchRefresh(Number(detail.refreshAfter) || 45);
+        if (!automatic) showToast('Match Center actualizado');
+      } catch (error) {
+        $('#matchLastUpdated').textContent = `Previa lista · ${error.message}`;
+        renderTimeline({events: []}, match);
+        renderStats({statistics: []});
+        renderLineups([], []);
+        renderAIAuto(match, {}, []);
+        renderAllMatchPro?.(match);
+      } finally {
+        $('#refreshMatch').classList.remove('loading');
+      }
+    }
+
+    async function loadTrendingPlayers(force=false) {
+      if ((state.playersLoading && !force)) return;
+      state.playersLoading = true;
+      try {
+        const data = await fetchJSON(`${dataengineBase()}/players/trending?limit=24`, 14000);
+        if (data.players?.length) {
+          state.worldCupPlayers = data.players.map(normalizeV2Player);
+          state.featuredPlayers = state.worldCupPlayers;
+          renderWorldCupPlayers();
+          renderPlayerOfDay();
+        }
+      } catch (e) {
+        console.warn('DataEngine trending players', e);
+      } finally {
+        state.playersLoading = false;
+      }
+    }
+
+    async function loadHomeIntelligence(force = false) {
+      if (state.homeExtrasLoading) return;
+      renderHomeIntelligence();
+      setTimeout(() => checkDataEngineHealth(), 20);
+      setTimeout(() => loadWorldCupOverview(force), 70);
+      setTimeout(() => loadTrendingPlayers(force), 200);
+    }
 
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
