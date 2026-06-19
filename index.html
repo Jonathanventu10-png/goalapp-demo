@@ -768,6 +768,19 @@ body{padding-top:0}
     .video-card-modern, .audio-card-modern { transition:transform .24s ease,border-color .24s ease; }
     .video-card-modern:active, .audio-card-modern:active { transform:scale(.985); }
 
+  
+    /* HOTFIX-1 mobile layout patch */
+    .goalai-radar-head { display:grid !important; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:12px; }
+    .goalai-radar-head h2 { line-height:1.05; word-break:normal; overflow-wrap:normal; max-width:100%; }
+    .goalai-radar-head p { max-width:100%; }
+    .ai-pulse { flex:0 0 auto; }
+    .hero .scoreboard { min-height:126px; }
+    .status-card { min-height:84px; }
+    @media (max-width:390px){
+      .goalai-radar-head h2 { font-size:24px; }
+      .ai-signal-grid { grid-template-columns:1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -937,6 +950,98 @@ body{padding-top:0}
       {id:'demo-2',league:'Premier League',homeName:'Liverpool',awayName:'Arsenal',homeLogo:TEAM_CATALOG[2].logo,awayLogo:TEAM_CATALOG[3].logo,score:'1 - 0',statusText:"65'",state:'today',isToday:true,favorite:true,isDemo:true,date:new Date().toISOString()},
       {id:'demo-3',league:'Champions League',homeName:'Paris Saint-Germain',awayName:'Manchester City',homeLogo:TEAM_CATALOG[5].logo,awayLogo:TEAM_CATALOG[4].logo,score:'8:00 PM',statusText:'HOY',state:'upcoming',isToday:false,isDemo:true,date:new Date(Date.now()+86400000).toISOString()}
     ];
+
+
+    const VISUAL_BACKGROUNDS = {
+      worldcup: [
+        'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1200&q=86'
+      ],
+      champions: [
+        'https://images.unsplash.com/photo-1518604666860-9ed391f76460?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=1200&q=86'
+      ],
+      premier: [
+        'https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?auto=format&fit=crop&w=1200&q=86'
+      ],
+      laliga: [
+        'https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=86'
+      ],
+      seriea: [
+        'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1486286701208-1d58e9338013?auto=format&fit=crop&w=1200&q=86'
+      ],
+      bundesliga: [
+        'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=86'
+      ],
+      live: [
+        'https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=86'
+      ],
+      upcoming: [
+        'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=86'
+      ],
+      finished: [
+        'https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1200&q=86'
+      ],
+      profile: [
+        'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1200&q=86'
+      ],
+      generic: [
+        'https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=86',
+        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=86'
+      ]
+    };
+
+    function seededIndex(seed, size) {
+      const str = String(seed || 'goalapp');
+      let total = 0;
+      for (let i = 0; i < str.length; i++) total = (total * 31 + str.charCodeAt(i)) >>> 0;
+      return size ? total % size : 0;
+    }
+
+    function chooseFromPool(poolName, seed) {
+      const pool = VISUAL_BACKGROUNDS[poolName] || VISUAL_BACKGROUNDS.generic;
+      return pool[seededIndex(seed, pool.length)];
+    }
+
+    function backgroundBucket(match = {}) {
+      const rawText = `${match.league || ''} ${match.competitionRound || ''} ${match.competitionCountry || ''}`.toLowerCase();
+      const text = typeof normalizeName === 'function' ? normalizeName(rawText) : rawText;
+      if ((typeof isWorldCupMatch === 'function' && isWorldCupMatch(match)) || text.includes('worldcup') || text.includes('mundial') || text.includes('world cup')) return 'worldcup';
+      if (text.includes('champions')) return 'champions';
+      if (text.includes('premier')) return 'premier';
+      if (text.includes('laliga') || text.includes('la liga')) return 'laliga';
+      if (text.includes('seriea') || text.includes('serie a')) return 'seriea';
+      if (text.includes('bundesliga')) return 'bundesliga';
+      if (match.live) return 'live';
+      if (match.finished) return 'finished';
+      return 'upcoming';
+    }
+
+    function chooseMatchBackground(match = {}, view = 'hero') {
+      const bucket = backgroundBucket(match);
+      return chooseFromPool(bucket, `${view}-${match.id || match.homeName || 'goal'}-${match.awayName || ''}`);
+    }
+
+    function chooseProfileBackground() {
+      const selected = (typeof selectedCatalogTeams === 'function' ? selectedCatalogTeams() : []);
+      const primary = selected[0]?.name || state?.selectedLeagues?.[0] || state?.profile?.name || 'goalapp';
+      return chooseFromPool('profile', primary);
+    }
+
+    function selectedPrimaryLeagueName() {
+      const id = state.selectedLeagues?.[0];
+      return (LEAGUES.find(l => l.id === id)?.name) || 'Mundial 2026';
+    }
 
     const DEFAULT_PROFILE = {name:'Jony',country:'El Salvador',language:'Español'};
     const ALERT_OPTIONS = [
@@ -1176,8 +1281,8 @@ body{padding-top:0}
         let matches=[];
         if(hasProfessionalBackend()){
           const backend=professionalBase();
-          const requests=[fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`,30000)];
-          if(state.selectedDate===dateKey(new Date()))requests.push(fetchJSON(`${backend}/api/matches?live=all&timezone=America%2FEl_Salvador`,20000));
+          const requests=[fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`,14000)];
+          if(state.selectedDate===dateKey(new Date()))requests.push(fetchJSON(`${backend}/api/matches?live=all&timezone=America%2FEl_Salvador`,12000));
           const results=await Promise.allSettled(requests);
           const successful=results.filter(result=>result.status==='fulfilled').map(result=>result.value);
           if(!successful.length)throw new Error(results[0]?.reason?.message||'La fecha no pudo cargarse');
@@ -1570,6 +1675,57 @@ body{padding-top:0}
       }finally{state.newsLoading=false;$('#refreshNews')?.classList.remove('loading');renderNews()}
     }
 
+
+    function demoNewsItems() {
+      const now = new Date().toISOString();
+      return [
+        { source: 'GoalNews', title: 'Mundial 2026: los partidos del día y el contexto que debes seguir', description: 'Resumen editorial temporal mientras se conectan las fuentes reales.', publishedAt: now, link: '', image: newsFallbackImage({source:'FIFA'}) },
+        { source: 'AS', title: 'Última hora de fichajes y mercado europeo', description: 'Tarjeta de respaldo; se reemplazará por contenido real al actualizar.', publishedAt: now, link: '', image: newsFallbackImage({source:'AS'}) },
+        { source: 'El Gráfico', title: 'Fútbol de El Salvador y agenda regional', description: 'Cobertura local para enriquecer GoalApp.', publishedAt: now, link: '', image: newsFallbackImage({source:'El Gráfico'}) }
+      ];
+    }
+
+    function demoVideoItems() {
+      const now = new Date().toISOString();
+      return [
+        { source: 'El Chiringuito', title: 'Video destacado: debate y análisis de actualidad', publishedAt: now, link: '', image: newsFallbackImage({source:'El Chiringuito'}) }
+      ];
+    }
+
+    function demoAudioItems() {
+      const now = new Date().toISOString();
+      return [
+        { source: 'GoalAudio', title: 'Resumen en audio: lo más importante del día', publishedAt: now, link: '', image: newsFallbackImage({source:'GoalAudio'}) }
+      ];
+    }
+
+    function ensureHomeDoesNotStayBlank() {
+      setTimeout(() => {
+        const heroStillLoading = ($('#heroStatus')?.textContent || '').toLowerCase().includes('cargando');
+        const noMatches = !state.matches?.length;
+        if (heroStillLoading && noMatches && !state.loading) {
+          state.matches = FALLBACK_GAMES.map(normalizeEvent ? x => ({...x, live: true, finished: false, state:'today'}) : x);
+          state.providerName = 'Modo respaldo';
+          state.updatedAt = new Date();
+          setDataSource('demo', 'Modo respaldo: revisa el Worker o vuelve a actualizar.');
+          renderAllMatchData();
+        }
+        if (!state.news?.length && !state.newsLoading) {
+          state.news = demoNewsItems();
+          renderHomePersonalNews();
+          renderNews();
+        }
+        if (!state.videos?.length) {
+          state.videos = demoVideoItems();
+          renderHomeMedia();
+        }
+        if (!state.audio?.length) {
+          state.audio = demoAudioItems();
+          renderHomeMedia();
+        }
+      }, 16000);
+    }
+
     function showScreen(name){
       const apply=()=>{const leavingMatch=state.currentScreen==='match'&&name!=='match';if(leavingMatch)clearMatchTimers();$$('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===name));state.previousScreen=state.currentScreen;state.currentScreen=name;window.scrollTo({top:0,behavior:'smooth'});if(name==='live'&&!state.matches.length)fetchRealMatches();if(name==='feed'&&!state.news.length&&!state.newsLoading)loadNews('all')};
       document.startViewTransition?document.startViewTransition(apply):apply();
@@ -1848,7 +2004,7 @@ body{padding-top:0}
     setTimeout(()=>{$('#splash').classList.add('done');setTimeout(()=>{if(!localStorage.getItem('goalapp_onboarded')&&!preview)openOnboarding()},250)},1000);
     if(preview){state.profile={name:'Jony',country:'El Salvador',language:'Español'};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=['real','liverpool','barca','salvador'];state.selectedLeagues=['worldcup','laliga','premier','champions','elsalvador']}
     if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
-    hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();renderHomeIntelligence();fetchRealMatches(true);loadNews('all');
+    hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();renderHomeIntelligence();fetchRealMatches(true);loadNews('all');ensureHomeDoesNotStayBlank();
   </script>
 </body>
 </html>
