@@ -890,6 +890,55 @@ body{padding-top:0}
     .match-chat-bubbles div { padding:10px 12px; border-radius:16px; background:rgba(255,255,255,.055); color:#dbe3df; font-size:12px; }
     @media (max-width:390px){ .photo-lineup-grid { grid-template-columns:repeat(2,1fr); } .match-pro-kpis { grid-template-columns:1fr; } .form-split { grid-template-columns:1fr; } }
 
+  
+    /* MATCHPRO-2 · Performance + predictive 22-player pitch */
+    .speed-note { display:inline-flex; align-items:center; gap:6px; color:var(--green); font-size:10px; font-weight:900; }
+    .predictive-pitch-card { overflow:hidden; }
+    .predictive-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:12px; }
+    .predictive-head h3 { margin:0; font-size:18px; }
+    .predictive-head p { margin:4px 0 0; color:var(--muted); font-size:11px; line-height:1.4; }
+    .predictive-chip { padding:8px 10px; border-radius:999px; color:#031008; background:var(--green); font-weight:900; font-size:10px; white-space:nowrap; }
+    .full-pitch-22 { position:relative; min-height:660px; border:1px solid rgba(255,255,255,.14); border-radius:26px; overflow:hidden; background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.10) 0 2px, transparent 3px),
+      linear-gradient(180deg, rgba(0,237,104,.09), rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,237,104,.09)),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 46px),
+      linear-gradient(145deg,#0a3b1e,#07110c);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), inset 0 0 80px rgba(0,0,0,.5);
+    }
+    .full-pitch-22::before { content:""; position:absolute; left:50%; top:50%; width:130px; height:130px; transform:translate(-50%,-50%); border:1px solid rgba(255,255,255,.22); border-radius:50%; }
+    .full-pitch-22::after { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid rgba(255,255,255,.24); }
+    .pitch-box-top, .pitch-box-bottom { position:absolute; left:24%; width:52%; height:80px; border:1px solid rgba(255,255,255,.22); }
+    .pitch-box-top { top:0; border-top:0; border-radius:0 0 20px 20px; }
+    .pitch-box-bottom { bottom:0; border-bottom:0; border-radius:20px 20px 0 0; }
+    .pitch-team-label { position:absolute; left:12px; right:12px; display:flex; align-items:center; justify-content:space-between; z-index:2; color:#dfffee; font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.6px; }
+    .pitch-team-label img { width:24px; height:24px; border-radius:50%; object-fit:contain; }
+    .pitch-team-label.away { top:12px; }
+    .pitch-team-label.home { bottom:12px; }
+    .pitch-player-dot { position:absolute; z-index:4; width:54px; min-height:64px; transform:translate(-50%,-50%); text-align:center; }
+    .pitch-player-dot .avatar { width:38px; height:38px; margin:0 auto 4px; border-radius:50%; overflow:hidden; background:#10171a; border:2px solid rgba(255,255,255,.28); box-shadow:0 8px 18px rgba(0,0,0,.35); display:grid; place-items:center; font-size:11px; font-weight:950; }
+    .pitch-player-dot.home .avatar { border-color:rgba(0,237,104,.72); }
+    .pitch-player-dot.away .avatar { border-color:rgba(91,126,255,.72); }
+    .pitch-player-dot img { width:100%; height:100%; object-fit:cover; }
+    .pitch-player-dot strong { display:block; color:#fff; font-size:9px; line-height:1.05; text-shadow:0 1px 8px rgba(0,0,0,.9); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .pitch-player-dot small { display:block; color:#c8d6cf; font-size:8px; }
+    .lineup-bench-pro { display:grid; gap:8px; margin-top:12px; }
+    .bench-row-pro { display:flex; gap:8px; overflow:auto; scrollbar-width:none; }
+    .bench-row-pro::-webkit-scrollbar { display:none; }
+    .bench-chip-pro { min-width:max-content; display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.08); font-size:11px; }
+    .bench-chip-pro img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+    .quick-sources-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:12px; }
+    .quick-source-card { padding:12px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.055); }
+    .quick-source-card strong { display:block; font-size:12px; }
+    .quick-source-card span { display:block; margin-top:5px; color:var(--muted); font-size:10px; }
+    .performance-banner { display:flex; align-items:center; gap:10px; padding:11px 12px; margin:10px 0 0; border-radius:18px; background:rgba(0,237,104,.08); border:1px solid rgba(0,237,104,.22); color:#dfffee; font-size:11px; }
+    .performance-banner b { color:var(--green); }
+    @media (max-width:390px){
+      .full-pitch-22 { min-height:620px; }
+      .pitch-player-dot { width:48px; }
+      .pitch-player-dot .avatar { width:34px; height:34px; }
+      .pitch-player-dot strong { font-size:8px; }
+    }
+
   </style>
 </head>
 <body>
@@ -2835,6 +2884,375 @@ body{padding-top:0}
         if (el) el.textContent = String(Math.max(0, Math.min(9, Number(el.textContent || 0) + Number(amount))));
       }
     });
+
+
+
+    /* MATCHPRO-2 · Overrides: faster load, richer media, full predictive pitch */
+
+    function compactName(name = '') {
+      const parts = String(name).split(/\s+/).filter(Boolean);
+      if (!parts.length) return 'Jugador';
+      return parts.length === 1 ? parts[0] : parts.slice(-1)[0];
+    }
+
+    function initials(name = '') {
+      return String(name).split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join('').toUpperCase() || 'FC';
+    }
+
+    const PREDICTIVE_POSITIONS = {
+      home: [
+        ['GK', 50, 94],
+        ['LB', 18, 82], ['CB', 39, 82], ['CB', 61, 82], ['RB', 82, 82],
+        ['CM', 28, 68], ['CM', 50, 65], ['CM', 72, 68],
+        ['LW', 20, 54], ['ST', 50, 51], ['RW', 80, 54]
+      ],
+      away: [
+        ['GK', 50, 6],
+        ['LB', 82, 18], ['CB', 61, 18], ['CB', 39, 18], ['RB', 18, 18],
+        ['CM', 72, 32], ['CM', 50, 35], ['CM', 28, 32],
+        ['LW', 80, 46], ['ST', 50, 49], ['RW', 20, 46]
+      ]
+    };
+
+    function createPlaceholderPlayer(teamName, role, index) {
+      const roleNames = {
+        GK:'Portero', LB:'Lateral', RB:'Lateral', CB:'Central', CM:'Medio', LW:'Extremo', RW:'Extremo', ST:'Delantero'
+      };
+      return {
+        name: `${roleNames[role] || 'Jugador'} ${index + 1}`,
+        photo: '',
+        position: role,
+        number: index + 1,
+        statistics: [{ team: { name: teamName, logo: '' }, games: { position: role }, goals: {} }]
+      };
+    }
+
+    function playersForTeam(match, side) {
+      const teamId = side === 'home' ? match.homeTeamId : match.awayTeamId;
+      const teamName = side === 'home' ? match.homeName : match.awayName;
+      const key = String(teamId || teamName || '');
+      const squad = (state.matchSquads?.[key] || []).map(p => normalizeFeaturedPlayer(p, { id: teamId, name: teamName, logo: side === 'home' ? match.homeLogo : match.awayLogo }));
+      const linked = richPlayerPool().filter(p => {
+        const t = normalizeName(playerTeamName(p));
+        return t.includes(normalizeName(teamName)) || String(p.statistics?.[0]?.team?.id || '') === String(teamId || '');
+      });
+      const merged = [];
+      const seen = new Set();
+      [...squad, ...linked].forEach(p => {
+        const k = normalizeName(p.name);
+        if (k && !seen.has(k)) { seen.add(k); merged.push(p); }
+      });
+      const positions = PREDICTIVE_POSITIONS[side];
+      while (merged.length < 11) {
+        const role = positions[merged.length]?.[0] || 'FC';
+        merged.push(createPlaceholderPlayer(teamName, role, merged.length));
+      }
+      return merged.slice(0, 18);
+    }
+
+    function pitchPlayerHTML(player, side, pos, index) {
+      const name = compactName(player.name);
+      const photo = playerPhoto(player);
+      const hasPhoto = player.photo || (photo && !photo.startsWith('data:image/svg'));
+      return `<div class="pitch-player-dot ${side}" style="left:${pos[1]}%;top:${pos[2]}%"><span class="avatar">${hasPhoto ? `<img src="${photo}" alt="${escapeHTML(player.name)}" onerror="this.replaceWith(document.createTextNode('${escapeHTML(initials(player.name))}'))">` : escapeHTML(initials(player.name))}</span><strong>${escapeHTML(name)}</strong><small>${escapeHTML(player.position || pos[0])}</small></div>`;
+    }
+
+    function renderPredictivePitch(match) {
+      const home = playersForTeam(match, 'home');
+      const away = playersForTeam(match, 'away');
+      const homeXI = home.slice(0, 11), awayXI = away.slice(0, 11);
+      const homeBench = home.slice(11, 18), awayBench = away.slice(11, 18);
+      return `<article class="card lineup-card predictive-pitch-card">
+        <div class="predictive-head">
+          <div><h3>Alineación predictiva</h3><p>Once probable generado con plantilla real cuando está disponible. No es alineación oficial.</p></div>
+          <span class="predictive-chip">22 jugadores</span>
+        </div>
+        <div class="full-pitch-22">
+          <div class="pitch-box-top"></div><div class="pitch-box-bottom"></div>
+          <div class="pitch-team-label away"><span>${escapeHTML(match.awayName)}</span><img src="${match.awayLogo}" alt=""></div>
+          <div class="pitch-team-label home"><img src="${match.homeLogo}" alt=""><span>${escapeHTML(match.homeName)}</span></div>
+          ${awayXI.map((p, i) => pitchPlayerHTML(p, 'away', PREDICTIVE_POSITIONS.away[i], i)).join('')}
+          ${homeXI.map((p, i) => pitchPlayerHTML(p, 'home', PREDICTIVE_POSITIONS.home[i], i)).join('')}
+        </div>
+        <div class="lineup-bench-pro">
+          <div class="bench-row-pro">${homeBench.map(p => `<span class="bench-chip-pro"><img src="${playerPhoto(p)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'" alt="">${escapeHTML(compactName(p.name))}</span>`).join('')}</div>
+          <div class="bench-row-pro">${awayBench.map(p => `<span class="bench-chip-pro"><img src="${playerPhoto(p)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'" alt="">${escapeHTML(compactName(p.name))}</span>`).join('')}</div>
+        </div>
+      </article>`;
+    }
+
+    async function loadMatchSquadsFast(match) {
+      if (!match || !hasProfessionalBackend()) return;
+      state.matchSquads = state.matchSquads || {};
+      const pairs = [
+        [match.homeTeamId, match.homeName],
+        [match.awayTeamId, match.awayName]
+      ].filter(([id, name]) => (id || name) && !state.matchSquads[String(id || name)]);
+      if (!pairs.length) return;
+      const settled = await Promise.allSettled(pairs.map(([id, name]) => {
+        if (!id) return Promise.resolve({ id: name, name, players: [] });
+        return fetchJSON(`${professionalBase()}/api/team/${encodeURIComponent(id)}/squad`, 8000).then(data => ({ id, name, players: data.players || [] }));
+      }));
+      settled.forEach(result => {
+        if (result.status === 'fulfilled') state.matchSquads[String(result.value.id || result.value.name)] = result.value.players;
+      });
+    }
+
+    function renderLineups(matchLineups = [], playersRows = []) {
+      const target = $('#matchLineups');
+      if (!target) return;
+      const match = state.selectedMatch;
+      if (!match) return;
+      if (!matchLineups.length) {
+        target.innerHTML = renderPredictivePitch(match);
+        return;
+      }
+      const official = matchLineups.map(lineup => {
+        const rowMax = new Map();
+        lineup.startXI.forEach(p => { const [r,c] = String(p.grid||'').split(':').map(Number); if(r&&c) rowMax.set(r,Math.max(rowMax.get(r)||0,c)); });
+        const ratings = playerRatingsMap(playersRows);
+        const pitchPlayers = lineup.startXI.map((p,index) => {
+          const pos = playerPitchPosition(p,rowMax) || {x:15+(index%4)*23,y:88-Math.floor(index/4)*28};
+          const rating=ratings.get(String(p.id))?.rating;
+          const short=(p.name||'Jugador').split(' ').slice(-1)[0];
+          return `<div class="pitch-player" style="left:${pos.x}%;top:${pos.y}%"><span class="player-number">${p.number??'—'}</span>${rating?`<b class="rating">${rating.toFixed(1)}</b>`:''}<span>${escapeHTML(short)}</span></div>`;
+        }).join('');
+        const bench=lineup.substitutes.slice(0,12).map(p=>`<div class="bench-player"><b>${p.number??'—'}</b><span>${escapeHTML(p.name)}</span></div>`).join('');
+        return `<article class="card lineup-card"><div class="lineup-head"><div class="lineup-team"><img src="${lineup.team.logo||placeholderLogo(lineup.team.name)}" alt=""><div><strong>${escapeHTML(lineup.team.name)}</strong><small>${lineup.coach?.name?`DT: ${escapeHTML(lineup.coach.name)}`:'Entrenador no publicado'}</small></div></div><span class="formation-badge">${escapeHTML(lineup.formation||'XI')}</span></div><div class="pitch"><div class="center-circle"></div>${pitchPlayers}</div><div class="bench-title">Suplentes</div><div class="bench-list">${bench||'<span class="sub">No publicados</span>'}</div></article>`;
+      }).join('');
+      target.innerHTML = official + `<div class="performance-banner"><b>Predictivo disponible.</b><span>Si una alineación oficial está incompleta, GoalApp conserva una vista táctica alternativa.</span></div>`;
+    }
+
+    function diverseVideos(items = []) {
+      const base = Array.isArray(items) ? [...items] : [];
+      const required = [
+        { source:'ESPN Deportes', title:'Resúmenes, goles importantes y análisis en ESPN Deportes', link:'https://espndeportes.espn.com/futbol/', image:newsFallbackImage({source:'ESPN Deportes'}), type:'video' },
+        { source:'ScoreBat', title:'Highlights oficiales y goles de partidos recientes', link:'https://www.scorebat.com/video-api/', image:newsFallbackImage({source:'ScoreBat'}), type:'video' },
+        { source:'TUDN', title:'Videos y clips de fútbol de TUDN', link:'https://www.tudn.com/futbol', image:newsFallbackImage({source:'TUDN'}), type:'video' },
+        { source:'FIFA', title:'Videos oficiales de FIFA y Mundial', link:'https://www.fifa.com/', image:newsFallbackImage({source:'FIFA'}), type:'video' }
+      ];
+      for (const item of required) {
+        if (!base.some(v => normalizeName(v.source || '').includes(normalizeName(item.source)))) base.push(item);
+      }
+      return base;
+    }
+
+    function renderHomeMedia() {
+      const videoTarget = $('#homeVideoHighlight');
+      const audioTarget = $('#homeAudioHighlight');
+      const videos = diverseVideos(state.videos && state.videos.length ? state.videos : demoVideoItems());
+      const audio = state.audio && state.audio.length ? state.audio : demoAudioItems();
+      if (videoTarget) videoTarget.innerHTML = videos.slice(0, 4).map(videoCardRichHTML).join('') + `<div class="quick-sources-grid">${videos.slice(0,4).map(v => `<button class="quick-source-card" data-news-link="${escapeHTML(v.link||'')}"><strong>${escapeHTML(v.source||'Video')}</strong><span>${escapeHTML(v.title||'Abrir fuente')}</span></button>`).join('')}</div>`;
+      if (audioTarget) audioTarget.innerHTML = audio.slice(0, 2).map((item, index) => audioCardRichHTML(item, index, true)).join('');
+    }
+
+    function renderNews() {
+      renderNewsSources();
+      const target = $('#newsFeed');
+      if (!target) return;
+      const category = state.newsCategory;
+      const videosMode = category === 'videos';
+      const audioMode = category === 'audio';
+      const items = videosMode ? diverseVideos(state.videos || []) : audioMode ? (state.audio?.length ? state.audio : demoAudioItems()) : (state.news || []);
+      if (!items.length) {
+        target.innerHTML = '<div class="news-empty-modern"><div class="news-empty-icon">✦</div><h3>No hay publicaciones disponibles</h3><p>Una o más fuentes no respondieron. Puedes actualizar de nuevo sin perder el resto de la app.</p></div>';
+        return;
+      }
+      if (videosMode) {
+        target.innerHTML = `<div class="video-strip">${items.slice(0, 24).map(videoCardHTML).join('')}</div><div class="quick-sources-grid">${items.slice(0,8).map(v => `<button class="quick-source-card" data-news-link="${escapeHTML(v.link||'')}"><strong>${escapeHTML(v.source||'Video')}</strong><span>${escapeHTML(v.title||'Abrir fuente')}</span></button>`).join('')}</div>`;
+      } else if (audioMode) {
+        target.innerHTML = `<div class="audio-list-modern">${items.slice(0, 18).map(audioCardHTML).join('')}</div>`;
+      } else {
+        const [hero, ...rest] = items;
+        target.innerHTML = newsHeroHTML(hero) + `<div class="news-list-modern">${rest.slice(0, 18).map(newsCardHTML).join('')}</div>`;
+      }
+      renderHomePersonalNews(); renderHomeMedia(); hydratePersonalization();
+    }
+
+    async function loadNews(category = state.newsCategory, force = false) {
+      if (state.newsLoading && !force) return;
+      state.newsLoading = true;
+      state.newsCategory = category;
+      $$('.news-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.newsCategory === category));
+      $('#refreshNews')?.classList.add('loading');
+      if (category !== 'all') renderNewsSkeleton();
+      try {
+        if (category === 'videos') {
+          const data = await fetchJSON(`${professionalBase()}/api/videos?limit=30`, 9000);
+          state.videos = diverseVideos(data.videos || []);
+          state.newsSources = data.sourceStatus || [];
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+        } else if (category === 'audio') {
+          const data = await fetchJSON(`${professionalBase()}/api/audio?limit=18`, 9000);
+          state.audio = data.audio || demoAudioItems();
+          state.newsSources = data.sourceStatus || [];
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+        } else {
+          const data = await fetchJSON(`${professionalBase()}/api/news?category=${encodeURIComponent(category)}&limit=36`, 9000);
+          state.news = data.news || [];
+          state.newsSources = data.sourceStatus || ((data.sources || []).map(source => ({ source, count: state.news.filter(item => item.source === source).length, ok: true })));
+          state.newsUpdatedAt = data.fetchedAt || new Date().toISOString();
+          Promise.allSettled([
+            fetchJSON(`${professionalBase()}/api/videos?limit=18`, 9000).then(videoData => { state.videos = diverseVideos(videoData.videos || []); }),
+            fetchJSON(`${professionalBase()}/api/audio?limit=10`, 9000).then(audioData => { state.audio = audioData.audio || demoAudioItems(); })
+          ]).then(() => { renderHomeMedia(); if (state.newsCategory === 'videos' || state.newsCategory === 'audio') renderNews(); });
+        }
+      } catch (error) {
+        console.warn('GoalNews fast', error);
+        if (category === 'videos') state.videos = diverseVideos(state.videos || []);
+        if (category === 'audio') state.audio = demoAudioItems();
+        showToast('Algunas fuentes tardaron. Mostrando contenido disponible.');
+      } finally {
+        state.newsLoading = false;
+        $('#refreshNews')?.classList.remove('loading');
+        renderNews();
+      }
+    }
+
+    async function fetchRealMatches(force = false) {
+      renderDateStrip();
+      if (state.offline) {
+        const cache = readCache();
+        state.matches = cache?.matches || [];
+        state.providerName = cache?.provider || state.providerName;
+        setDataSource(cache ? 'cache' : 'demo', cache ? `Última actualización: ${formatUpdated(new Date(cache.savedAt))}` : 'Sin conexión');
+        renderAllMatchData();
+        return;
+      }
+      if (state.loading) return;
+      const cached = readCache();
+      if (!force && cached && Date.now() - cached.savedAt < CACHE_MAX_AGE) {
+        state.matches = cached.matches;
+        state.providerName = cached.provider || state.providerName;
+        state.updatedAt = new Date(cached.savedAt);
+        setDataSource('cache', `Guardados: ${formatUpdated(state.updatedAt)}`);
+        renderAllMatchData();
+        fetchRealMatches(true);
+        return;
+      }
+      state.loading = true;
+      $('#refreshRealData')?.classList.add('loading');
+      renderMatches();
+      try {
+        let matches = [];
+        if (hasProfessionalBackend()) {
+          const backend = professionalBase();
+          const requests = [fetchJSON(`${backend}/api/matches?date=${encodeURIComponent(state.selectedDate)}&timezone=America%2FEl_Salvador`, 9000)];
+          if (state.selectedDate === dateKey(new Date())) requests.push(fetchJSON(`${backend}/api/matches?live=all&timezone=America%2FEl_Salvador`, 7000));
+          const results = await Promise.allSettled(requests);
+          const successful = results.filter(result => result.status === 'fulfilled').map(result => result.value);
+          if (!successful.length) throw new Error(results[0]?.reason?.message || 'La fecha no pudo cargarse');
+          const events = successful.flatMap(data => Array.isArray(data?.matches) ? data.matches : []).filter(item => dateKey(new Date(item.date || 0)) === state.selectedDate);
+          const unique = [...new Map(events.filter(Boolean).map(item => [String(item.id || JSON.stringify(item)), item])).values()];
+          matches = unique.map(normalizeProfessionalMatch).sort(compareByRelevance);
+          state.providerName = 'GoalApp Data API';
+        } else {
+          const result = await fetchJSON(`${LEGACY_API_BASE}/eventsday.php?d=${state.selectedDate}&s=Soccer`, 8000);
+          const events = extractArray(result, ['events']);
+          const unique = [...new Map(events.filter(Boolean).map(item => [String(item.idEvent || JSON.stringify(item)), item])).values()];
+          matches = unique.map(normalizeEvent).sort(compareByRelevance);
+          state.providerName = 'TheSportsDB';
+        }
+        state.matches = matches;
+        state.updatedAt = new Date();
+        saveCache(matches);
+        setDataSource('real', `Actualizado: ${formatUpdated(state.updatedAt)}`);
+      } catch (error) {
+        console.warn('GoalApp fast data error:', error);
+        const cacheNow = readCache();
+        if (cacheNow) {
+          state.matches = cacheNow.matches;
+          state.providerName = cacheNow.provider || state.providerName;
+          state.updatedAt = new Date(cacheNow.savedAt);
+          setDataSource('cache', `No se pudo actualizar. Guardados: ${formatUpdated(state.updatedAt)}`);
+        } else {
+          state.matches = [];
+          setDataSource('demo', `Error: ${error?.message || 'Error desconocido'}`);
+        }
+      } finally {
+        state.loading = false;
+        $('#refreshRealData')?.classList.remove('loading');
+        renderAllMatchData();
+        hydrateBackendUI();
+        scheduleListRefresh();
+        setTimeout(() => loadHomeIntelligence(false), 250);
+      }
+    }
+
+    async function loadMatchSquads(match) {
+      return loadMatchSquadsFast(match);
+    }
+
+    async function refreshSelectedMatch(automatic = false) {
+      const match = state.selectedMatch;
+      if (!match) return;
+      $('#refreshMatch').classList.add('loading');
+      const squadPromise = loadMatchSquadsFast(match).then(() => {
+        renderLineups([], []);
+        renderAllMatchPro(match);
+      }).catch(() => {});
+      try {
+        let detail = {};
+        if (match.source === 'professional' && hasProfessionalBackend()) {
+          try { detail = await fetchJSON(`${professionalBase()}/api/match/${encodeURIComponent(match.id)}?timezone=America%2FEl_Salvador`, 10000); } catch (e) { detail = {}; }
+        }
+        if (detail.match) {
+          const richer = normalizeProfessionalMatch(detail.match);
+          Object.assign(match, richer);
+          state.selectedMatch = match;
+          renderMatchHeader(match);
+        }
+        state.matchDetail = detail;
+        const availability = detail.availability || {};
+        $('#matchLastUpdated').textContent = `Actualizado ${formatTime(new Date(detail.fetchedAt || Date.now()))}`;
+        renderTimeline({events: detail.events || []}, match);
+        renderStats({statistics: detail.statistics || []});
+        renderTopPlayers(detail.players || []);
+        renderLineups(detail.lineups || [], detail.players || []);
+        renderAIAuto(match, {statistics: detail.statistics || []}, detail.events || []);
+        renderAllMatchPro(match);
+        $('#availabilityRow')?.remove();
+        const chips = [['Eventos', availability.events], ['Stats', availability.statistics], ['Alineaciones', availability.lineups], ['Plantillas', Boolean(matchPlayerPool(match).length)]];
+        const holder = $('#matchAIFacts');
+        holder.insertAdjacentHTML('beforebegin', `<div class="availability-row" id="availabilityRow">${chips.map(([name,on]) => `<span class="availability-chip ${on?'on':''}">${name}</span>`).join('')}</div>`);
+        squadPromise.finally(() => {});
+        startMatchRefresh(Number(detail.refreshAfter) || 45);
+        if (!automatic) showToast('Match Center actualizado');
+      } catch (error) {
+        $('#matchLastUpdated').textContent = `Previa lista · ${error.message}`;
+        renderTimeline({events: []}, match);
+        renderStats({statistics: []});
+        renderLineups([], []);
+        renderAIAuto(match, {}, []);
+        renderAllMatchPro(match);
+        if (!automatic) showToast('Mostrando previa interactiva');
+      } finally {
+        $('#refreshMatch').classList.remove('loading');
+      }
+    }
+
+    async function openMatch(matchId) {
+      const match = state.matches.find(m => m.id === String(matchId)) || state.matches[0];
+      if (!match) return;
+      clearMatchTimers();
+      state.selectedMatch = match;
+      state.matchDetail = null;
+      state.matchLazy = { standings:false, h2h:false };
+      renderMatchHeader(match);
+      $('#matchRefreshLabel').textContent = match.finished ? 'Resumen del partido' : match.live ? 'Partido en vivo' : 'Previa interactiva';
+      $('#matchLastUpdated').textContent = 'Carga rápida activada';
+      $('#matchEvents').innerHTML = renderMatchOverview(match);
+      renderStats({statistics: []});
+      renderLineups([], []);
+      $('#matchStandings').innerHTML = renderGroupTableCompact(match);
+      $('#matchH2H').innerHTML = renderMatchOverview(match);
+      renderAIAuto(match, {}, []);
+      renderAllMatchPro(match);
+      $$('[data-mtab]').forEach((b,i) => b.classList.toggle('active', i === 0));
+      $$('[data-panel]').forEach(p => p.classList.toggle('active', p.dataset.panel === 'summary'));
+      showScreen('match');
+      refreshSelectedMatch(false);
+    }
 
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
