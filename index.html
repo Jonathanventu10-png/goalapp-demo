@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GoalApp" />
-  <title>GoalApp GOALAI-1 · Inteligencia personalizada</title>
+  <title>GoalApp CONTENT-3 · Noticias, videos y audio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -665,6 +665,109 @@ body{padding-top:0}
     .ai-confidence { display:flex; align-items:center; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid var(--line); color:var(--muted); font-size:9px; }
     .ai-confidence i { width:56px; height:5px; border-radius:99px; background:linear-gradient(90deg,var(--green) 76%, rgba(255,255,255,.16) 76%); }
 
+  
+
+    /* VISUAL-1 + HOME-NEWS-1 */
+    .hero, .match-hero, .profile-hero-card, .news-spotlight { transform: translateZ(0); }
+    .hero::before, .match-hero::before, .profile-hero-card::before {
+      content:""; position:absolute; inset:auto -20% -35% auto; width:220px; height:220px; border-radius:50%;
+      background: radial-gradient(circle, rgba(0,237,104,.18), transparent 60%); filter: blur(16px); z-index:-1; pointer-events:none;
+      animation: ambientFloat 8s ease-in-out infinite alternate;
+    }
+    @keyframes ambientFloat { from { transform: translate3d(0,0,0); opacity:.6; } to { transform: translate3d(-18px,-20px,0); opacity:.95; } }
+    .hero, .match-hero { backdrop-filter: blur(3px); }
+    .hero-countdown, .hero-news-kicker { display:flex; align-items:center; gap:8px; width:max-content; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.08); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.12); }
+    .hero-countdown b { color:#fff; }
+    .hero-meta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .headline-strip { display:grid; grid-auto-flow:column; grid-auto-columns:78%; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:2px; scrollbar-width:none; }
+    .headline-strip::-webkit-scrollbar { display:none; }
+    .headline-pill { scroll-snap-align:start; display:flex; gap:10px; align-items:flex-start; padding:12px; min-height:92px; border-radius:18px; border:1px solid var(--line); background:linear-gradient(145deg,rgba(17,24,28,.96),rgba(8,12,14,.94)); box-shadow:0 16px 35px rgba(0,0,0,.2); }
+    .headline-pill img { width:56px; height:56px; border-radius:14px; object-fit:cover; flex:0 0 auto; }
+    .headline-pill strong { display:block; font-size:12px; line-height:1.35; margin-top:4px; }
+    .headline-pill small { display:block; margin-top:6px; color:var(--muted); font-size:10px; }
+    .news-spotlight { position:relative; overflow:hidden; min-height:210px; margin-bottom:12px; border:1px solid rgba(255,255,255,.1); border-radius:26px; background:linear-gradient(145deg,#10171a,#080c0e); }
+    .news-spotlight img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .news-spotlight::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.55) 44%, rgba(0,0,0,.92)); }
+    .news-spotlight-copy { position:relative; z-index:1; display:flex; flex-direction:column; justify-content:flex-end; min-height:210px; padding:18px; }
+    .news-spotlight-copy h3 { margin:12px 0 8px; font-size:24px; line-height:1.08; letter-spacing:-.9px; }
+    .news-spotlight-copy p { margin:0; max-width:92%; color:#d6ded9; font-size:12px; line-height:1.45; }
+    .news-spotlight-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; color:#b4beb8; font-size:10px; }
+    .news-mini-grid { display:grid; gap:12px; }
+    .news-card-modern, .favorite-match-card, .club-card, .player-trend-card, .worldcup-mini, .mini-match, .match-row, .settings button, .smart-alerts .alert-item, .summary-tile, .tournament-stat, .tournament-hub { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease, background .24s ease; }
+    .news-card-modern:active, .favorite-match-card:active, .club-card:active, .player-trend-card:active, .worldcup-mini:active, .mini-match:active, .match-row:active, .headline-pill:active, .news-spotlight:active { transform: translateY(1px) scale(.985); }
+    .favorite-match-card:hover, .club-card:hover, .news-card-modern:hover, .mini-match:hover { border-color:rgba(0,237,104,.36); box-shadow:0 20px 40px rgba(0,0,0,.28); }
+    .profile-hero-card { position:relative; overflow:hidden; min-height:228px; margin-bottom:14px; padding:18px; border:1px solid rgba(255,255,255,.09); border-radius:28px; background:linear-gradient(145deg,#10171a,#080c0e); }
+    .profile-hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.08); filter:saturate(1.02) contrast(1.05); animation:stadiumZoom 16s ease-in-out infinite alternate; }
+    .profile-hero-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(5,8,10,.18),rgba(5,8,10,.42) 38%, rgba(4,5,6,.95)); }
+    .profile-hero-content { position:relative; z-index:1; display:flex; flex-direction:column; justify-content:space-between; min-height:192px; }
+    .profile-hero-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .profile-tier { padding:7px 10px; border-radius:999px; font-size:10px; font-weight:900; color:#051209; background:linear-gradient(90deg,#fff,var(--green)); box-shadow:0 8px 24px rgba(0,237,104,.18); }
+    .profile-hero-main { display:flex; align-items:flex-end; gap:14px; }
+    .profile-hero-avatar { width:74px; height:74px; border-radius:24px; display:grid; place-items:center; color:#031008; background:linear-gradient(135deg,#fff,var(--green)); font-size:28px; font-weight:950; box-shadow:0 18px 35px rgba(0,0,0,.36); }
+    .profile-hero-copy h2 { margin:0; font-size:27px; letter-spacing:-1px; }
+    .profile-hero-copy p { margin:6px 0 0; color:#d8e1dc; font-size:12px; }
+    .profile-hero-badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .profile-hero-badges span { padding:8px 10px; border-radius:14px; background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.12); font-size:10px; color:#f1f5f3; }
+    .profile-highlights { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px; }
+    .profile-highlight { padding:14px 12px; border-radius:18px; background:linear-gradient(145deg,#11181c,#0a0d0f); border:1px solid rgba(255,255,255,.06); text-align:left; }
+    .profile-highlight span { display:block; color:var(--muted); font-size:10px; }
+    .profile-highlight strong { display:block; margin-top:6px; font-size:14px; line-height:1.25; }
+    .preferences-summary { margin-top:12px; }
+    .summary-tile { background:linear-gradient(145deg,#11181c,#090d10); }
+    .news-module-caption { margin:-3px 0 12px; color:var(--muted); font-size:11px; line-height:1.45; }
+    .home-news-grid { display:grid; gap:12px; }
+    .home-news-grid .news-card-modern { min-height:110px; }
+    .news-card-modern { display:grid; grid-template-columns:96px 1fr; overflow:hidden; width:100%; border:1px solid var(--line); border-radius:20px; background:linear-gradient(145deg,#10171a,#080c0e); text-align:left; box-shadow:0 18px 34px rgba(0,0,0,.22); }
+    .news-card-image-wrap { position:relative; overflow:hidden; min-height:110px; }
+    .news-card-image { width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+    .news-card-modern:active .news-card-image, .news-card-modern:hover .news-card-image { transform:scale(1.06); }
+    .news-card-copy { display:flex; flex-direction:column; justify-content:space-between; padding:14px; gap:10px; }
+    .news-card-copy h3 { margin:2px 0 0; font-size:15px; line-height:1.25; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .news-card-meta { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:10px; }
+    .news-card-arrow { display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.08); font-size:16px; color:var(--green); }
+    .source-badge { display:inline-flex; align-items:center; gap:6px; width:max-content; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.09); font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; }
+    .source-badge.as::before, .source-badge.md::before, .source-badge.marca::before, .source-badge.video::before, .source-badge.espn::before, .source-badge.sv::before, .source-badge.fifa::before, .source-badge.uefa::before, .source-badge.audio::before { content:""; width:7px; height:7px; border-radius:50%; }
+    .source-badge.as::before { background:#4da3ff; } .source-badge.md::before { background:#ffd23f; } .source-badge.marca::before { background:#ff5b64; } .source-badge.video::before { background:#b374ff; } .source-badge.espn::before { background:#cc0000; } .source-badge.sv::before { background:#2f8cff; } .source-badge.fifa::before { background:#0053b8; } .source-badge.uefa::before { background:#3366ff; } .source-badge.audio::before { background:#9b55ff; }
+    .hero .team-name { display:block; max-width:96px; margin:0 auto; line-height:1.25; }
+    .match-hero .scoreboard { margin-top:14px; }
+    .section-head { gap:10px; }
+    .section-head .eyebrow { white-space:nowrap; }
+    .app::before { content:""; position:fixed; inset:auto 0 58px 0; height:80px; pointer-events:none; background:linear-gradient(180deg,transparent,rgba(1,2,2,.92)); z-index:29; }
+    @media (max-width:390px){ .headline-strip { grid-auto-columns:86%; } .page-title { font-size:27px; } .news-spotlight-copy h3 { font-size:21px; } }
+
+  
+    /* CONTENT-3 MEDIA */
+    .home-media-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+    .home-video-card, .home-audio-card {
+      position:relative; overflow:hidden; min-height:160px; width:100%;
+      border:1px solid rgba(255,255,255,.09); border-radius:24px;
+      background:linear-gradient(145deg,#10171a,#080c0e); text-align:left;
+      box-shadow:0 18px 42px rgba(0,0,0,.25); transition:transform .24s ease,border-color .24s ease;
+    }
+    .home-video-card:active, .home-audio-card:active { transform:scale(.985); }
+    .home-video-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.06); }
+    .home-video-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.65) 50%,rgba(0,0,0,.94)); }
+    .home-media-copy { position:relative; z-index:1; min-height:160px; padding:16px; display:flex; flex-direction:column; justify-content:flex-end; }
+    .home-media-copy h3 { margin:10px 0 0; font-size:18px; line-height:1.18; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .play-badge { display:grid; place-items:center; width:42px; height:42px; border-radius:50%; color:#031008; background:var(--green); box-shadow:0 12px 32px rgba(0,237,104,.28); font-weight:950; }
+    .home-audio-card { min-height:auto; display:grid; grid-template-columns:54px 1fr auto; align-items:center; gap:12px; padding:14px; }
+    .audio-wave { display:flex; align-items:flex-end; gap:3px; width:54px; height:54px; padding:12px; border-radius:18px; background:linear-gradient(135deg,rgba(155,85,255,.26),rgba(0,237,104,.10)); border:1px solid rgba(255,255,255,.08); }
+    .audio-wave i { width:5px; border-radius:999px; background:var(--green); animation:wave 1.1s ease-in-out infinite alternate; }
+    .audio-wave i:nth-child(1){height:14px}.audio-wave i:nth-child(2){height:26px;animation-delay:-.2s}.audio-wave i:nth-child(3){height:18px;animation-delay:-.4s}.audio-wave i:nth-child(4){height:31px;animation-delay:-.6s}
+    @keyframes wave { to { transform:scaleY(.45); opacity:.65; } }
+    .audio-copy strong { display:block; font-size:13px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .audio-copy small { display:block; margin-top:6px; color:var(--muted); font-size:10px; }
+    .media-arrow { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; color:var(--green); background:rgba(255,255,255,.08); }
+    .news-chip[data-news-category="audio"] { color:#d8c7ff; }
+    .news-chip[data-news-category="elsalvador"] { color:#b8d8ff; }
+    .audio-list-modern { display:grid; gap:12px; }
+    .audio-card-modern { display:grid; grid-template-columns:58px 1fr; gap:12px; align-items:center; width:100%; padding:13px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(145deg,#10171a,#080c0e); text-align:left; }
+    .audio-card-modern h3 { margin:4px 0 4px; font-size:15px; line-height:1.3; }
+    .audio-card-modern small { color:var(--muted); font-size:10px; }
+    .video-strip { scroll-snap-type:x mandatory; }
+    .video-card-modern, .audio-card-modern { transition:transform .24s ease,border-color .24s ease; }
+    .video-card-modern:active, .audio-card-modern:active { transform:scale(.985); }
+
   </style>
 </head>
 <body>
@@ -710,7 +813,15 @@ body{padding-top:0}
         </article>
 
         <div class="section-head"><div><h2>Noticias para ti</h2><span class="eyebrow">ACTUALIZADAS</span></div><button class="link-btn" data-go="feed">Ver todas</button></div>
+        <p class="news-module-caption">Las noticias de tus equipos y del torneo más importante del momento aparecen primero.</p>
+        <article class="news-spotlight reveal-card" id="homeNewsSpotlight"><div class="news-spotlight-copy"><span class="source-badge">GoalNews</span><h3>Cargando noticia principal…</h3><p>Estamos reuniendo lo más importante del momento para tu pantalla de inicio.</p></div></article>
+        <div class="headline-strip" id="headlineStrip"><div class="headline-pill"><div><strong>Actualizando titulares…</strong><small>GoalNews</small></div></div></div>
         <div class="home-news-grid" id="homeNews"><div class="news-skeleton-row"><div class="skeleton"></div><div class="news-skeleton-lines"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div></div>
+        <div class="section-head"><div><h2>Video destacado</h2><span class="eyebrow">VER</span></div><button class="link-btn" data-news-category="videos" data-go="feed">Videos</button></div>
+        <div class="home-media-grid" id="homeVideoHighlight"><article class="home-video-card"><div class="home-media-copy"><span class="source-badge video">Video</span><h3>Cargando videos destacados…</h3></div></article></div>
+
+        <div class="section-head"><div><h2>GoalAudio</h2><span class="eyebrow">ESCUCHAR</span></div><button class="link-btn" data-news-category="audio" data-go="feed">Audio</button></div>
+        <div class="home-media-grid" id="homeAudioHighlight"><article class="home-audio-card"><span class="audio-wave"><i></i><i></i><i></i><i></i></span><span class="audio-copy"><strong>Preparando resúmenes y podcasts…</strong><small>GoalApp Audio</small></span><span class="media-arrow">›</span></article></div>
 
         <div class="section-head"><div><h2>Por qué importa</h2><span class="eyebrow">CONTEXTO</span></div></div>
         <article class="card why-card" id="whyMatters"><h3>GoalAI está leyendo tus fuentes</h3><p>Cuando lleguen noticias de tus equipos, te explicaremos por qué son relevantes.</p><div class="why-source"><span>Confianza: media</span><span>Fuentes enlazadas</span></div></article>
@@ -765,7 +876,11 @@ body{padding-top:0}
               <button class="news-chip" data-news-category="transfers">Fichajes</button>
               <button class="news-chip" data-news-category="realmadrid">Real Madrid</button>
               <button class="news-chip" data-news-category="barcelona">Barcelona</button>
+              <button class="news-chip" data-news-category="elsalvador">El Salvador</button>
+              <button class="news-chip" data-news-category="latam">LatAm</button>
+              <button class="news-chip" data-news-category="champions">Champions</button>
               <button class="news-chip" data-news-category="videos">Videos</button>
+              <button class="news-chip" data-news-category="audio">Audio</button>
             </div>
             <button class="news-refresh" id="refreshNews" aria-label="Actualizar noticias"><svg class="icon"><use href="#i-live"/></svg></button>
           </div>
@@ -784,7 +899,7 @@ body{padding-top:0}
 
       <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
 
-      <section class="screen" data-screen="profile"><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
+      <section class="screen" data-screen="profile"><article class="profile-hero-card reveal-card" id="profileHeroCard"><img class="profile-hero-bg" id="profileHeroBg" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="profile-hero-content"><div class="profile-hero-top"><span class="eyebrow">Tu identidad GoalApp</span><span class="profile-tier">PREMIUM BETA</span></div><div><div class="profile-hero-main"><div class="profile-hero-avatar" id="profileHeroAvatar">J</div><div class="profile-hero-copy"><h2 id="profileHeroName">Jony</h2><p id="profileHeroHeadline">Seguimiento inteligente de tus equipos y torneos favoritos.</p><div class="profile-hero-badges"><span id="profileHeroFavorite">Equipo principal · —</span><span id="profileHeroLeague">Torneo del momento · Mundial 2026</span></div></div></div><div class="profile-highlights"><div class="profile-highlight"><span>Tu equipo</span><strong id="profileHighlightTeam">—</strong></div><div class="profile-highlight"><span>Liga principal</span><strong id="profileHighlightLeague">—</strong></div><div class="profile-highlight"><span>Alertas activas</span><strong id="profileHighlightAlerts">0 activas</strong></div></div></div></div></article><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
     </main>
 
     <nav class="nav"><button class="active" data-go="home"><span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span>Inicio</button><button data-go="live"><span class="nav-icon"><svg class="icon"><use href="#i-live"/></svg></span>Live</button><button data-go="feed"><span class="nav-icon"><svg class="icon"><use href="#i-spark"/></svg></span>Feed</button><button data-go="clubs"><span class="nav-icon"><svg class="icon"><use href="#i-club"/></svg></span>Clubes</button><button data-go="profile"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button></nav>
@@ -845,7 +960,7 @@ body{padding-top:0}
       showOtherCompetitions:false,
       onboardingStep:0, matchDetail:null, matchRefreshTimer:null, matchCountdownTimer:null, listRefreshTimer:null, matchRefreshAfter:0,
       matchLazy:{standings:false,h2h:false},
-      news:[], videos:[], newsCategory:'all', newsLoading:false, newsSources:[], newsUpdatedAt:null,
+      news:[], videos:[], audio:[], newsCategory:'all', newsLoading:false, newsSources:[], newsUpdatedAt:null,
       favoriteNextMatches:[], worldCupStandings:[], worldCupPlayers:[], homeExtrasLoading:false, homeCountdownTimer:null
     };
 
@@ -1191,9 +1306,20 @@ body{padding-top:0}
     }
     function renderHomePersonalNews(){
       const target=$('#homeNews');if(!target)return;const items=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));
-      target.innerHTML=items.length?items.slice(0,5).map(newsCardHTML).join(''):'<article class="card status-card"><p>Conectando noticias de tus equipos y del Mundial…</p></article>';
+      const spotlight=$('#homeNewsSpotlight');const headlineStrip=$('#headlineStrip');
+      if(spotlight){
+        if(items[0]) spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(items[0])}" alt="" onerror="this.src='${newsFallbackImage(items[0])}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(items[0])}<span>${relativeTime(items[0].publishedAt)}</span><span>${isWorldCupNews(items[0])?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(items[0].title||'Noticia destacada')}</h3><p>${escapeHTML(items[0].description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+        else spotlight.innerHTML='<div class="news-spotlight-copy"><span class="source-badge">GoalNews</span><h3>Sin noticia destacada por ahora</h3><p>Cuando lleguen titulares relevantes, esta tarjeta mostrará lo más importante del momento.</p></div>';
+        spotlight.dataset.newsLink=items[0]?.link||'';
+      }
+      if(headlineStrip){
+        const strips=items.slice(1,6);
+        headlineStrip.innerHTML=strips.length?strips.map(item=>`<button class="headline-pill" data-news-link="${escapeHTML(item.link||'')}"><img loading="lazy" src="${safeNewsImage(item)}" alt="" onerror="this.src='${newsFallbackImage(item)}'"><div><span class="source-badge ${sourceSlug(item.source)}">${escapeHTML(item.source||'GoalNews')}</span><strong>${escapeHTML(item.title||'Titular')}</strong><small>${relativeTime(item.publishedAt)} · ${isWorldCupNews(item)?'Mundial':selectedNewsScore(item)>0?'Para ti':'Última hora'}</small></div></button>`).join(''):'<div class="headline-pill"><div><strong>Preparando titulares</strong><small>GoalNews actualizará esta tira en cuanto lleguen nuevas publicaciones.</small></div></div>';
+      }
+      const feed=items.slice(1,5);
+      target.innerHTML=feed.length?`<div class="news-mini-grid">${feed.map(newsCardHTML).join('')}</div>`:'<article class="card status-card"><p>Conectando noticias de tus equipos y del Mundial…</p></article>';
     }
-    function renderHomeIntelligence(){renderHomeFavoriteTeams();renderHomeFavoriteMatches();renderWorldCupHub();renderWorldCupTable();renderWorldCupPlayers();renderHomePersonalNews();renderGoalAIHome()}
+    function renderHomeIntelligence(){renderHomeFavoriteTeams();renderHomeFavoriteMatches();renderWorldCupHub();renderWorldCupTable();renderWorldCupPlayers();renderHomePersonalNews();renderHomeMedia();renderGoalAIHome()}
 
     function selectedDisplayNames(){return selectedCatalogTeams().map(t=>t.name)}
     function nextRelevantMatch(){const all=dedupeMatches([...(state.matches||[]),...(state.favoriteNextMatches||[])]).sort(compareByRelevance);return all.find(m=>isSelectedTeamMatch(m)&&m.live)||all.find(m=>isSelectedTeamMatch(m)&&!m.finished)||all.find(m=>isWorldCupMatch(m)&&m.live)||all.find(m=>isWorldCupMatch(m)&&!m.finished)||all.find(m=>m.live)||all.find(m=>!m.finished)||all[0]||null}
@@ -1257,6 +1383,16 @@ body{padding-top:0}
       $('#profileSettingsStatus').textContent=`${profile.country||'El Salvador'} ›`;
       $('#favoriteCount').textContent=`${state.selectedTeams.length} ›`;$('#leagueCount').textContent=`${state.selectedLeagues.length} ›`;$('#alertCount').textContent=`${state.alertPreferences.length} activas ›`;
       $('#summaryTeams').textContent=state.selectedTeams.length;$('#summaryLeagues').textContent=state.selectedLeagues.length;$('#summaryAlerts').textContent=state.alertPreferences.length;
+      const primaryTeam=selected[0]?.name||'Sin equipo principal';const primaryLeague=selectedPrimaryLeagueName();
+      if($('#profileHeroAvatar'))$('#profileHeroAvatar').textContent=initial;
+      if($('#profileHeroName'))$('#profileHeroName').textContent=profile.name||'Jony';
+      if($('#profileHeroHeadline'))$('#profileHeroHeadline').textContent=selected.length?`Sigues principalmente a ${selected.slice(0,2).map(t=>t.name).join(' y ')}. GoalApp priorizará sus partidos, noticias y alertas.`:'Añade tus equipos favoritos para desbloquear una experiencia mucho más personalizada.';
+      if($('#profileHeroFavorite'))$('#profileHeroFavorite').textContent=`Equipo principal · ${primaryTeam}`;
+      if($('#profileHeroLeague'))$('#profileHeroLeague').textContent=`Torneo del momento · ${primaryLeague}`;
+      if($('#profileHighlightTeam'))$('#profileHighlightTeam').textContent=primaryTeam;
+      if($('#profileHighlightLeague'))$('#profileHighlightLeague').textContent=primaryLeague;
+      if($('#profileHighlightAlerts'))$('#profileHighlightAlerts').textContent=`${state.alertPreferences.length} activas`;
+      if($('#profileHeroBg'))$('#profileHeroBg').src=chooseProfileBackground();
       $('#clubList').innerHTML=TEAM_CATALOG.map(t=>`<article class="club-card"><img src="${t.logo}" alt="${escapeHTML(t.name)}"><div><h3>${escapeHTML(t.name)}</h3><p>${escapeHTML(t.country)}</p><small>${state.selectedTeams.includes(t.id)?'Incluido en tu experiencia':'Disponible para seguir'}</small></div><button class="follow ${state.selectedTeams.includes(t.id)?'on':''}" data-follow="${t.id}">${state.selectedTeams.includes(t.id)?'Siguiendo':'Seguir'}</button></article>`).join('');
       renderHomeIntelligence();
     }
@@ -1269,14 +1405,14 @@ body{padding-top:0}
       const featured=favorite.find(m=>m.live)||favorite.find(m=>!m.finished)||worldCup.find(m=>m.live)||worldCup.find(m=>!m.finished)||priority.find(m=>m.live)||priority.find(m=>!m.finished)||favorite.find(m=>m.finished)||worldCup.find(m=>m.finished)||priority[0]||all[0];
       if(!featured){
         $('#heroCompetition').textContent='No hay partidos para esta fecha';$('#heroPriority').innerHTML='<i></i>Tu agenda está libre';
-        $('#heroHomeLogo').src=placeholderLogo('GA');$('#heroAwayLogo').src=placeholderLogo('GA');$('#heroHomeName').textContent='GoalApp';$('#heroAwayName').textContent='Calendario';$('#heroScore').textContent='—';$('#heroStatus').textContent='Sin partidos';
+        $('#heroBackground').src=chooseFromPool('generic','home-empty');$('#heroHomeLogo').src=placeholderLogo('GA');$('#heroAwayLogo').src=placeholderLogo('GA');$('#heroHomeName').textContent='GoalApp';$('#heroAwayName').textContent='Calendario';$('#heroScore').textContent='—';$('#heroStatus').textContent='Sin partidos';
         $('#heroCountdown').hidden=true;$('#heroMatchButton').disabled=false;$('#heroMatchButton').textContent='Explorar calendario';$('#heroMatchButton').dataset.go='live';delete $('#heroMatchButton').dataset.matchId;
       }else{
         $('#heroCompetition').textContent=`${featured.league}${featured.competitionRound?' · '+featured.competitionRound:featured.venue?' · '+featured.venue:''}`;
         $('#heroPriority').innerHTML=`<i></i>${isSelectedTeamMatch(featured)?'Tu equipo es prioridad':isWorldCupMatch(featured)?'Partido clave del Mundial':featured.live?'En vivo ahora':'Partido destacado'}`;
         $('#heroHomeLogo').src=featured.homeLogo;$('#heroHomeLogo').alt=featured.homeName;$('#heroHomeName').textContent=featured.homeName;
         $('#heroAwayLogo').src=featured.awayLogo;$('#heroAwayLogo').alt=featured.awayName;$('#heroAwayName').textContent=featured.awayName;
-        $('#heroScore').textContent=featured.score;$('#heroStatus').textContent=featured.statusText;if(featured.background)$('#heroBackground').src=featured.background;
+        $('#heroScore').textContent=featured.score;$('#heroStatus').textContent=featured.statusText;$('#heroBackground').src=chooseMatchBackground(featured,'hero');
         const countdown=$('#heroCountdown');countdown.hidden=featured.live||featured.finished;countdown.dataset.countdownTo=featured.date;countdown.classList.toggle('live',featured.live);if(!countdown.hidden)countdown.querySelector('[data-countdown-value]').textContent=countdownText(featured.date);
         const button=$('#heroMatchButton');button.disabled=false;delete button.dataset.go;button.dataset.matchId=featured.id;button.textContent=featured.finished?'Ver resumen →':featured.live?'Seguir en vivo →':'Ver previa →';
       }
@@ -1351,7 +1487,7 @@ body{padding-top:0}
     }
     function newsFallbackImage(item={}){
       const source=sourceSlug(item.source);
-      const palettes={as:['#0b53a5','#14213d'],md:['#ffd23f','#241b00'],marca:['#ed1c24','#3a0709'],video:['#9554ff','#170928']};
+      const palettes={as:['#0b53a5','#14213d'],md:['#ffd23f','#241b00'],marca:['#ed1c24','#3a0709'],video:['#9554ff','#170928'],espn:['#cc0000','#160101'],sv:['#0b47aa','#07172e'],fifa:['#0053b8','#00193d'],uefa:['#003399','#020b26'],audio:['#9b55ff','#060a0d']};
       const [a,b]=palettes[source]||palettes.as;
       const label=encodeURIComponent((item.source||'GoalNews').slice(0,16));
       return `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 520'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='${encodeURIComponent(a)}'/%3E%3Cstop offset='1' stop-color='${encodeURIComponent(b)}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='520' fill='url(%23g)'/%3E%3Ccircle cx='670' cy='80' r='180' fill='%23ffffff' opacity='.06'/%3E%3Ctext x='52' y='420' fill='%23ffffff' font-family='Arial' font-weight='800' font-size='72'%3E${label}%3C/text%3E%3C/svg%3E`;
@@ -1367,6 +1503,20 @@ body{padding-top:0}
     function videoCardHTML(item){
       return `<button class="video-card-modern" data-news-link="${escapeHTML(item.link||'')}"><img loading="lazy" src="${safeNewsImage(item)}" alt="" onerror="this.src='${newsFallbackImage({source:'El Chiringuito'})}'"><span class="video-play">▶</span><span class="video-card-copy">${sourceBadgeHTML({...item,source:item.source||'El Chiringuito'})}<h3>${escapeHTML(item.title||'Video destacado')}</h3></span></button>`;
     }
+    function audioCardHTML(item){
+      return `<button class="audio-card-modern" data-news-link="${escapeHTML(item.link||'')}"><span class="audio-wave"><i></i><i></i><i></i><i></i></span><span class="audio-copy">${sourceBadgeHTML({...item,source:item.source||'GoalAudio'})}<strong>${escapeHTML(item.title||'Audio destacado')}</strong><small>${relativeTime(item.publishedAt)} · Escuchar en la fuente</small></span></button>`;
+    }
+    function renderHomeMedia(){
+      const videoTarget=$('#homeVideoHighlight');const audioTarget=$('#homeAudioHighlight');
+      if(videoTarget){
+        const video=state.videos?.[0];
+        videoTarget.innerHTML=video?`<button class="home-video-card" data-news-link="${escapeHTML(video.link||'')}"><img loading="lazy" src="${safeNewsImage(video)}" alt="" onerror="this.src='${newsFallbackImage({source:'Video'})}'"><div class="home-media-copy"><span class="play-badge">▶</span><h3>${escapeHTML(video.title||'Video destacado')}</h3><small>${escapeHTML(video.source||'Video')} · ${relativeTime(video.publishedAt)}</small></div></button>`:`<article class="home-video-card"><div class="home-media-copy"><span class="source-badge video">Video</span><h3>Los videos aparecerán al actualizar GoalNews</h3></div></article>`;
+      }
+      if(audioTarget){
+        const audio=state.audio?.[0];
+        audioTarget.innerHTML=audio?`<button class="home-audio-card" data-news-link="${escapeHTML(audio.link||'')}"><span class="audio-wave"><i></i><i></i><i></i><i></i></span><span class="audio-copy"><strong>${escapeHTML(audio.title||'Audio destacado')}</strong><small>${escapeHTML(audio.source||'GoalAudio')} · ${relativeTime(audio.publishedAt)}</small></span><span class="media-arrow">›</span></button>`:`<article class="home-audio-card"><span class="audio-wave"><i></i><i></i><i></i><i></i></span><span class="audio-copy"><strong>Audio y podcasts deportivos aparecerán aquí.</strong><small>GoalAudio</small></span><span class="media-arrow">›</span></article>`;
+      }
+    }
     function renderNewsSkeleton(){
       const target=$('#newsFeed');if(!target)return;
       target.innerHTML='<div class="skeleton news-skeleton-hero"></div><div class="news-skeleton-row"><div class="skeleton"></div><div class="news-skeleton-lines"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div><div class="news-skeleton-row"><div class="skeleton"></div><div class="news-skeleton-lines"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>';
@@ -1379,17 +1529,19 @@ body{padding-top:0}
     }
     function renderNews(){
       const target=$('#newsFeed');if(!target)return;
-      const items=state.newsCategory==='videos'?state.videos:state.news;
+      const items=state.newsCategory==='videos'?state.videos:state.newsCategory==='audio'?state.audio:state.news;
       $('#newsCount').textContent=items.length?`${items.length} publicaciones`:'Sin publicaciones';
       $('#newsUpdatedAt').textContent=state.newsUpdatedAt?`Actualizado ${relativeTime(state.newsUpdatedAt).toLowerCase()}`:'Ahora';
       renderNewsSources();
       const videosMode=state.newsCategory==='videos';
+      const audioMode=state.newsCategory==='audio';
       $('#videoSectionHeading').hidden=!state.videos.length||videosMode;
       $('#videoFeed').innerHTML=!videosMode&&state.videos.length?state.videos.slice(0,6).map(videoCardHTML).join(''):'';
-      if(!items.length){target.innerHTML='<div class="news-empty-modern"><div class="news-empty-icon">✦</div><h3>No hay titulares disponibles</h3><p>Una o más fuentes no respondieron. Puedes actualizar de nuevo sin perder el resto de la aplicación.</p></div>';return}
-      const [hero,...rest]=items;
-      target.innerHTML=newsHeroHTML(hero)+`<div class="news-list-modern">${rest.slice(0,18).map(newsCardHTML).join('')}</div>`;
-      renderHomePersonalNews();hydratePersonalization()
+      if(!items.length){target.innerHTML='<div class="news-empty-modern"><div class="news-empty-icon">✦</div><h3>No hay publicaciones disponibles</h3><p>Una o más fuentes no respondieron. Puedes actualizar de nuevo sin perder el resto de la aplicación.</p></div>';renderHomeMedia();return}
+      if(videosMode){target.innerHTML=`<div class="video-strip">${items.slice(0,18).map(videoCardHTML).join('')}</div>`;}
+      else if(audioMode){target.innerHTML=`<div class="audio-list-modern">${items.slice(0,18).map(audioCardHTML).join('')}</div>`;}
+      else{const [hero,...rest]=items;target.innerHTML=newsHeroHTML(hero)+`<div class="news-list-modern">${rest.slice(0,18).map(newsCardHTML).join('')}</div>`;}
+      renderHomePersonalNews();renderHomeMedia();hydratePersonalization()
     }
     async function loadNews(category=state.newsCategory,force=false){
       if(state.newsLoading&&!force)return;
@@ -1398,13 +1550,19 @@ body{padding-top:0}
       $('#refreshNews')?.classList.add('loading');renderNewsSkeleton();
       try{
         if(category==='videos'){
-          const data=await fetchJSON(`${professionalBase()}/api/videos?limit=18`,30000);
+          const data=await fetchJSON(`${professionalBase()}/api/videos?limit=24`,30000);
           state.videos=data.videos||[];state.newsSources=(data.sourceStatus||[]);state.newsUpdatedAt=data.fetchedAt||new Date().toISOString();
+        }else if(category==='audio'){
+          const data=await fetchJSON(`${professionalBase()}/api/audio?limit=18`,30000);
+          state.audio=data.audio||[];state.newsSources=(data.sourceStatus||[]);state.newsUpdatedAt=data.fetchedAt||new Date().toISOString();
         }else{
-          const data=await fetchJSON(`${professionalBase()}/api/news?category=${encodeURIComponent(category)}&limit=30`,30000);
+          const data=await fetchJSON(`${professionalBase()}/api/news?category=${encodeURIComponent(category)}&limit=36`,30000);
           state.news=data.news||[];state.newsSources=data.sourceStatus||((data.sources||[]).map(source=>({source,count:state.news.filter(item=>item.source===source).length,ok:true})));state.newsUpdatedAt=data.fetchedAt||new Date().toISOString();
           if(!state.videos.length){
-            fetchJSON(`${professionalBase()}/api/videos?limit=10`,30000).then(videoData=>{state.videos=videoData.videos||[];renderNews()}).catch(()=>{});
+            fetchJSON(`${professionalBase()}/api/videos?limit=12`,30000).then(videoData=>{state.videos=videoData.videos||[];renderHomeMedia();renderNews()}).catch(()=>{});
+          }
+          if(!state.audio.length){
+            fetchJSON(`${professionalBase()}/api/audio?limit=8`,30000).then(audioData=>{state.audio=audioData.audio||[];renderHomeMedia();renderNews()}).catch(()=>{});
           }
         }
       }catch(error){
@@ -1426,7 +1584,7 @@ body{padding-top:0}
       $('#matchVenue').textContent=[match.venue,match.venueCity].filter(Boolean).join(' · ')||'No disponible';
       $('#matchReferee').textContent=match.referee||'No disponible';
       const ht=match.halftime;$('#matchHalftime').textContent=ht&&ht.home!==null&&ht.away!==null?`${ht.home} - ${ht.away}`:'No disponible';
-      if(match.background)$('#matchBackground').src=match.background;
+      $('#matchBackground').src=chooseMatchBackground(match,'detail');
     }
     function renderNoDetail(target,title,text){target.innerHTML=`<div class="status-card"><h3>${escapeHTML(title)}</h3><p>${escapeHTML(text)}</p></div>`}
     function eventIcon(item){
