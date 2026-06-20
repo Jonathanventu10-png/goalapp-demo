@@ -1038,7 +1038,7 @@ body{padding-top:0}
     .devmode-banner b{color:#fff}.devmode-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border-radius:999px;background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.22);color:#ffe9b0;font-size:10px;font-weight:900;letter-spacing:.5px}
 
   
-    /* QA-1 · Stability, diagnostics and mobile empty states */
+    /* UX-2 · Premium mobile experience and microinteractions */
     .qa-panel { border-color:rgba(0,237,104,.2); background:linear-gradient(145deg,rgba(13,22,25,.98),rgba(7,10,12,.98)); }
     .qa-panel-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
     .qa-panel-head h2 { margin:4px 0 6px; font-size:22px; }
@@ -1058,6 +1058,67 @@ body{padding-top:0}
     .qa-mini-note { display:inline-flex; align-items:center; gap:7px; padding:7px 9px; border-radius:999px; border:1px solid rgba(0,237,104,.18); background:rgba(0,237,104,.08); color:#dfffee; font-size:10px; font-weight:900; }
     .qa-route-pill { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; padding:6px 8px; font-size:10px; color:var(--muted); }
     @media(max-width:390px){ .qa-panel-head{display:block}.qa-panel-head .link-btn{margin-top:10px}.qa-row{align-items:flex-start}.qa-row strong{max-width:55%;} }
+
+  
+    /* UX-2 · Premium mobile layer */
+    :root {
+      --ux2-glass: rgba(13, 20, 22, .72);
+      --ux2-glow: 0 18px 70px rgba(0,237,104,.12);
+      --ux2-card: linear-gradient(155deg, rgba(18,27,30,.96), rgba(5,8,9,.98));
+      --ux2-line: rgba(255,255,255,.085);
+    }
+    body.ux2-ready { background:
+      radial-gradient(circle at 50% -10%, rgba(0,237,104,.16), transparent 32%),
+      radial-gradient(circle at 8% 20%, rgba(71,133,255,.11), transparent 28%),
+      #010303; }
+    body.ux2-ready .app { box-shadow: 0 30px 90px rgba(0,0,0,.42); position:relative; overflow:hidden; }
+    body.ux2-ready .app::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.28; background:linear-gradient(135deg, rgba(255,255,255,.025), transparent 30%); }
+    body.ux2-ready .topbar { height:68px; background:rgba(5,9,10,.78); border-bottom:1px solid var(--ux2-line); backdrop-filter: blur(26px) saturate(1.25); }
+    body.ux2-ready .brand { letter-spacing:.1px; }
+    body.ux2-ready .brand-logo { filter: drop-shadow(0 0 18px rgba(0,237,104,.34)); }
+    body.ux2-ready .circle-btn { background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.09); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+    body.ux2-ready main { padding-bottom:116px; }
+    body.ux2-ready .screen { animation: ux2ScreenIn .28s cubic-bezier(.2,.8,.2,1); }
+    @keyframes ux2ScreenIn { from { opacity:.5; transform:translateY(10px) scale(.995); } to { opacity:1; transform:none; } }
+    .ux2-hero-shell { margin: 2px 0 14px; padding: 14px; border:1px solid var(--ux2-line); border-radius:26px; background:linear-gradient(145deg, rgba(0,237,104,.12), rgba(255,255,255,.035) 38%, rgba(0,0,0,.18)); box-shadow:var(--ux2-glow); overflow:hidden; position:relative; }
+    .ux2-hero-shell::before { content:""; position:absolute; inset:-80px -60px auto auto; width:180px; height:180px; border-radius:999px; background:rgba(0,237,104,.18); filter:blur(18px); }
+    .ux2-hero-top { position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .ux2-hero-top small { color:var(--muted); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.7px; }
+    .ux2-hero-top b { display:block; margin-top:3px; font-size:18px; letter-spacing:-.35px; }
+    .ux2-quality { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px; position:relative; }
+    .ux2-quality span { min-height:56px; padding:10px; border:1px solid rgba(255,255,255,.075); border-radius:18px; background:rgba(0,0,0,.18); color:var(--muted); font-size:10px; }
+    .ux2-quality strong { display:block; color:#fff; font-size:14px; margin-bottom:4px; }
+    .ux2-chip { display:inline-flex; align-items:center; gap:7px; padding:8px 10px; border-radius:999px; color:#06100a; background:var(--green); font-size:10px; font-weight:950; box-shadow:0 0 30px rgba(0,237,104,.25); }
+    body.ux2-ready .card, body.ux2-ready .hero, body.ux2-ready .news, body.ux2-ready .match-row, body.ux2-ready .club-card, body.ux2-ready .feed-item, body.ux2-ready .tournament-hub { border-color:var(--ux2-line); background:var(--ux2-card); box-shadow:0 14px 42px rgba(0,0,0,.22); }
+    body.ux2-ready .hero { border-radius:30px; min-height:390px; box-shadow:0 28px 70px rgba(0,0,0,.35); }
+    body.ux2-ready .hero::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, transparent 30%, rgba(0,0,0,.16)); }
+    body.ux2-ready .scoreboard { position:relative; z-index:2; padding:14px; border:1px solid rgba(255,255,255,.08); border-radius:24px; background:rgba(0,0,0,.20); backdrop-filter: blur(12px); }
+    body.ux2-ready .primary { min-height:52px; border-radius:17px; box-shadow:0 14px 34px rgba(0,237,104,.18); }
+    body.ux2-ready .secondary, body.ux2-ready .link-btn { border-radius:14px; }
+    body.ux2-ready .match-row { position:relative; overflow:hidden; min-height:96px; border-radius:22px; transition:transform .18s ease, border-color .18s ease, background .18s ease; }
+    body.ux2-ready .match-row::before { content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px; border-radius:999px; background:rgba(255,255,255,.1); }
+    body.ux2-ready .match-row[data-ux2-live="true"]::before { background:var(--green); box-shadow:0 0 18px rgba(0,237,104,.55); }
+    body.ux2-ready .match-row:active { transform:scale(.985); border-color:rgba(0,237,104,.32); }
+    .ux2-status-pill { display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:24px; padding:0 8px; border-radius:999px; background:rgba(255,255,255,.07); color:#d7e2dd; font-size:9px; font-weight:900; letter-spacing:.25px; }
+    .ux2-status-pill.live { background:rgba(0,237,104,.14); color:var(--green); }
+    .ux2-status-pill.finished { background:rgba(255,255,255,.09); color:#e9f0ed; }
+    body.ux2-ready .nav { width:min(calc(100% - 18px),414px); bottom:10px; grid-template-columns:repeat(5,1fr); border:1px solid rgba(255,255,255,.08); border-radius:26px; background:rgba(5,9,10,.82); box-shadow:0 18px 64px rgba(0,0,0,.38); padding:8px 8px max(8px,env(safe-area-inset-bottom)); backdrop-filter: blur(28px) saturate(1.35); }
+    body.ux2-ready .nav button { border-radius:18px; padding:3px 0 5px; transition:transform .18s ease, color .18s ease; }
+    body.ux2-ready .nav button:active { transform:scale(.94); }
+    body.ux2-ready .nav .nav-icon { width:34px; height:34px; border-radius:15px; }
+    body.ux2-ready .nav button.active .nav-icon { transform:translateY(-5px); border-radius:17px; }
+    .ux2-floating-refresh { position:fixed; z-index:90; right:calc((100vw - min(100vw,430px))/2 + 16px); bottom:94px; width:48px; height:48px; border:1px solid rgba(255,255,255,.09); border-radius:18px; background:rgba(6,10,11,.80); color:var(--green); backdrop-filter:blur(18px); box-shadow:0 18px 44px rgba(0,0,0,.32); display:grid; place-items:center; font-size:18px; font-weight:950; }
+    .ux2-floating-refresh:active { transform:scale(.94); }
+    .ux2-section-snap { display:grid; grid-auto-flow:column; grid-auto-columns:max-content; gap:8px; overflow-x:auto; scrollbar-width:none; margin:8px 0 14px; padding-bottom:2px; }
+    .ux2-section-snap::-webkit-scrollbar { display:none; }
+    .ux2-section-snap button { min-height:38px; border:1px solid rgba(255,255,255,.08); border-radius:999px; background:rgba(255,255,255,.055); color:#dce7e2; padding:0 13px; font-size:11px; font-weight:850; }
+    .ux2-section-snap button.active { background:rgba(0,237,104,.12); border-color:rgba(0,237,104,.25); color:var(--green); }
+    body.ux2-ready .skeleton { background:linear-gradient(90deg,rgba(255,255,255,.055),rgba(255,255,255,.13),rgba(255,255,255,.055)); background-size:220% 100%; animation:ux2Shimmer 1.15s linear infinite; }
+    @keyframes ux2Shimmer { to { background-position:-220% 0; } }
+    body.ux2-ready .status-card { border-style:solid; border-color:rgba(255,255,255,.08); background:linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.025)); }
+    .ux2-mini-toast { position:fixed; left:50%; bottom:156px; z-index:130; transform:translate(-50%, 8px); max-width:min(360px, calc(100vw - 34px)); padding:11px 13px; border:1px solid rgba(0,237,104,.22); border-radius:16px; background:rgba(4,9,10,.86); color:#eafff3; font-size:11px; box-shadow:0 18px 50px rgba(0,0,0,.34); backdrop-filter:blur(18px); opacity:0; pointer-events:none; transition:.2s; }
+    .ux2-mini-toast.show { opacity:1; transform:translate(-50%, 0); }
+    @media (min-width:650px){ body.ux2-ready .nav{bottom:30px;border-radius:26px} .ux2-floating-refresh{bottom:114px} }
 
   </style>
 </head>
@@ -1227,7 +1288,7 @@ body{padding-top:0}
     const LEGACY_API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
     const DEFAULT_PROFESSIONAL_BACKEND = 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev';
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
-    const CACHE_KEY = 'goalapp_real_matches_dataengine2';
+    const CACHE_KEY = 'goalapp_real_matches_ux2';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
     const TEAM_CATALOG = [
@@ -4854,7 +4915,7 @@ body{padding-top:0}
       const todayCount = report.today?.count ?? report.today?.matches?.length ?? 0;
       const errors = [report.healthError, report.debugError, report.overviewError, report.todayError].filter(Boolean);
       return [
-        {label:'Worker', value:version, ok:String(version).includes('QA-1') || String(version).includes('DATAENGINE')},
+        {label:'Worker', value:version, ok:String(version).includes('UX-2') || String(version).includes('QA-1') || String(version).includes('DATAENGINE')},
         {label:'Proveedor', value:configured ? provider : 'No configurado', ok:configured},
         {label:'Modo', value:report.v3health?.modeLabel || report.debug?.modeLabel || 'Desarrollo real', ok:true},
         {label:'Torneo activo', value:`Liga ${qaShort(active.league,1)} · Temporada ${qaShort(active.season,2022)}`, ok:true},
@@ -4959,6 +5020,160 @@ body{padding-top:0}
       }
     }
     setTimeout(() => qaRunDiagnostics(false), 1800);
+
+
+    /* UX-2 · Premium mobile interaction layer */
+    const UX2_VERSION = 'UX-2';
+    function ux2Boot() {
+      document.body.classList.add('ux2-ready');
+      ux2InjectHomeShell();
+      ux2InjectQuickNav();
+      ux2InjectFloatingRefresh();
+      ux2EnhanceMatchCards();
+      ux2BindHaptics();
+      ux2InstallNavObserver();
+    }
+
+    function ux2Toast(message) {
+      let node = document.getElementById('ux2MiniToast');
+      if (!node) {
+        node = document.createElement('div');
+        node.id = 'ux2MiniToast';
+        node.className = 'ux2-mini-toast';
+        document.body.appendChild(node);
+      }
+      node.textContent = message;
+      node.classList.add('show');
+      clearTimeout(node._timer);
+      node._timer = setTimeout(() => node.classList.remove('show'), 2100);
+    }
+
+    function ux2InjectHomeShell() {
+      const screen = document.querySelector('[data-screen="home"]');
+      if (!screen || document.getElementById('ux2HeroShell')) return;
+      const profile = state?.profile || {};
+      const favCount = (state?.selectedTeams || []).length;
+      const leagueCount = (state?.selectedLeagues || []).length;
+      const shell = document.createElement('article');
+      shell.id = 'ux2HeroShell';
+      shell.className = 'ux2-hero-shell reveal-card';
+      shell.innerHTML = `
+        <div class="ux2-hero-top">
+          <div><small>GoalApp Premium Mobile</small><b>${escapeHTML(profile.name || 'Jony')}, tu fútbol está listo</b></div>
+          <span class="ux2-chip">UX-2</span>
+        </div>
+        <div class="ux2-quality">
+          <span><strong>${favCount || '—'}</strong>equipos favoritos</span>
+          <span><strong>${leagueCount || '—'}</strong>ligas seguidas</span>
+          <span><strong>Real</strong>datos de desarrollo</span>
+        </div>`;
+      const afterSubtitle = screen.querySelector('#homeSubtitle');
+      if (afterSubtitle) afterSubtitle.insertAdjacentElement('afterend', shell);
+      else screen.prepend(shell);
+    }
+
+    function ux2InjectQuickNav() {
+      const screen = document.querySelector('[data-screen="home"]');
+      if (!screen || document.getElementById('ux2QuickNav')) return;
+      const nav = document.createElement('div');
+      nav.id = 'ux2QuickNav';
+      nav.className = 'ux2-section-snap';
+      nav.innerHTML = `
+        <button class="active" data-go="home">Inicio</button>
+        <button data-go="live">Partidos</button>
+        <button data-wc-tab="groups">Grupos</button>
+        <button data-go="feed">Noticias</button>
+        <button data-open-qa>Diagnóstico</button>`;
+      const anchor = document.getElementById('ux2HeroShell') || screen.querySelector('.favorite-team-strip');
+      if (anchor) anchor.insertAdjacentElement('afterend', nav);
+    }
+
+    function ux2InjectFloatingRefresh() {
+      if (document.getElementById('ux2Refresh')) return;
+      const btn = document.createElement('button');
+      btn.id = 'ux2Refresh';
+      btn.className = 'ux2-floating-refresh';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Actualizar datos');
+      btn.textContent = '↻';
+      document.body.appendChild(btn);
+    }
+
+    function ux2UpdateHeroShell() {
+      const shell = document.getElementById('ux2HeroShell');
+      if (!shell) return;
+      const profile = state?.profile || {};
+      const favCount = (state?.selectedTeams || []).length;
+      const leagueCount = (state?.selectedLeagues || []).length;
+      const matchCount = (state?.matches || []).length;
+      shell.querySelector('b').textContent = `${profile.name || 'Jony'}, tu fútbol está listo`;
+      const items = shell.querySelectorAll('.ux2-quality span strong');
+      if (items[0]) items[0].textContent = favCount || '—';
+      if (items[1]) items[1].textContent = leagueCount || '—';
+      if (items[2]) items[2].textContent = matchCount ? `${matchCount}` : 'Real';
+      const labels = shell.querySelectorAll('.ux2-quality span');
+      if (labels[2]) labels[2].lastChild.textContent = matchCount ? 'partidos cargados' : 'datos de desarrollo';
+    }
+
+    function ux2EnhanceMatchCards() {
+      document.querySelectorAll('.match-row').forEach(row => {
+        if (row.dataset.ux2Enhanced) return;
+        row.dataset.ux2Enhanced = '1';
+        const txt = row.textContent || '';
+        const live = /en vivo|live|\b1H\b|\b2H\b|\bHT\b|\d+'/.test(txt);
+        const finished = /final|FT|terminado|finalizado/i.test(txt);
+        row.dataset.ux2Live = String(live);
+        const pill = document.createElement('span');
+        pill.className = `ux2-status-pill ${live ? 'live' : finished ? 'finished' : ''}`;
+        pill.textContent = live ? 'EN VIVO' : finished ? 'FINAL' : 'PARTIDO';
+        row.appendChild(pill);
+      });
+    }
+
+    function ux2BindHaptics() {
+      if (window.__ux2Haptics) return;
+      window.__ux2Haptics = true;
+      document.addEventListener('click', e => {
+        const actionable = e.target.closest('button,[data-go],[data-match-id],[data-wc-tab]');
+        if (!actionable) return;
+        try { navigator.vibrate?.(8); } catch {}
+      }, { capture:true });
+      document.addEventListener('click', e => {
+        if (e.target.closest('#ux2Refresh')) {
+          ux2Toast('Actualizando datos reales…');
+          try { fetchRealMatches?.(true); } catch { location.reload(); }
+        }
+      });
+    }
+
+    function ux2InstallNavObserver() {
+      if (window.__ux2Observer) return;
+      window.__ux2Observer = true;
+      const observer = new MutationObserver(() => {
+        ux2InjectHomeShell();
+        ux2InjectQuickNav();
+        ux2EnhanceMatchCards();
+        ux2UpdateHeroShell();
+      });
+      observer.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['class'] });
+    }
+
+    const UX2_originalRenderAllMatchData = typeof renderAllMatchData === 'function' ? renderAllMatchData : null;
+    if (UX2_originalRenderAllMatchData) {
+      renderAllMatchData = function(){
+        UX2_originalRenderAllMatchData();
+        setTimeout(() => { ux2Boot(); ux2EnhanceMatchCards(); ux2UpdateHeroShell(); }, 80);
+      };
+    }
+    const UX2_originalHydratePersonalization = typeof hydratePersonalization === 'function' ? hydratePersonalization : null;
+    if (UX2_originalHydratePersonalization) {
+      hydratePersonalization = function(){
+        UX2_originalHydratePersonalization();
+        setTimeout(() => { ux2InjectHomeShell(); ux2UpdateHeroShell(); }, 80);
+      };
+    }
+    document.addEventListener('DOMContentLoaded', () => setTimeout(ux2Boot, 120));
+    setTimeout(ux2Boot, 900);
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
     function openPreferenceModal(id){preferenceModals.forEach(name=>$('#'+name)?.classList.toggle('open',name===id));if(id==='profileModal'){const profile=state.profile||DEFAULT_PROFILE;$('#editProfileName').value=profile.name||'';$('#editProfileCountry').value=profile.country||'El Salvador';$('#editProfileLanguage').value=profile.language||'Español'}renderChoices()}
