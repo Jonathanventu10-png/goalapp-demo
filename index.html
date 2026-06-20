@@ -1023,7 +1023,7 @@ body{padding-top:0}
     .updated-pill { padding:6px 9px; border-radius:999px; background:rgba(0,237,104,.12); border:1px solid rgba(0,237,104,.24); color:#dfffee; font-size:9px; font-weight:900; }
 
   
-    /* DATAENGINE-1 · provider diagnostics */
+    /* DATAENGINE-4 · API-Football provider diagnostics */
     .provider-stack { display:grid; gap:10px; margin-top:12px; }
     .provider-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 12px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.045); font-size:12px; }
     .provider-row strong { display:flex; align-items:center; gap:8px; }
@@ -1031,6 +1031,11 @@ body{padding-top:0}
     .provider-row.ok i { background:var(--green); }
     .provider-row.warn i { background:#ffd166; }
     .dataengine-badge { display:inline-flex; align-items:center; gap:8px; padding:9px 11px; border-radius:999px; background:rgba(0,237,104,.09); border:1px solid rgba(0,237,104,.22); color:#dfffee; font-size:10px; font-weight:900; }
+
+  
+    /* DATAENGINE-5 · development real-data banner */
+    .devmode-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin:12px 0;border:1px solid rgba(255,209,102,.25);background:rgba(255,209,102,.08);border-radius:18px;color:#f7e6b7;font-size:12px;line-height:1.45}
+    .devmode-banner b{color:#fff}.devmode-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border-radius:999px;background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.22);color:#ffe9b0;font-size:10px;font-weight:900;letter-spacing:.5px}
 
   </style>
 </head>
@@ -1068,9 +1073,9 @@ body{padding-top:0}
         <div class="section-head"><div><h2>Tus partidos</h2><span class="eyebrow">PRIMERO TÚ</span></div><button class="link-btn" data-go="clubs">Editar</button></div>
         <div class="home-favorite-matches" id="homeFavoriteMatches"><div class="loading-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div></div></div>
 
-        <div class="section-head"><div><h2>Mundial 2026</h2><span class="live-dot"></span></div><button class="link-btn" data-go="live">Calendario</button></div>
+        <div class="section-head"><div><h2>Mundial · Modo desarrollo</h2><span class="live-dot"></span></div><button class="link-btn" data-go="live">Calendario</button></div>
         <article class="tournament-hub reveal-card" id="worldCupHub" style="--i:2">
-          <div class="tournament-head"><div class="tournament-title"><small id="worldCupStage">Torneo del momento</small><h2>La Copa del Mundo</h2><p>48 selecciones · 12 grupos · 104 partidos</p></div><div class="tournament-emblem">26</div></div>
+          <div class="tournament-head"><div class="tournament-title"><small id="worldCupStage">Torneo del momento</small><h2>Copa del Mundo · Datos reales</h2><p>Datos reales históricos · sin API premium</p></div><div class="tournament-emblem">26</div></div>
           <div class="tournament-stats"><div class="tournament-stat"><strong id="worldCupTodayCount">—</strong><span>partidos hoy</span></div><div class="tournament-stat"><strong id="worldCupLiveCount">—</strong><span>en vivo</span></div><div class="tournament-stat"><strong id="worldCupDaysLeft">—</strong><span>días restantes</span></div></div>
           <div class="tournament-progress"><i id="worldCupProgress"></i></div><div class="tournament-progress-label"><span>11 jun</span><span id="worldCupProgressText">En curso</span><span>19 jul</span></div>
           <div class="worldcup-match-strip" id="worldCupMatches"><div class="loading-card"><div class="skeleton skeleton-line"></div></div></div>
@@ -1182,7 +1187,7 @@ body{padding-top:0}
 
       <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
 
-      <section class="screen" data-screen="profile"><article class="profile-hero-card reveal-card" id="profileHeroCard"><img class="profile-hero-bg" id="profileHeroBg" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="profile-hero-content"><div class="profile-hero-top"><span class="eyebrow">Tu identidad GoalApp</span><span class="profile-tier">PREMIUM BETA</span></div><div><div class="profile-hero-main"><div class="profile-hero-avatar" id="profileHeroAvatar">J</div><div class="profile-hero-copy"><h2 id="profileHeroName">Jony</h2><p id="profileHeroHeadline">Seguimiento inteligente de tus equipos y torneos favoritos.</p><div class="profile-hero-badges"><span id="profileHeroFavorite">Equipo principal · —</span><span id="profileHeroLeague">Torneo del momento · Mundial 2026</span></div></div></div><div class="profile-highlights"><div class="profile-highlight"><span>Tu equipo</span><strong id="profileHighlightTeam">—</strong></div><div class="profile-highlight"><span>Liga principal</span><strong id="profileHighlightLeague">—</strong></div><div class="profile-highlight"><span>Alertas activas</span><strong id="profileHighlightAlerts">0 activas</strong></div></div></div></div></article><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
+      <section class="screen" data-screen="profile"><article class="profile-hero-card reveal-card" id="profileHeroCard"><img class="profile-hero-bg" id="profileHeroBg" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="profile-hero-content"><div class="profile-hero-top"><span class="eyebrow">Tu identidad GoalApp</span><span class="profile-tier">PREMIUM BETA</span></div><div><div class="profile-hero-main"><div class="profile-hero-avatar" id="profileHeroAvatar">J</div><div class="profile-hero-copy"><h2 id="profileHeroName">Jony</h2><p id="profileHeroHeadline">Seguimiento inteligente de tus equipos y torneos favoritos.</p><div class="profile-hero-badges"><span id="profileHeroFavorite">Equipo principal · —</span><span id="profileHeroLeague">Torneo del momento · Mundial · Modo desarrollo</span></div></div></div><div class="profile-highlights"><div class="profile-highlight"><span>Tu equipo</span><strong id="profileHighlightTeam">—</strong></div><div class="profile-highlight"><span>Liga principal</span><strong id="profileHighlightLeague">—</strong></div><div class="profile-highlight"><span>Alertas activas</span><strong id="profileHighlightAlerts">0 activas</strong></div></div></div></div></article><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
     </main>
 
     <nav class="nav"><button class="active" data-go="home"><span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span>Inicio</button><button data-go="live"><span class="nav-icon"><svg class="icon"><use href="#i-live"/></svg></span>Live</button><button data-go="feed"><span class="nav-icon"><svg class="icon"><use href="#i-spark"/></svg></span>Feed</button><button data-go="clubs"><span class="nav-icon"><svg class="icon"><use href="#i-club"/></svg></span>Clubes</button><button data-go="profile"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button></nav>
@@ -1200,7 +1205,7 @@ body{padding-top:0}
     const LEGACY_API_BASE = 'https://www.thesportsdb.com/api/v1/json/123';
     const DEFAULT_PROFESSIONAL_BACKEND = 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev';
     const BACKEND_STORAGE_KEY = 'goalapp_backend_url_v1';
-    const CACHE_KEY = 'goalapp_real_matches_dataengine1';
+    const CACHE_KEY = 'goalapp_real_matches_dataengine2';
     const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 
     const TEAM_CATALOG = [
@@ -1310,7 +1315,7 @@ body{padding-top:0}
 
     function selectedPrimaryLeagueName() {
       const id = state.selectedLeagues?.[0];
-      return (LEAGUES.find(l => l.id === id)?.name) || 'Mundial 2026';
+      return (LEAGUES.find(l => l.id === id)?.name) || 'Mundial · Modo desarrollo';
     }
 
     const DEFAULT_PROFILE = {name:'Jony',country:'El Salvador',language:'Español'};
@@ -1598,7 +1603,7 @@ body{padding-top:0}
     function finishOnboarding(){localStorage.setItem('goalapp_onboarded','1');localStorage.setItem('goalapp_profile',JSON.stringify(state.profile));localStorage.setItem('goalapp_alerts',JSON.stringify(state.alertPreferences));localStorage.setItem('goalapp_teams',JSON.stringify(state.selectedTeams));localStorage.setItem('goalapp_leagues',JSON.stringify(state.selectedLeagues));$('#onboarding').hidden=true;hydratePersonalization();renderAllMatchData();showToast('Tu GoalApp personalizada está lista')}
 
 
-    const HOME_EXTRAS_CACHE_KEY='goalapp_home_extras_dataengine1';
+    const HOME_EXTRAS_CACHE_KEY='goalapp_home_extras_dataengine2';
     const HOME_EXTRAS_TTL=15*60*1000;
     const WORLD_CUP_LEAGUE_ID=1;
     const WORLD_CUP_SEASON=2026;
@@ -1623,7 +1628,7 @@ body{padding-top:0}
       const now=new Date(),key=dateKey(now);
       if(key<'2026-06-11')return 'Comienza el 11 de junio';
       if(key<='2026-06-17')return 'Fase de grupos · Jornada 1';
-      if(key<='2026-06-23')return 'Fase de grupos · Jornada 2';
+      if(key<='2026-06-23')return 'Modo desarrollo · datos reales';
       if(key<='2026-06-27')return 'Fase de grupos · Jornada 3';
       if(key<='2026-07-03')return 'Ronda de 32';
       if(key<='2026-07-07')return 'Octavos de final';
@@ -1664,7 +1669,7 @@ body{padding-top:0}
       target.innerHTML=matches.length?matches.map(favoriteMatchCardHTML).join(''):`<article class="card status-card"><h3>No hay partidos cercanos de tus equipos</h3><p>GoalApp seguirá buscando el próximo encuentro de tus favoritos.</p></article>`;
       startHomeCountdown();
     }
-    function worldCupMiniHTML(match,index=0){return `<button class="worldcup-mini reveal-card" style="--i:${index}" data-match-id="${escapeHTML(match.id)}"><small><span>${escapeHTML(match.competitionRound||'Mundial 2026')}</span><span>${escapeHTML(formatTime(new Date(match.date)))}</span></small><div class="worldcup-mini-teams"><div class="worldcup-mini-team"><img src="${match.homeLogo}" alt=""><strong>${escapeHTML(match.homeName)}</strong></div><div class="worldcup-mini-score"><b>${escapeHTML(match.score)}</b><span>${escapeHTML(match.statusText)}</span></div><div class="worldcup-mini-team"><img src="${match.awayLogo}" alt=""><strong>${escapeHTML(match.awayName)}</strong></div></div></button>`}
+    function worldCupMiniHTML(match,index=0){return `<button class="worldcup-mini reveal-card" style="--i:${index}" data-match-id="${escapeHTML(match.id)}"><small><span>${escapeHTML(match.competitionRound||'Mundial · Modo desarrollo')}</span><span>${escapeHTML(formatTime(new Date(match.date)))}</span></small><div class="worldcup-mini-teams"><div class="worldcup-mini-team"><img src="${match.homeLogo}" alt=""><strong>${escapeHTML(match.homeName)}</strong></div><div class="worldcup-mini-score"><b>${escapeHTML(match.score)}</b><span>${escapeHTML(match.statusText)}</span></div><div class="worldcup-mini-team"><img src="${match.awayLogo}" alt=""><strong>${escapeHTML(match.awayName)}</strong></div></div></button>`}
     function renderWorldCupHub(){
       const matches=(state.matches||[]).filter(isWorldCupMatch).sort(compareByRelevance);const live=matches.filter(match=>match.live).length;const progress=worldCupProgressData();
       $('#worldCupStage').textContent=worldCupStageLabel();$('#worldCupTodayCount').textContent=matches.length;$('#worldCupLiveCount').textContent=live;$('#worldCupDaysLeft').textContent=progress.days;$('#worldCupProgress').style.width=`${progress.pct}%`;$('#worldCupProgressText').textContent=`${Math.round(progress.pct)}% del torneo`;
@@ -1677,13 +1682,13 @@ body{padding-top:0}
     }
     function renderWorldCupPlayers(){
       const target=$('#worldCupPlayers');if(!target)return;const players=state.worldCupPlayers||[];
-      target.innerHTML=players.length?players.slice(0,8).map((player,index)=>{const stat=player.statistics?.[0]||{};const goals=stat.goals?.total??0;return `<button class="player-trend-card reveal-card" style="--i:${index}" data-toast="${escapeHTML(player.name)} · ${goals} goles"><img src="${player.photo||newsFallbackImage({source:'Mundial 2026'})}" alt="${escapeHTML(player.name)}"><span class="player-trend-goals">${goals} G</span><span class="player-trend-copy"><strong>${escapeHTML(player.name)}</strong><span>${escapeHTML(stat.team?.name||player.nationality||'Mundial 2026')}</span></span></button>`}).join(''):`<article class="card status-card"><p>Los goleadores del Mundial se mostrarán cuando haya datos disponibles.</p></article>`;
+      target.innerHTML=players.length?players.slice(0,8).map((player,index)=>{const stat=player.statistics?.[0]||{};const goals=stat.goals?.total??0;return `<button class="player-trend-card reveal-card" style="--i:${index}" data-toast="${escapeHTML(player.name)} · ${goals} goles"><img src="${player.photo||newsFallbackImage({source:'Mundial · Modo desarrollo'})}" alt="${escapeHTML(player.name)}"><span class="player-trend-goals">${goals} G</span><span class="player-trend-copy"><strong>${escapeHTML(player.name)}</strong><span>${escapeHTML(stat.team?.name||player.nationality||'Mundial · Modo desarrollo')}</span></span></button>`}).join(''):`<article class="card status-card"><p>Los goleadores del Mundial se mostrarán cuando haya datos disponibles.</p></article>`;
     }
     function renderHomePersonalNews(){
       const target=$('#homeNews');if(!target)return;const items=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));
       const spotlight=$('#homeNewsSpotlight');const headlineStrip=$('#headlineStrip');
       if(spotlight){
-        if(items[0]) spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(items[0])}" alt="" onerror="this.src='${newsFallbackImage(items[0])}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(items[0])}<span>${relativeTime(items[0].publishedAt)}</span><span>${isWorldCupNews(items[0])?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(items[0].title||'Noticia destacada')}</h3><p>${escapeHTML(items[0].description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+        if(items[0]) spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(items[0])}" alt="" onerror="this.src='${newsFallbackImage(items[0])}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(items[0])}<span>${relativeTime(items[0].publishedAt)}</span><span>${isWorldCupNews(items[0])?'Mundial · Modo desarrollo':'Momento clave'}</span></div><h3>${escapeHTML(items[0].title||'Noticia destacada')}</h3><p>${escapeHTML(items[0].description||'Abre la fuente original para leer más detalles.')}</p></div>`;
         else spotlight.innerHTML='<div class="news-spotlight-copy"><span class="source-badge">GoalNews</span><h3>Sin noticia destacada por ahora</h3><p>Cuando lleguen titulares relevantes, esta tarjeta mostrará lo más importante del momento.</p></div>';
         spotlight.dataset.newsLink=items[0]?.link||'';
       }
@@ -1702,7 +1707,7 @@ body{padding-top:0}
       const items=[];const profile=state.profile||DEFAULT_PROFILE;const teams=selectedDisplayNames();const next=nextRelevantMatch();
       if(next){items.push(next.live?`${next.homeName} vs ${next.awayName} está en vivo: ${next.score}.`:next.finished?`${next.homeName} vs ${next.awayName} terminó ${next.score}.`:`${next.homeName} vs ${next.awayName} empieza ${countdownText(next.date)}.`)}
       const favCount=dedupeMatches([...(state.matches||[]),...(state.favoriteNextMatches||[])]).filter(isSelectedTeamMatch).length;if(favCount)items.push(`${favCount} partidos relacionados con tus equipos favoritos.`);
-      const wc=(state.matches||[]).filter(isWorldCupMatch);if(wc.length)items.push(`Mundial 2026: ${wc.length} partidos en la fecha seleccionada.`);
+      const wc=(state.matches||[]).filter(isWorldCupMatch);if(wc.length)items.push(`Mundial · Modo desarrollo: ${wc.length} partidos en la fecha seleccionada.`);
       const relevantNews=[...(state.news||[])].sort((a,b)=>selectedNewsScore(b)-selectedNewsScore(a));if(relevantNews[0])items.push(`Noticia clave: ${relevantNews[0].title}.`);
       if(teams.length)items.push(`Prioridad actual: ${teams.slice(0,3).join(', ')}.`);else items.push(`${profile.name||'Jony'}, selecciona equipos para un resumen más preciso.`);
       return items;
@@ -1714,13 +1719,13 @@ body{padding-top:0}
       renderWhyMatters(news[0],next); renderPlayerOfDay(); renderSmartAlerts(next,news[0]);
     }
     function renderWhyMatters(item,next){const target=$('#whyMatters'); if(!target)return; const teams=selectedDisplayNames(); let title='Por qué importa'; let reason='GoalAI prioriza esta información porque está conectada con tus equipos, el Mundial o una competición principal.'; let source='Fuentes enlazadas';
-      if(item){title=item.title||title; const related=teams.find(t=>normalizeName(item.title+' '+(item.description||'')).includes(normalizeName(t))); reason=related?`Afecta directamente a ${related}, uno de tus equipos favoritos. Puede cambiar el contexto del próximo partido o la conversación del día.`:isWorldCupNews(item)?'Está relacionada con el Mundial 2026, el torneo que más atención concentra ahora mismo.':`Viene de ${item.source||'una fuente deportiva'} y aparece entre las noticias más recientes.`; source=`${item.source||'GoalNews'} · ${relativeTime(item.publishedAt)}`;}
+      if(item){title=item.title||title; const related=teams.find(t=>normalizeName(item.title+' '+(item.description||'')).includes(normalizeName(t))); reason=related?`Afecta directamente a ${related}, uno de tus equipos favoritos. Puede cambiar el contexto del próximo partido o la conversación del día.`:isWorldCupNews(item)?'Está relacionada con el Mundial · Modo desarrollo, el torneo que más atención concentra ahora mismo.':`Viene de ${item.source||'una fuente deportiva'} y aparece entre las noticias más recientes.`; source=`${item.source||'GoalNews'} · ${relativeTime(item.publishedAt)}`;}
       else if(next){title=`${next.homeName} vs ${next.awayName}`; reason=next.live?'Es el partido más urgente ahora porque está en vivo. GoalApp lo mantiene arriba para acceso rápido.':next.finished?'Ya terminó: puedes revisar resumen, eventos y contexto postpartido.':`Todavía no empieza. GoalApp lo destaca para que sepas cuánto falta y puedas seguir la previa.`; source=`${next.league} · ${next.statusText}`;}
       target.innerHTML=`<h3>${escapeHTML(title)}</h3><p>${escapeHTML(reason)}</p><div class="why-source"><span>${escapeHTML(source)}</span><span>Confianza: ${item||next?'alta':'media'}</span></div>`;}
     function isWorldCupNews(item){return /mundial|world cup|fifa|selecci[oó]n/i.test(`${item?.title||''} ${item?.description||''} ${item?.category||''}`)}
     function renderPlayerOfDay(){const target=$('#playerOfDay'); if(!target)return; const players=[...(state.worldCupPlayers||[])]; let p=players[0]; if(!p){target.innerHTML=`<img src="${newsFallbackImage({source:'GoalAI'})}" alt=""><div><h3>Jugador a vigilar</h3><p>Cuando haya estadísticas suficientes, GoalAI destacará al jugador con mayor impacto para tus equipos.</p><div class="player-metrics"><span>Rating pendiente</span><span>Datos reales</span></div></div>`;return}
       const stat=p.statistics?.[0]||{};const goals=stat.goals?.total??0,assists=stat.goals?.assists??0,games=stat.games?.appearences??stat.games?.appearances??'—';
-      target.innerHTML=`<img src="${p.photo||newsFallbackImage({source:'Mundial 2026'})}" alt="${escapeHTML(p.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><div><h3>${escapeHTML(p.name)}</h3><p>${escapeHTML(stat.team?.name||p.nationality||'Jugador destacado')} aparece arriba por producción ofensiva y relevancia del torneo.</p><div class="player-metrics"><span>${goals} goles</span><span>${assists??0} asist.</span><span>${games} PJ</span></div></div>`;}
+      target.innerHTML=`<img src="${p.photo||newsFallbackImage({source:'Mundial · Modo desarrollo'})}" alt="${escapeHTML(p.name)}" onerror="this.src='${newsFallbackImage({source:'GoalAI'})}'"><div><h3>${escapeHTML(p.name)}</h3><p>${escapeHTML(stat.team?.name||p.nationality||'Jugador destacado')} aparece arriba por producción ofensiva y relevancia del torneo.</p><div class="player-metrics"><span>${goals} goles</span><span>${assists??0} asist.</span><span>${games} PJ</span></div></div>`;}
     function renderSmartAlerts(next,news){const target=$('#smartAlerts'); if(!target)return; const alerts=[]; if(next)alerts.push({icon:next.live?'⚽':'⏱',title:next.live?`Marcador en vivo: ${next.score}`:`${next.homeName} vs ${next.awayName}`,text:next.live?`${next.homeName} vs ${next.awayName} · ${next.statusText}`:`Comienza ${countdownText(next.date)} · ${next.league}`,state:next.live?'Ahora':'Programada'}); if(news)alerts.push({icon:'◆',title:'Noticia importante',text:news.title,state:'Nueva'}); if(state.alertPreferences.includes('daily'))alerts.push({icon:'✦',title:'Daily Brief activo',text:'Recibirás un resumen personalizado cuando abras GoalApp.',state:'Activo'}); if(!alerts.length)alerts.push({icon:'✓',title:'Sin alertas críticas',text:'GoalAI seguirá vigilando tus equipos.',state:'OK'});
       target.innerHTML=alerts.slice(0,4).map(a=>`<div class="alert-item"><span class="alert-icon">${a.icon}</span><div><strong>${escapeHTML(a.title)}</strong><small>${escapeHTML(a.text)}</small></div><b>${escapeHTML(a.state)}</b></div>`).join('');}
 
@@ -1949,7 +1954,7 @@ body{padding-top:0}
     function demoNewsItems() {
       const now = new Date().toISOString();
       return [
-        { source: 'GoalNews', title: 'Mundial 2026: los partidos del día y el contexto que debes seguir', description: 'Resumen editorial temporal mientras se conectan las fuentes reales.', publishedAt: now, link: '', image: newsFallbackImage({source:'FIFA'}) },
+        { source: 'GoalNews', title: 'Mundial · Modo desarrollo: los partidos del día y el contexto que debes seguir', description: 'Resumen editorial temporal mientras se conectan las fuentes reales.', publishedAt: now, link: '', image: newsFallbackImage({source:'FIFA'}) },
         { source: 'AS', title: 'Última hora de fichajes y mercado europeo', description: 'Tarjeta de respaldo; se reemplazará por contenido real al actualizar.', publishedAt: now, link: '', image: newsFallbackImage({source:'AS'}) },
         { source: 'El Gráfico', title: 'Fútbol de El Salvador y agenda regional', description: 'Cobertura local para enriquecer GoalApp.', publishedAt: now, link: '', image: newsFallbackImage({source:'El Gráfico'}) }
       ];
@@ -3366,8 +3371,8 @@ body{padding-top:0}
 
     /* MATCHPRO-3 · Fast loading + correct World Cup groups */
 
-    const WC_NEWS_CACHE = 'goalapp_news_cache_dataengine1';
-    const WC_OVERVIEW_CACHE = 'goalapp_worldcup_overview_dataengine1';
+    const WC_NEWS_CACHE = 'goalapp_news_cache_dataengine2';
+    const WC_OVERVIEW_CACHE = 'goalapp_worldcup_overview_dataengine2';
     const WC_GROUP_CODES = {
       A:['MEX','RSA','KOR','CZE'],
       B:['CAN','BIH','QAT','SUI'],
@@ -3616,7 +3621,7 @@ body{padding-top:0}
     function demoNewsItems() {
       const now = new Date().toISOString();
       return [
-        { source:'ESPN Deportes', title:'Mundial 2026: resultados, grupos y partidos clave del día', description:'Resumen temporal mientras se actualizan las fuentes reales.', publishedAt:now, link:'https://espndeportes.espn.com/futbol/', image:newsFallbackImage({source:'ESPN Deportes'}) },
+        { source:'ESPN Deportes', title:'Mundial · Modo desarrollo: resultados, grupos y partidos clave del día', description:'Resumen temporal mientras se actualizan las fuentes reales.', publishedAt:now, link:'https://espndeportes.espn.com/futbol/', image:newsFallbackImage({source:'ESPN Deportes'}) },
         { source:'FIFA', title:'Calendario, grupos y camino del torneo', description:'Información del torneo conectada al Centro Mundial.', publishedAt:now, link:'https://www.fifa.com/', image:newsFallbackImage({source:'FIFA'}) },
         { source:'TUDN', title:'Videos, goles y análisis de selecciones', description:'Acceso a contenido en video mientras se cargan feeds.', publishedAt:now, link:'https://www.tudn.com/futbol', image:newsFallbackImage({source:'TUDN'}) },
         { source:'AS', title:'Última hora de fichajes y mercado europeo', description:'Noticias enlazadas a la fuente original.', publishedAt:now, link:'https://as.com/futbol/', image:newsFallbackImage({source:'AS'}) }
@@ -3842,7 +3847,7 @@ body{padding-top:0}
 
     /* MATCHPRO-4 · Native videos, updated standings and real-player recovery */
 
-    const TRENDING_PLAYERS_CACHE = 'goalapp_trending_players_dataengine1';
+    const TRENDING_PLAYERS_CACHE = 'goalapp_trending_players_dataengine2';
 
     function videoEmbedUrl(item = {}) {
       const link = String(item.embed || item.embedUrl || item.link || '');
@@ -3996,7 +4001,7 @@ body{padding-top:0}
       const spotlight=$('#homeNewsSpotlight'), headlineStrip=$('#headlineStrip');
       if(spotlight){
         const main=items[0] || demoNewsItems()[0];
-        spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+        spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial · Modo desarrollo':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
         spotlight.dataset.newsLink=main.link||'';
       }
       if(headlineStrip){
@@ -4270,7 +4275,7 @@ body{padding-top:0}
       if(spotlight){
         if (items[0]) {
           const main=items[0];
-          spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial 2026':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
+          spotlight.innerHTML=`<img loading="eager" src="${safeNewsImage(main)}" alt="" onerror="this.src='${newsFallbackImage(main)}'"><div class="news-spotlight-copy"><div class="news-spotlight-meta">${sourceBadgeHTML(main)}<span>${relativeTime(main.publishedAt)}</span><span>${isWorldCupNews(main)?'Mundial · Modo desarrollo':'Momento clave'}</span></div><h3>${escapeHTML(main.title||'Noticia destacada')}</h3><p>${escapeHTML(main.description||'Abre la fuente original para leer más detalles.')}</p></div>`;
           spotlight.dataset.newsLink=main.link||'';
         } else {
           spotlight.innerHTML=`<div class="news-spotlight-copy">${truthStatusHTML(false,'Consultando noticias reales. GoalApp no mostrará titulares temporales como si fueran reales.')}</div>`;
@@ -4482,16 +4487,16 @@ body{padding-top:0}
 
     /* DATAENGINE-1 · Sportmonks primary data layer */
 
-    function dataengineBase() { return `${professionalBase()}/api/v2`; }
+    function dataengineBase() { return `${professionalBase()}/api/v3`; }
 
     async function checkDataEngineHealth() {
       try {
         const health = await fetchJSON(`${dataengineBase()}/health`, 9000);
         state.dataengineHealth = health;
-        const sport = health.providers?.sportmonks?.configured;
+        const sport = false;
         const api = health.providers?.apiFootball?.configured;
         const score = health.providers?.scorebat?.available;
-        setDataSource(sport ? 'real' : api ? 'cache' : 'demo', sport ? 'Sportmonks activo' : api ? 'API-Football respaldo' : 'Proveedor principal no configurado');
+        setDataSource(api ? 'real' : 'demo', sport ? 'API-Football Mundial activo' : api ? 'API-Football respaldo' : 'Proveedor principal no configurado');
         return health;
       } catch (error) {
         state.dataengineHealth = { ok:false, error:error.message };
@@ -4700,6 +4705,107 @@ body{padding-top:0}
       setTimeout(() => loadTrendingPlayers(force), 200);
     }
 
+
+
+    /* DATAENGINE-4 · API-Football World Cup Core front-end override */
+    function dataengineBase() { return `${professionalBase()}/api/v3`; }
+
+    function appVersionResetDataEngine4() {
+      const key = 'goalapp_version_seen_dataengine4';
+      if (localStorage.getItem(key) === 'DATAENGINE-4') return;
+      [
+        'goalapp_real_matches_dataengine1','goalapp_home_extras_dataengine1','goalapp_news_cache_dataengine1','goalapp_worldcup_overview_dataengine1','goalapp_trending_players_dataengine1',
+        'goalapp_real_matches_dataengine5','goalapp_home_extras_dataengine5','goalapp_news_cache_dataengine5','goalapp_worldcup_overview_dataengine5','goalapp_trending_players_dataengine5',
+        'goalapp_real_matches_v5','goalapp_worldcup_overview_v5'
+      ].forEach(k => localStorage.removeItem(k));
+      localStorage.setItem(key, 'DATAENGINE-4');
+    }
+    appVersionResetDataEngine4();
+
+    async function checkDataEngineHealth() {
+      try {
+        const health = await fetchJSON(`${dataengineBase()}/health`, 9000);
+        state.dataengineHealth = health;
+        const api = health.providers?.apiFootball?.configured;
+        setDataSource(api ? 'real' : 'demo', api ? 'API-Football Mundial activo' : 'Falta APISPORTS_KEY');
+        return health;
+      } catch (error) {
+        state.dataengineHealth = { ok:false, error:error.message };
+        return state.dataengineHealth;
+      }
+    }
+
+    function normalizeV2Match(item = {}) {
+      const base = {
+        id: String(item.id || item.fixtureId || item.apiFootballId || Math.random()),
+        source: item.source || 'api-football',
+        provider: item.provider || 'API-Football',
+        league: item.league?.name || item.leagueName || item.competition || 'Football',
+        competitionId: item.league?.id || item.leagueId || item.competitionId || '',
+        season: item.season?.id || item.seasonId || item.season || '',
+        competitionRound: item.round?.name || item.roundName || item.stage?.name || item.stageName || '',
+        competitionCountry: item.country?.name || item.country || '',
+        homeTeamId: item.home?.id || item.homeTeamId || '',
+        awayTeamId: item.away?.id || item.awayTeamId || '',
+        homeName: item.home?.name || item.homeName || 'Local',
+        awayName: item.away?.name || item.awayName || 'Visitante',
+        homeLogo: item.home?.logo || item.homeLogo || placeholderLogo(item.home?.name || item.homeName || 'Local'),
+        awayLogo: item.away?.logo || item.awayLogo || placeholderLogo(item.away?.name || item.awayName || 'Visitante'),
+        homeScore: item.score?.home ?? item.homeScore ?? null,
+        awayScore: item.score?.away ?? item.awayScore ?? null,
+        statusText: item.status?.label || item.statusText || item.status?.name || '',
+        statusShort: item.status?.short || item.statusShort || '',
+        date: item.date || item.startingAt || item.starting_at || new Date().toISOString(),
+        venue: item.venue?.name || item.venueName || item.venue || '',
+        venueCity: item.venue?.city || item.venueCity || '',
+        referee: item.referee || '',
+        background: chooseFromPool ? chooseFromPool('worldcup', item.id || item.homeName || 'match') : '',
+        group: item.group || '',
+        raw: item
+      };
+      const now = Date.now();
+      const start = new Date(base.date).getTime();
+      const finishedCodes = ['FT','AET','PEN','FINISHED','FIN','FULL_TIME'];
+      const liveCodes = ['LIVE','1H','2H','HT','ET','BT','INT'];
+      base.finished = Boolean(item.finished) || finishedCodes.includes(String(base.statusShort).toUpperCase()) || /finished|full|final|ft/i.test(base.statusText);
+      base.live = Boolean(item.live) || liveCodes.includes(String(base.statusShort).toUpperCase()) || /live|inplay|1st|2nd|half/i.test(base.statusText);
+      base.state = base.live ? 'live' : base.finished ? 'finished' : start > now ? 'upcoming' : 'today';
+      base.score = base.homeScore !== null && base.awayScore !== null ? `${base.homeScore} - ${base.awayScore}` : formatTime(new Date(base.date));
+      if (!base.statusText) base.statusText = base.live ? 'En vivo' : base.finished ? 'Finalizado' : formatTime(new Date(base.date));
+      return base;
+    }
+
+    async function loadWorldCupOverview(force = false) {
+      renderWorldCupTable();
+      try {
+        const overview = await fetchJSON(`${dataengineBase()}/worldcup/overview?timezone=America%2FEl_Salvador`, 14000);
+        state.worldCupOverview = overview;
+        state.worldCupStandings = overview?.standings || [];
+        renderWorldCupTable();
+        renderWorldCupHub();
+        renderWorldCupCenterPro(state.wcTab || 'groups');
+      } catch (error) {
+        state.worldCupOverview = { ok:false, provider:'API-Football', standings:[], matches:[], error:error.message };
+        renderWorldCupTable();
+        renderWorldCupHub();
+      }
+    }
+
+
+
+    /* DATAENGINE-5 · visible development mode marker */
+    function renderDevModeBanner(){
+      const home=document.querySelector('#screen-home .content')||document.querySelector('#homeScreen')||document.querySelector('.screen.active');
+      if(!home||document.getElementById('devmodeBanner'))return;
+      const banner=document.createElement('div');
+      banner.id='devmodeBanner';
+      banner.className='devmode-banner';
+      banner.innerHTML='<span class="devmode-badge">DEV</span><span><b>Modo desarrollo real:</b> usando datos históricos reales permitidos por tu plan gratuito. La misma interfaz quedará lista para cambiar a Mundial 2026 cuando compres acceso premium.</span>';
+      const anchor=home.querySelector('.daily-brief,#dailyBrief,.goalai-card,.worldcup-card')||home.firstElementChild;
+      if(anchor)anchor.insertAdjacentElement('beforebegin',banner); else home.prepend(banner);
+    }
+    setTimeout(renderDevModeBanner,700);
+    document.addEventListener('visibilitychange',()=>setTimeout(renderDevModeBanner,300));
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
     function openPreferenceModal(id){preferenceModals.forEach(name=>$('#'+name)?.classList.toggle('open',name===id));if(id==='profileModal'){const profile=state.profile||DEFAULT_PROFILE;$('#editProfileName').value=profile.name||'';$('#editProfileCountry').value=profile.country||'El Salvador';$('#editProfileLanguage').value=profile.language||'Español'}renderChoices()}
