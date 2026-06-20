@@ -1023,7 +1023,7 @@ body{padding-top:0}
     .updated-pill { padding:6px 9px; border-radius:999px; background:rgba(0,237,104,.12); border:1px solid rgba(0,237,104,.24); color:#dfffee; font-size:9px; font-weight:900; }
 
   
-    /* UX2-HOTFIX-1 · API-Football provider diagnostics */
+    /* DATA-SOURCE-6 · API-Football provider diagnostics */
     .provider-stack { display:grid; gap:10px; margin-top:12px; }
     .provider-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 12px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.045); font-size:12px; }
     .provider-row strong { display:flex; align-items:center; gap:8px; }
@@ -1033,10 +1033,20 @@ body{padding-top:0}
     .dataengine-badge { display:inline-flex; align-items:center; gap:8px; padding:9px 11px; border-radius:999px; background:rgba(0,237,104,.09); border:1px solid rgba(0,237,104,.22); color:#dfffee; font-size:10px; font-weight:900; }
 
   
-    /* UX2-HOTFIX-1: safe mobile polish without runtime-heavy mutations */
+    /* DATA-SOURCE-6: safe mobile polish without runtime-heavy mutations */
     .hotfix-banner{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;margin:12px 0;border-radius:18px;border:1px solid rgba(0,237,104,.22);background:linear-gradient(135deg,rgba(0,237,104,.10),rgba(255,255,255,.035));font-size:12px;line-height:1.45;color:#d9ffe9}.hotfix-banner b{color:white}.hotfix-chip{flex:0 0 auto;border-radius:999px;padding:7px 9px;background:rgba(0,237,104,.15);border:1px solid rgba(0,237,104,.25);font-weight:900;color:#7cffae;font-size:10px;letter-spacing:.4px}.screen.active{animation:screenIn .28s cubic-bezier(.2,.8,.2,1) both}.match-row,.card,.hero,.tournament-hub{box-shadow:0 14px 42px rgba(0,0,0,.24)}.nav{box-shadow:0 -18px 60px rgba(0,0,0,.36);backdrop-filter:blur(22px)}#bootRescue{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,#0d2017,#020303 60%);color:white;padding:24px;text-align:center;transition:opacity .3s ease,visibility .3s ease}#bootRescue.hide{opacity:0;visibility:hidden;pointer-events:none}.boot-card{max-width:330px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);border-radius:26px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.4)}.boot-card h1{margin:0 0 8px;font-size:27px}.boot-card p{margin:0;color:#9fb0a8;font-size:13px;line-height:1.45}.boot-loader{width:46px;height:4px;border-radius:99px;margin:18px auto 0;background:linear-gradient(90deg,transparent,#00ed68,transparent);animation:pulseLine 1.2s infinite}
 
-  </style>
+  
+
+/* DATA-SOURCE-6 · Hybrid free sources */
+.ds6-source-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(0,237,104,.10);border:1px solid rgba(0,237,104,.22);color:#dfffee;font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase}
+.ds6-source-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}
+.ds6-source-card{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:18px;padding:12px;min-height:78px;box-shadow:0 16px 40px rgba(0,0,0,.14)}
+.ds6-source-card b{display:block;font-size:13px;color:#fff;margin-bottom:4px}.ds6-source-card span{display:block;font-size:11px;color:var(--muted);line-height:1.35}.ds6-source-card.ok{border-color:rgba(0,237,104,.22)}.ds6-source-card.warn{border-color:rgba(255,209,102,.25)}
+.ds6-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin:12px 0;border:1px solid rgba(0,237,104,.22);background:linear-gradient(135deg,rgba(0,237,104,.10),rgba(38,120,255,.08));border-radius:18px;color:#dfffee;font-size:12px;line-height:1.45}.ds6-banner b{color:#fff}
+@media(max-width:390px){.ds6-source-grid{grid-template-columns:1fr}}
+
+</style>
 </head>
 <body>
   <div id="bootRescue"><div class="boot-card"><h1>GoalApp</h1><p>Cargando versión segura con datos reales históricos.</p><div class="boot-loader"></div></div></div>
@@ -4708,18 +4718,18 @@ body{padding-top:0}
 
 
 
-    /* UX2-HOTFIX-1 · API-Football World Cup Core front-end override */
+    /* DATA-SOURCE-6 · API-Football World Cup Core front-end override */
     function dataengineBase() { return `${professionalBase()}/api/v3`; }
 
     function appVersionResetDataEngine4() {
       const key = 'goalapp_version_seen_dataengine4';
-      if (localStorage.getItem(key) === 'UX2-HOTFIX-1') return;
+      if (localStorage.getItem(key) === 'DATA-SOURCE-6') return;
       [
         'goalapp_real_matches_dataengine1','goalapp_home_extras_dataengine1','goalapp_news_cache_dataengine1','goalapp_worldcup_overview_dataengine1','goalapp_trending_players_dataengine1',
         'goalapp_real_matches_hotfix1','goalapp_home_extras_hotfix1','goalapp_news_cache_hotfix1','goalapp_worldcup_overview_hotfix1','goalapp_trending_players_hotfix1',
         'goalapp_real_matches_v5','goalapp_worldcup_overview_v5'
       ].forEach(k => localStorage.removeItem(k));
-      localStorage.setItem(key, 'UX2-HOTFIX-1');
+      localStorage.setItem(key, 'DATA-SOURCE-6');
     }
     appVersionResetDataEngine4();
 
@@ -4792,6 +4802,47 @@ body{padding-top:0}
       }
     }
 
+
+
+
+/* DATA-SOURCE-6 · Hybrid free sources front-end shim */
+(function(){
+  const DS6_VERSION='DATA-SOURCE-6';
+  function base(){
+    try { return (typeof dataengineBase === 'function' ? dataengineBase() : `${professionalBase()}/api/v3`); }
+    catch { return 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev/api/v3'; }
+  }
+  async function ds6FetchJSON(url, timeout=9000){
+    const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(), timeout);
+    try{ const r=await fetch(url,{signal:ctrl.signal,cache:'no-store'}); const j=await r.json(); if(!r.ok) throw new Error(j.error||`HTTP ${r.status}`); return j; }
+    finally{ clearTimeout(t); }
+  }
+  function injectBanner(){
+    if(document.getElementById('ds6Banner')) return;
+    const screen=document.querySelector('#screen-home .content') || document.querySelector('.screen.active .content') || document.querySelector('main') || document.body;
+    if(!screen) return;
+    const el=document.createElement('div'); el.id='ds6Banner'; el.className='ds6-banner';
+    el.innerHTML=`<span class="ds6-source-pill">${DS6_VERSION}</span><span><b>Fuentes híbridas gratis:</b> API-Football histórico para desarrollo, TheSportsDB para arte/equipos, ScoreBat/feeds para videos y noticias. Sin depender de API premium todavía.</span>`;
+    const anchor=screen.querySelector('.devmode-banner,.hero,.worldcup-card,.daily-brief') || screen.firstElementChild;
+    if(anchor) anchor.insertAdjacentElement('beforebegin', el); else screen.prepend(el);
+  }
+  function injectSourcesPanel(report){
+    if(document.getElementById('ds6SourcesPanel')) return;
+    const target=document.querySelector('#screen-profile .content') || document.querySelector('#profile .content') || document.querySelector('[data-screen="profile"]') || document.querySelector('.content') || document.body;
+    if(!target) return;
+    const providers=report?.sources || {};
+    const html=`<section id="ds6SourcesPanel" class="card ds6-source-panel" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><h3 style="margin:0">Fuentes de datos</h3><span class="ds6-source-pill">Hybrid</span></div><div class="ds6-source-grid"><div class="ds6-source-card ${providers.apiFootball?.configured?'ok':'warn'}"><b>API-Football</b><span>${providers.apiFootball?.configured?'Activo para datos históricos y Match Center':'Falta APISPORTS_KEY'}</span></div><div class="ds6-source-card ok"><b>TheSportsDB</b><span>Arte, equipos y datos de respaldo cuando esté disponible.</span></div><div class="ds6-source-card ok"><b>ScoreBat / video</b><span>Highlights y videos cuando las fuentes permitan insertarlos.</span></div><div class="ds6-source-card ok"><b>Google News / feeds</b><span>Noticias y enlaces contextuales; no marcadores en vivo.</span></div></div><button id="ds6CopyReport" class="btn secondary" style="width:100%;margin-top:10px">Copiar reporte de fuentes</button></section>`;
+    target.insertAdjacentHTML('beforeend', html);
+    document.getElementById('ds6CopyReport')?.addEventListener('click', async()=>{
+      try{ await navigator.clipboard.writeText(JSON.stringify(report||{},null,2)); alert('Reporte copiado'); } catch{ alert('No se pudo copiar'); }
+    });
+  }
+  async function bootDS6(){
+    injectBanner();
+    try{ const report=await ds6FetchJSON(`${base()}/sources`,9000); injectSourcesPanel(report); } catch(e){ console.warn('DS6 sources panel unavailable',e); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(bootDS6,400)); else setTimeout(bootDS6,400);
+})();
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
     function openPreferenceModal(id){preferenceModals.forEach(name=>$('#'+name)?.classList.toggle('open',name===id));if(id==='profileModal'){const profile=state.profile||DEFAULT_PROFILE;$('#editProfileName').value=profile.name||'';$('#editProfileCountry').value=profile.country||'El Salvador';$('#editProfileLanguage').value=profile.language||'Español'}renderChoices()}
