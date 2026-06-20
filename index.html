@@ -1023,7 +1023,7 @@ body{padding-top:0}
     .updated-pill { padding:6px 9px; border-radius:999px; background:rgba(0,237,104,.12); border:1px solid rgba(0,237,104,.24); color:#dfffee; font-size:9px; font-weight:900; }
 
   
-    /* DATA-SOURCE-6 · API-Football provider diagnostics */
+    /* DATA-SOURCE-6-HOTFIX-1 · API-Football provider diagnostics */
     .provider-stack { display:grid; gap:10px; margin-top:12px; }
     .provider-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 12px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,.045); font-size:12px; }
     .provider-row strong { display:flex; align-items:center; gap:8px; }
@@ -1033,12 +1033,12 @@ body{padding-top:0}
     .dataengine-badge { display:inline-flex; align-items:center; gap:8px; padding:9px 11px; border-radius:999px; background:rgba(0,237,104,.09); border:1px solid rgba(0,237,104,.22); color:#dfffee; font-size:10px; font-weight:900; }
 
   
-    /* DATA-SOURCE-6: safe mobile polish without runtime-heavy mutations */
+    /* DATA-SOURCE-6-HOTFIX-1: safe mobile polish without runtime-heavy mutations */
     .hotfix-banner{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;margin:12px 0;border-radius:18px;border:1px solid rgba(0,237,104,.22);background:linear-gradient(135deg,rgba(0,237,104,.10),rgba(255,255,255,.035));font-size:12px;line-height:1.45;color:#d9ffe9}.hotfix-banner b{color:white}.hotfix-chip{flex:0 0 auto;border-radius:999px;padding:7px 9px;background:rgba(0,237,104,.15);border:1px solid rgba(0,237,104,.25);font-weight:900;color:#7cffae;font-size:10px;letter-spacing:.4px}.screen.active{animation:screenIn .28s cubic-bezier(.2,.8,.2,1) both}.match-row,.card,.hero,.tournament-hub{box-shadow:0 14px 42px rgba(0,0,0,.24)}.nav{box-shadow:0 -18px 60px rgba(0,0,0,.36);backdrop-filter:blur(22px)}#bootRescue{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,#0d2017,#020303 60%);color:white;padding:24px;text-align:center;transition:opacity .3s ease,visibility .3s ease}#bootRescue.hide{opacity:0;visibility:hidden;pointer-events:none}.boot-card{max-width:330px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);border-radius:26px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.4)}.boot-card h1{margin:0 0 8px;font-size:27px}.boot-card p{margin:0;color:#9fb0a8;font-size:13px;line-height:1.45}.boot-loader{width:46px;height:4px;border-radius:99px;margin:18px auto 0;background:linear-gradient(90deg,transparent,#00ed68,transparent);animation:pulseLine 1.2s infinite}
 
   
 
-/* DATA-SOURCE-6 · Hybrid free sources */
+/* DATA-SOURCE-6-HOTFIX-1 · Hybrid free sources */
 .ds6-source-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(0,237,104,.10);border:1px solid rgba(0,237,104,.22);color:#dfffee;font-size:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase}
 .ds6-source-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}
 .ds6-source-card{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:18px;padding:12px;min-height:78px;box-shadow:0 16px 40px rgba(0,0,0,.14)}
@@ -1050,7 +1050,7 @@ body{padding-top:0}
 </head>
 <body>
   <div id="bootRescue"><div class="boot-card"><h1>GoalApp</h1><p>Cargando versión segura con datos reales históricos.</p><div class="boot-loader"></div></div></div>
-  <script>setTimeout(function(){var r=document.getElementById("bootRescue"); if(r) r.classList.add("hide");},2600); window.addEventListener("error",function(){var r=document.getElementById("bootRescue"); if(r){r.classList.remove("hide"); r.querySelector("p").textContent="La app encontró un error de carga. Actualiza la página o vuelve a subir el index.html hotfix.";} });</script>
+  <script>(function(){function hideBoot(){var r=document.getElementById("bootRescue"); if(r) r.classList.add("hide");} setTimeout(hideBoot,2200); window.addEventListener("error",function(e){console.warn("GoalApp non-fatal error",e&&e.message); hideBoot();},true); window.addEventListener("unhandledrejection",function(e){console.warn("GoalApp non-fatal rejection",e&&e.reason); hideBoot();},true);})();</script>
   <svg width="0" height="0" style="position:absolute"><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol><symbol id="i-club" viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6z"/><path d="M9 12h6M12 9v6"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 2l1.5 2M16 2l-1.5 2M7 9h10M5 13H2M22 13h-3M5 18H2M22 18h-3"/><rect x="6" y="5" width="12" height="16" rx="6"/><path d="M12 9v12"/></symbol></svg>
 
   <div class="splash" id="splash"><div class="splash-inner"><svg class="splash-logo" viewBox="0 0 48 48"><defs><linearGradient id="g1"><stop stop-color="#00ff78"/><stop offset="1" stop-color="#00b84d"/></linearGradient></defs><path fill="url(#g1)" d="M8 8h29l-6 8H16l-5 8 5 8h11v-5h-8l5-7h15v14L31 42H12L2 25z"/></svg><h1>Goal<span>App</span></h1><p>Tu fútbol. Tu mundo.</p><div class="splash-line"></div></div></div>
@@ -4718,18 +4718,18 @@ body{padding-top:0}
 
 
 
-    /* DATA-SOURCE-6 · API-Football World Cup Core front-end override */
+    /* DATA-SOURCE-6-HOTFIX-1 · API-Football World Cup Core front-end override */
     function dataengineBase() { return `${professionalBase()}/api/v3`; }
 
     function appVersionResetDataEngine4() {
       const key = 'goalapp_version_seen_dataengine4';
-      if (localStorage.getItem(key) === 'DATA-SOURCE-6') return;
+      if (localStorage.getItem(key) === 'DATA-SOURCE-6-HOTFIX-1') return;
       [
         'goalapp_real_matches_dataengine1','goalapp_home_extras_dataengine1','goalapp_news_cache_dataengine1','goalapp_worldcup_overview_dataengine1','goalapp_trending_players_dataengine1',
         'goalapp_real_matches_hotfix1','goalapp_home_extras_hotfix1','goalapp_news_cache_hotfix1','goalapp_worldcup_overview_hotfix1','goalapp_trending_players_hotfix1',
         'goalapp_real_matches_v5','goalapp_worldcup_overview_v5'
       ].forEach(k => localStorage.removeItem(k));
-      localStorage.setItem(key, 'DATA-SOURCE-6');
+      localStorage.setItem(key, 'DATA-SOURCE-6-HOTFIX-1');
     }
     appVersionResetDataEngine4();
 
@@ -4805,9 +4805,9 @@ body{padding-top:0}
 
 
 
-/* DATA-SOURCE-6 · Hybrid free sources front-end shim */
+/* DATA-SOURCE-6-HOTFIX-1 · Hybrid free sources front-end shim */
 (function(){
-  const DS6_VERSION='DATA-SOURCE-6';
+  const DS6_VERSION='DATA-SOURCE-6-HOTFIX-1';
   function base(){
     try { return (typeof dataengineBase === 'function' ? dataengineBase() : `${professionalBase()}/api/v3`); }
     catch { return 'https://ancient-band-0d08goalapp-data.jonathan-ventu10.workers.dev/api/v3'; }
@@ -4934,6 +4934,185 @@ body{padding-top:0}
     if(preview){state.profile={name:'Jony',country:'El Salvador',language:'Español'};state.alertPreferences=['goals','kickoff','lineups','news','daily'];state.selectedTeams=['real','liverpool','barca','salvador'];state.selectedLeagues=['worldcup','laliga','premier','champions','elsalvador']}
     if(!localStorage.getItem(BACKEND_STORAGE_KEY)){localStorage.setItem(BACKEND_STORAGE_KEY,DEFAULT_PROFESSIONAL_BACKEND)}
     hydratePersonalization();renderChoices();updateStep();renderDateStrip();renderMatches();hydrateBackendUI();renderHomeIntelligence();renderHomeMedia();fetchRealMatches(true);loadNews('all');ensureHomeDoesNotStayBlank();
+
+/* DATA-SOURCE-6-HOTFIX-1 · onboarding and boot-rescue safety patch */
+(function(){
+  const HOTFIX_VERSION = 'DATA-SOURCE-6-HOTFIX-1';
+
+  function hideBoot(){
+    try {
+      const boot = document.getElementById('bootRescue');
+      if (boot) boot.classList.add('hide');
+    } catch {}
+  }
+
+  function showSafeToast(message){
+    try {
+      if (typeof showToast === 'function') showToast(message);
+      else console.log(message);
+    } catch { console.log(message); }
+  }
+
+  function safeSetItem(key, value){
+    try { localStorage.setItem(key, value); } catch {}
+  }
+
+  function safeGetItem(key){
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+
+  function ensureDefaults(){
+    try {
+      if (!Array.isArray(state.selectedTeams) || !state.selectedTeams.length) {
+        state.selectedTeams = ['real', 'barca'];
+      }
+      if (!Array.isArray(state.selectedLeagues) || !state.selectedLeagues.length) {
+        state.selectedLeagues = ['worldcup', 'champions'];
+      }
+      if (!Array.isArray(state.alertPreferences) || !state.alertPreferences.length) {
+        state.alertPreferences = ['goals','kickoff','lineups','news','daily'];
+      }
+      if (!state.profile || !state.profile.name) {
+        state.profile = { ...(typeof DEFAULT_PROFILE !== 'undefined' ? DEFAULT_PROFILE : {name:'Jony', country:'El Salvador', language:'Español'}) };
+      }
+    } catch {}
+  }
+
+  function basicHomeFallback(){
+    try {
+      ensureDefaults();
+      const demo = (typeof DEMO_MATCHES !== 'undefined' && Array.isArray(DEMO_MATCHES)) ? DEMO_MATCHES : [];
+      if (!Array.isArray(state.matches) || !state.matches.length) state.matches = demo.slice();
+      const teams = (typeof TEAM_CATALOG !== 'undefined' ? TEAM_CATALOG : []).filter(t => state.selectedTeams?.includes(t.id)).slice(0,3);
+
+      const homeTeams = document.getElementById('homeFavoriteTeams');
+      if (homeTeams) {
+        homeTeams.innerHTML = teams.length
+          ? teams.map(t => `<button class="favorite-team-chip"><img src="${t.logo}" alt=""><span><strong>${t.name}</strong><small>Tu equipo</small></span></button>`).join('')
+          : `<button class="favorite-team-chip more">Selecciona tus equipos</button>`;
+      }
+
+      const brief = document.getElementById('briefList');
+      if (brief) {
+        brief.innerHTML = `
+          <li><strong>Modo seguro activo:</strong> la app cargó sin bloquear la pantalla.</li>
+          <li><strong>Datos gratis:</strong> usando fuentes históricas y de respaldo mientras no se compra API premium.</li>
+          <li><strong>Siguiente paso:</strong> abre Live o Perfil para revisar diagnóstico y partidos.</li>`;
+      }
+
+      const fav = document.getElementById('homeFavoriteMatches');
+      if (fav && (!fav.textContent || /cargando|loading/i.test(fav.textContent))) {
+        const rows = state.matches.slice(0,3);
+        fav.innerHTML = rows.length ? rows.map((m,i)=>`
+          <button class="favorite-match-card reveal-card" style="--i:${i}" data-match-id="${String(m.id || '').replace(/"/g,'&quot;')}">
+            <div class="favorite-match-top"><span class="favorite-match-badge">${m.favorite ? 'Tu equipo' : 'Partido destacado'}</span><span>${m.league || 'Football'}</span></div>
+            <div class="favorite-match-teams">
+              <div class="favorite-match-team"><img src="${m.homeLogo || ''}" alt=""><strong>${m.homeName || 'Local'}</strong></div>
+              <div class="favorite-match-middle"><strong>${m.score || '—'}</strong><small>${m.statusText || 'Modo seguro'}</small></div>
+              <div class="favorite-match-team"><img src="${m.awayLogo || ''}" alt=""><strong>${m.awayName || 'Visitante'}</strong></div>
+            </div>
+            <div class="favorite-match-foot"><span>Datos de desarrollo</span><span>Seguro</span></div>
+          </button>`).join('') : `<article class="card status-card"><p>Partidos en modo desarrollo listos para cargar.</p></article>`;
+      }
+
+      const center = document.getElementById('worldCupCenterBody');
+      if (center && /Preparando|Cargando|actualización/i.test(center.textContent || '')) {
+        center.innerHTML = `<div class="quick-table-empty">Modo desarrollo activo. La app usará datos históricos y fuentes gratis hasta activar una API premium.</div>`;
+      }
+
+      const source = document.getElementById('dataSourceLabel');
+      if (source) source.textContent = HOTFIX_VERSION;
+
+      hideBoot();
+    } catch (error) {
+      console.warn('GoalApp fallback failed', error);
+      hideBoot();
+    }
+  }
+
+  function safeHydrate(){
+    try { if (typeof hydratePersonalization === 'function') hydratePersonalization(); }
+    catch (error) { console.warn('hydratePersonalization safe fallback', error); }
+  }
+
+  const originalRenderAll = (typeof renderAllMatchData === 'function') ? renderAllMatchData : null;
+  if (originalRenderAll) {
+    renderAllMatchData = function(){
+      try { return originalRenderAll.apply(this, arguments); }
+      catch (error) {
+        console.warn('renderAllMatchData safe fallback', error);
+        basicHomeFallback();
+      }
+    };
+  }
+
+  const originalFinish = (typeof finishOnboarding === 'function') ? finishOnboarding : null;
+  if (originalFinish) {
+    finishOnboarding = function(){
+      try {
+        return originalFinish.apply(this, arguments);
+      } catch (error) {
+        console.warn('finishOnboarding safe fallback', error);
+        ensureDefaults();
+        safeSetItem('goalapp_onboarded','1');
+        safeSetItem('goalapp_profile', JSON.stringify(state.profile || {}));
+        safeSetItem('goalapp_alerts', JSON.stringify(state.alertPreferences || []));
+        safeSetItem('goalapp_teams', JSON.stringify(state.selectedTeams || []));
+        safeSetItem('goalapp_leagues', JSON.stringify(state.selectedLeagues || []));
+        const onboarding = document.getElementById('onboarding');
+        if (onboarding) onboarding.hidden = true;
+        safeHydrate();
+        basicHomeFallback();
+        showSafeToast('GoalApp lista en modo seguro');
+      } finally {
+        setTimeout(hideBoot, 0);
+        setTimeout(hideBoot, 500);
+        setTimeout(basicHomeFallback, 800);
+      }
+    };
+  }
+
+  const originalFetchReal = (typeof fetchRealMatches === 'function') ? fetchRealMatches : null;
+  if (originalFetchReal) {
+    fetchRealMatches = async function(){
+      try { return await originalFetchReal.apply(this, arguments); }
+      catch (error) {
+        console.warn('fetchRealMatches safe fallback', error);
+        basicHomeFallback();
+      } finally {
+        hideBoot();
+      }
+    };
+  }
+
+  window.addEventListener('error', function(event){
+    console.warn('GoalApp captured non-fatal error', event && event.message);
+    hideBoot();
+    try { event.stopImmediatePropagation(); } catch {}
+  }, true);
+
+  window.addEventListener('unhandledrejection', function(event){
+    console.warn('GoalApp captured non-fatal promise rejection', event && event.reason);
+    hideBoot();
+    try { event.stopImmediatePropagation(); } catch {}
+  }, true);
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function(){
+      if (safeGetItem('goalapp_onboarded') === '1') {
+        const onboarding = document.getElementById('onboarding');
+        if (onboarding) onboarding.hidden = true;
+        basicHomeFallback();
+      }
+      hideBoot();
+    }, 700);
+  });
+
+  setTimeout(hideBoot, 1200);
+  setTimeout(basicHomeFallback, 2600);
+  setTimeout(hideBoot, 4200);
+})();
+
   </script>
 </body>
 </html>
