@@ -1037,6 +1037,28 @@ body{padding-top:0}
     .devmode-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin:12px 0;border:1px solid rgba(255,209,102,.25);background:rgba(255,209,102,.08);border-radius:18px;color:#f7e6b7;font-size:12px;line-height:1.45}
     .devmode-banner b{color:#fff}.devmode-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border-radius:999px;background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.22);color:#ffe9b0;font-size:10px;font-weight:900;letter-spacing:.5px}
 
+  
+    /* QA-1 · Stability, diagnostics and mobile empty states */
+    .qa-panel { border-color:rgba(0,237,104,.2); background:linear-gradient(145deg,rgba(13,22,25,.98),rgba(7,10,12,.98)); }
+    .qa-panel-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .qa-panel-head h2 { margin:4px 0 6px; font-size:22px; }
+    .qa-panel-head p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
+    .qa-grid { display:grid; gap:9px; }
+    .qa-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 12px; border:1px solid var(--line); border-radius:15px; background:rgba(255,255,255,.045); }
+    .qa-row span { color:var(--muted); font-size:11px; }
+    .qa-row strong { font-size:12px; text-align:right; }
+    .qa-row.ok { border-color:rgba(0,237,104,.22); background:rgba(0,237,104,.07); }
+    .qa-row.warn { border-color:rgba(255,209,102,.22); background:rgba(255,209,102,.06); }
+    .qa-row.bad { border-color:rgba(255,89,104,.22); background:rgba(255,89,104,.07); }
+    .qa-actions { display:flex; gap:9px; flex-wrap:wrap; margin-top:14px; }
+    .qa-actions button { flex:1; min-width:145px; }
+    .qa-report { margin-top:12px; max-height:190px; overflow:auto; white-space:pre-wrap; word-break:break-word; padding:12px; border-radius:14px; border:1px solid var(--line); background:#050708; color:#b7c2be; font-size:10px; line-height:1.42; }
+    .qa-empty-state { padding:18px; border:1px solid rgba(255,209,102,.2); background:rgba(255,209,102,.06); border-radius:20px; color:#f6e6bd; line-height:1.45; font-size:13px; text-align:center; }
+    .qa-empty-state strong { display:block; color:#fff; margin-bottom:6px; font-size:15px; }
+    .qa-mini-note { display:inline-flex; align-items:center; gap:7px; padding:7px 9px; border-radius:999px; border:1px solid rgba(0,237,104,.18); background:rgba(0,237,104,.08); color:#dfffee; font-size:10px; font-weight:900; }
+    .qa-route-pill { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; padding:6px 8px; font-size:10px; color:var(--muted); }
+    @media(max-width:390px){ .qa-panel-head{display:block}.qa-panel-head .link-btn{margin-top:10px}.qa-row{align-items:flex-start}.qa-row strong{max-width:55%;} }
+
   </style>
 </head>
 <body>
@@ -1187,7 +1209,7 @@ body{padding-top:0}
 
       <section class="screen" data-screen="clubs"><span class="eyebrow">Tus favoritos</span><h1 class="page-title">Clubes</h1><p class="sub">Gestiona los equipos que forman tu experiencia.</p><div id="clubList"></div></section>
 
-      <section class="screen" data-screen="profile"><article class="profile-hero-card reveal-card" id="profileHeroCard"><img class="profile-hero-bg" id="profileHeroBg" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="profile-hero-content"><div class="profile-hero-top"><span class="eyebrow">Tu identidad GoalApp</span><span class="profile-tier">PREMIUM BETA</span></div><div><div class="profile-hero-main"><div class="profile-hero-avatar" id="profileHeroAvatar">J</div><div class="profile-hero-copy"><h2 id="profileHeroName">Jony</h2><p id="profileHeroHeadline">Seguimiento inteligente de tus equipos y torneos favoritos.</p><div class="profile-hero-badges"><span id="profileHeroFavorite">Equipo principal · —</span><span id="profileHeroLeague">Torneo del momento · Mundial · Modo desarrollo</span></div></div></div><div class="profile-highlights"><div class="profile-highlight"><span>Tu equipo</span><strong id="profileHighlightTeam">—</strong></div><div class="profile-highlight"><span>Liga principal</span><strong id="profileHighlightLeague">—</strong></div><div class="profile-highlight"><span>Alertas activas</span><strong id="profileHighlightAlerts">0 activas</strong></div></div></div></div></article><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
+      <section class="screen" data-screen="profile"><article class="profile-hero-card reveal-card" id="profileHeroCard"><img class="profile-hero-bg" id="profileHeroBg" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=86" alt="Estadio"><div class="profile-hero-content"><div class="profile-hero-top"><span class="eyebrow">Tu identidad GoalApp</span><span class="profile-tier">PREMIUM BETA</span></div><div><div class="profile-hero-main"><div class="profile-hero-avatar" id="profileHeroAvatar">J</div><div class="profile-hero-copy"><h2 id="profileHeroName">Jony</h2><p id="profileHeroHeadline">Seguimiento inteligente de tus equipos y torneos favoritos.</p><div class="profile-hero-badges"><span id="profileHeroFavorite">Equipo principal · —</span><span id="profileHeroLeague">Torneo del momento · Mundial · Modo desarrollo</span></div></div></div><div class="profile-highlights"><div class="profile-highlight"><span>Tu equipo</span><strong id="profileHighlightTeam">—</strong></div><div class="profile-highlight"><span>Liga principal</span><strong id="profileHighlightLeague">—</strong></div><div class="profile-highlight"><span>Alertas activas</span><strong id="profileHighlightAlerts">0 activas</strong></div></div></div></div></article><div class="profile"><div class="profile-photo" id="profileAvatar">J</div><div><h1 id="profileName">Jony</h1><p id="profileHandle">@jonyfutbol</p><span class="premium-badge">BETA</span><div class="country-chip"><b id="profileCountry">El Salvador</b><span>·</span><span id="profileLanguage">Español</span></div></div></div><div class="preferences-summary"><div class="summary-tile"><strong id="summaryTeams">0</strong><span>Equipos</span></div><div class="summary-tile"><strong id="summaryLeagues">0</strong><span>Ligas</span></div><div class="summary-tile"><strong id="summaryAlerts">0</strong><span>Alertas</span></div></div><article class="card settings"><button data-edit-profile><span>Perfil, país e idioma</span><b id="profileSettingsStatus">Editar ›</b></button><button data-edit-teams><span>Equipos favoritos</span><b id="favoriteCount">0 ›</b></button><button data-edit-leagues><span>Ligas favoritas</span><b id="leagueCount">0 ›</b></button><button data-edit-alerts><span>Alertas inteligentes</span><b id="alertCount">0 activas ›</b></button><button data-config-backend><span>Fuente profesional</span><b id="backendStatus">Configurar ›</b></button><button data-open-qa><span>Diagnóstico de datos</span><b id="qaHeaderStatus">Revisar ›</b></button><button id="toggleOffline"><span>Simular conexión</span><b id="offlineLabel">En línea ›</b></button><button data-report><span>Reportar error o sugerencia</span><b>Abrir ›</b></button><button id="resetApp"><span>Reiniciar personalización</span><b>Restablecer ›</b></button></article><article class="card qa-panel" id="qaPanel"><div class="qa-panel-head"><div><span class="eyebrow">QA-1</span><h2>Diagnóstico de GoalApp</h2><p>Estado real del Worker, proveedor, torneo activo y secciones críticas.</p></div><button class="link-btn" id="qaRefresh">Actualizar</button></div><div class="qa-grid" id="qaGrid"><div class="qa-row warn"><span>Estado</span><strong>Esperando revisión</strong></div></div><div class="qa-actions"><button class="secondary" id="qaCopyReport">Copiar reporte técnico</button><button class="secondary" id="qaTestRoutes">Probar rutas</button></div><pre class="qa-report" id="qaReport">Aún no hay reporte.</pre></article><article class="card premium"><h2>GoalApp Plus</h2><p>IA avanzada, estadísticas premium, Match Stories y una experiencia sin anuncios.</p><button class="primary" data-toast="Prueba gratuita simulada activada">Probar 7 días gratis</button></article></section>
     </main>
 
     <nav class="nav"><button class="active" data-go="home"><span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span>Inicio</button><button data-go="live"><span class="nav-icon"><svg class="icon"><use href="#i-live"/></svg></span>Live</button><button data-go="feed"><span class="nav-icon"><svg class="icon"><use href="#i-spark"/></svg></span>Feed</button><button data-go="clubs"><span class="nav-icon"><svg class="icon"><use href="#i-club"/></svg></span>Clubes</button><button data-go="profile"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button></nav>
@@ -4715,7 +4737,7 @@ body{padding-top:0}
       if (localStorage.getItem(key) === 'DATAENGINE-4') return;
       [
         'goalapp_real_matches_dataengine1','goalapp_home_extras_dataengine1','goalapp_news_cache_dataengine1','goalapp_worldcup_overview_dataengine1','goalapp_trending_players_dataengine1',
-        'goalapp_real_matches_dataengine5','goalapp_home_extras_dataengine5','goalapp_news_cache_dataengine5','goalapp_worldcup_overview_dataengine5','goalapp_trending_players_dataengine5',
+        'goalapp_real_matches_qa1','goalapp_home_extras_qa1','goalapp_news_cache_qa1','goalapp_worldcup_overview_qa1','goalapp_trending_players_qa1',
         'goalapp_real_matches_v5','goalapp_worldcup_overview_v5'
       ].forEach(k => localStorage.removeItem(k));
       localStorage.setItem(key, 'DATAENGINE-4');
@@ -4806,6 +4828,137 @@ body{padding-top:0}
     }
     setTimeout(renderDevModeBanner,700);
     document.addEventListener('visibilitychange',()=>setTimeout(renderDevModeBanner,300));
+
+
+    /* QA-1 · Diagnostics and resilient mobile states */
+    const QA_ROUTES = ['/api/health','/api/v3/health','/api/v3/debug/worldcup','/api/v3/worldcup/overview','/api/v3/matches/today'];
+
+    function qaBase() { return professionalBase(); }
+    function qaDataBase() { return `${professionalBase()}/api/v3`; }
+    function qaShort(value, fallback='—') { return value === undefined || value === null || value === '' ? fallback : String(value); }
+    function qaStatusClass(ok, warn=false) { return ok ? 'ok' : warn ? 'warn' : 'bad'; }
+    function qaEmptyHTML(title, body) { return `<div class="qa-empty-state"><strong>${escapeHTML(title)}</strong><span>${escapeHTML(body)}</span></div>`; }
+
+    async function qaFetch(path, timeout=9000) {
+      const url = path.startsWith('http') ? path : `${qaBase()}${path}`;
+      return await fetchJSON(url, timeout);
+    }
+
+    function qaBuildRows(report={}) {
+      const provider = report.health?.provider || report.v3health?.providers?.apiFootball ? 'API-Football' : '—';
+      const configured = Boolean(report.health?.configured || report.v3health?.providers?.apiFootball?.configured);
+      const version = report.health?.version || report.v3health?.version || '—';
+      const active = report.v3health?.active || report.debug?.active || report.overview?.active || {};
+      const fixtureCount = report.debug?.checks?.[0]?.fixtureCount ?? report.overview?.fixtureCount ?? report.overview?.matches?.length ?? 0;
+      const standingsGroups = report.debug?.checks?.[0]?.standingsGroups ?? report.overview?.standings?.length ?? 0;
+      const todayCount = report.today?.count ?? report.today?.matches?.length ?? 0;
+      const errors = [report.healthError, report.debugError, report.overviewError, report.todayError].filter(Boolean);
+      return [
+        {label:'Worker', value:version, ok:String(version).includes('QA-1') || String(version).includes('DATAENGINE')},
+        {label:'Proveedor', value:configured ? provider : 'No configurado', ok:configured},
+        {label:'Modo', value:report.v3health?.modeLabel || report.debug?.modeLabel || 'Desarrollo real', ok:true},
+        {label:'Torneo activo', value:`Liga ${qaShort(active.league,1)} · Temporada ${qaShort(active.season,2022)}`, ok:true},
+        {label:'Fixtures cargados', value:String(fixtureCount), ok:Number(fixtureCount)>0, warn:Number(fixtureCount)===0},
+        {label:'Grupos/Tablas', value:String(standingsGroups), ok:Number(standingsGroups)>0, warn:Number(standingsGroups)===0},
+        {label:'Partidos inicio', value:String(todayCount), ok:Number(todayCount)>0, warn:Number(todayCount)===0},
+        {label:'Errores', value:errors.length ? errors[0] : 'Sin errores críticos', ok:!errors.length, warn:errors.length>0}
+      ];
+    }
+
+    function qaRender(report={}) {
+      state.qaReport = report;
+      const grid = $('#qaGrid');
+      const pre = $('#qaReport');
+      const header = $('#qaHeaderStatus');
+      if (!grid || !pre) return;
+      const rows = qaBuildRows(report);
+      grid.innerHTML = rows.map(row => `<div class="qa-row ${qaStatusClass(row.ok,row.warn)}"><span>${escapeHTML(row.label)}</span><strong>${escapeHTML(row.value)}</strong></div>`).join('');
+      pre.textContent = JSON.stringify(report, null, 2);
+      const bad = rows.filter(r => !r.ok && !r.warn).length;
+      const warn = rows.filter(r => r.warn).length;
+      if (header) header.textContent = bad ? 'Error ›' : warn ? 'Revisar ›' : 'OK ›';
+    }
+
+    async function qaRunDiagnostics(showToastAfter=true) {
+      const report = { generatedAt:new Date().toISOString(), app:'GoalApp', qa:'QA-1', url:location.href, userAgent:navigator.userAgent };
+      try { report.health = await qaFetch('/api/health', 7000); } catch(e){ report.healthError = e.message; }
+      try { report.v3health = await qaFetch('/api/v3/health', 8000); } catch(e){ report.v3healthError = e.message; }
+      try { report.debug = await qaFetch('/api/v3/debug/worldcup', 12000); } catch(e){ report.debugError = e.message; }
+      try { report.overview = await qaFetch('/api/v3/worldcup/overview?timezone=America%2FEl_Salvador', 12000); } catch(e){ report.overviewError = e.message; }
+      try { report.today = await qaFetch('/api/v3/matches/today?timezone=America%2FEl_Salvador', 12000); } catch(e){ report.todayError = e.message; }
+      qaRender(report);
+      qaEnhanceEmptyStates(report);
+      if (showToastAfter) showToast('Diagnóstico actualizado');
+      return report;
+    }
+
+    function qaEnhanceEmptyStates(report=state.qaReport||{}) {
+      const fixtureCount = report.debug?.checks?.[0]?.fixtureCount ?? report.overview?.fixtureCount ?? 0;
+      const standingsGroups = report.overview?.standings?.length ?? report.debug?.checks?.[0]?.standingsGroups ?? 0;
+      const todayCount = report.today?.count ?? report.today?.matches?.length ?? 0;
+      const emptyTargets = [
+        ['#homeFavoriteMatches', 'Tus partidos se cargarán desde datos reales', 'En modo desarrollo usamos partidos históricos disponibles en tu plan gratuito.'],
+        ['#worldCupTable', 'Tabla en actualización', 'GoalApp calculará la tabla con resultados reales cuando el Worker entregue fixtures.'],
+        ['#worldCupPlayers', 'Jugadores en revisión', 'Las fotos y estadísticas dependen de la cobertura incluida en tu plan actual.'],
+        ['#homeVideoHighlight', 'Videos en actualización', 'Los videos solo aparecerán si la fuente entrega un embed reproducible dentro de GoalApp.']
+      ];
+      emptyTargets.forEach(([selector,title,body]) => {
+        const el = $(selector);
+        if (!el) return;
+        const text = el.textContent.trim().toLowerCase();
+        const hasRealCards = el.querySelector('button, article:not(.status-card), .wc-group-card, .player-trend-card, .native-video-card');
+        if (!hasRealCards && (text === '' || text.includes('cargando') || text.includes('no hay') || text.includes('actualización') || text.includes('consultando'))) {
+          el.innerHTML = qaEmptyHTML(title, body);
+        }
+      });
+      const center = $('#worldCupCenterBody');
+      if (center && Number(fixtureCount) === 0 && center.textContent.toLowerCase().includes('tabla real no disponible')) {
+        center.innerHTML = qaEmptyHTML('Torneo activo sin fixtures', 'Revisa /api/v3/debug/worldcup. En modo desarrollo debería usar Mundial 2022 o una temporada permitida por el plan gratuito.');
+      }
+    }
+
+    async function qaCopyReport() {
+      const report = state.qaReport || await qaRunDiagnostics(false);
+      const text = JSON.stringify(report, null, 2);
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Reporte técnico copiado');
+      } catch (e) {
+        $('#qaReport').textContent = text;
+        showToast('No se pudo copiar; reporte visible abajo');
+      }
+    }
+
+    function qaOpenPanel() {
+      goTo('profile');
+      setTimeout(() => {
+        $('#qaPanel')?.scrollIntoView({behavior:'smooth', block:'start'});
+        qaRunDiagnostics(false);
+      }, 120);
+    }
+
+    document.addEventListener('click', e => {
+      if (e.target.closest('[data-open-qa]')) qaOpenPanel();
+      if (e.target.closest('#qaRefresh')) qaRunDiagnostics(true);
+      if (e.target.closest('#qaTestRoutes')) qaRunDiagnostics(true);
+      if (e.target.closest('#qaCopyReport')) qaCopyReport();
+    });
+
+    const QA_originalRenderAllMatchData = typeof renderAllMatchData === 'function' ? renderAllMatchData : null;
+    if (QA_originalRenderAllMatchData) {
+      renderAllMatchData = function(){
+        QA_originalRenderAllMatchData();
+        setTimeout(() => qaEnhanceEmptyStates(), 50);
+      }
+    }
+    const QA_originalHydratePersonalization = typeof hydratePersonalization === 'function' ? hydratePersonalization : null;
+    if (QA_originalHydratePersonalization) {
+      hydratePersonalization = function(){
+        QA_originalHydratePersonalization();
+        setTimeout(() => qaRender(state.qaReport || {}), 80);
+      }
+    }
+    setTimeout(() => qaRunDiagnostics(false), 1800);
 
     const preferenceModals=['profileModal','teamsModal','leaguesModal','alertsModal'];
     function openPreferenceModal(id){preferenceModals.forEach(name=>$('#'+name)?.classList.toggle('open',name===id));if(id==='profileModal'){const profile=state.profile||DEFAULT_PROFILE;$('#editProfileName').value=profile.name||'';$('#editProfileCountry').value=profile.country||'El Salvador';$('#editProfileLanguage').value=profile.language||'Español'}renderChoices()}
